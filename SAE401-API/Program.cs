@@ -1,10 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using SAE401_API.Models.EntityFramework;
 using DotNetEnv;
+using SAE401_API.Models.Repository;
+using SAE401_API.Models.DataManager;
 
 Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<IDataRepository<Produit>, ProduitManager>();
+
 
 // Add services to the container.
 

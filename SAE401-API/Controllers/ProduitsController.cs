@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SAE401_API.Models.DataManager;
 using SAE401_API.Models.EntityFramework;
+using SAE401_API.Models.Repository;
 
 namespace SAE401_API.Controllers
 {
@@ -13,25 +15,25 @@ namespace SAE401_API.Controllers
     [ApiController]
     public class ProduitsController : ControllerBase
     {
-        private readonly _DBMilibooContext _context;
+        private readonly  IDataRepository<Produit> dataRepository;
 
-        public ProduitsController(_DBMilibooContext context)
+        public ProduitsController( IDataRepository<Produit> datarepo)
         {
-            _context = context;
+            dataRepository = datarepo;
         }
 
-        // GET: api/Produits
+        // GET: api/Produits        
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Produit>>> GetProduits()
         {
-            return await _context.Produits.ToListAsync();
+            return await dataRepository.GetAllAsync();
         }
 
         // GET: api/Produits/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Produit>> GetProduit(int id)
         {
-            var produit = await _context.Produits.FindAsync(id);
+            var produit =await dataRepository.GetByIdAsync(id);
 
             if (produit == null)
             {
@@ -51,25 +53,18 @@ namespace SAE401_API.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(produit).State = EntityState.Modified;
+            var produitToUpdate = await dataRepository.GetByIdAsync(id);
 
-            try
+            if (produitToUpdate == null)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProduitExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
-            return NoContent();
+            else
+            {
+                await dataRepository.UpdateAsync(produitToUpdate.Value, produit);
+                return NoContent();
+            }
         }
 
         // POST: api/Produits
@@ -77,8 +72,13 @@ namespace SAE401_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Produit>> PostProduit(Produit produit)
         {
-            _context.Produits.Add(produit);
-            await _context.SaveChangesAsync();
+            if(!ModelState.IsValid)
+            {
+
+            return BadRequest(ModelState); 
+            }
+
+            await dataRepository.AddAsync(produit);
 
             return CreatedAtAction("GetProduit", new { id = produit.Idproduit }, produit);
         }
@@ -87,21 +87,16 @@ namespace SAE401_API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduit(int id)
         {
-            var produit = await _context.Produits.FindAsync(id);
+            var produit =  await dataRepository.GetByIdAsync(id);
             if (produit == null)
             {
                 return NotFound();
             }
 
-            _context.Produits.Remove(produit);
-            await _context.SaveChangesAsync();
-
+            await dataRepository.DeleteAsync(produit.Value);
             return NoContent();
         }
 
-        private bool ProduitExists(int id)
-        {
-            return _context.Produits.Any(e => e.Idproduit == id);
-        }
+
     }
 }
