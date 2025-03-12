@@ -21,7 +21,8 @@ public partial class Historiqueconsultation
 
     [Column("hst_dateconsultation")]
     [DateValidator]
-    public DateTime Dateconsultation { get; set; }
+    [Required]
+    public DateTime Dateconsultation { get; set; }= DateTime.Now;
 
     [ForeignKey(nameof(Idclient))]
     [InverseProperty("Historiqueconsultations")]

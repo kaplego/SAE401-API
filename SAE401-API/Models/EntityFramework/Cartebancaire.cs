@@ -26,7 +26,8 @@ public partial class Cartebancaire
 
     [Column("car_dateenregistement")]
     [DateValidator]
-    public DateTime Dateenregistement { get; set; }
+    [Required]
+    public DateTime Dateenregistement { get; set; }= DateTime.Now;
 
     [Column("car_numcartebancaire")]
     [StringLength(16)]
@@ -35,6 +36,7 @@ public partial class Cartebancaire
     public string Numcartebancaire { get; set; } = null!;
 
     [Column("car_dateexpirationcarte")]
+    [Required]
     public DateTime Dateexpirationcarte { get; set; }
 
     [ForeignKey(nameof(Idclient))]

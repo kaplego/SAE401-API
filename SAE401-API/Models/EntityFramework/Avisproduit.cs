@@ -28,7 +28,8 @@ public partial class Avisproduit
 
     [Column("avi_dateavis")]
     [DateValidator]
-    public DateTime Dateavis { get; set; }
+    [Required]
+    public DateTime Dateavis { get; set; } = DateTime.Now;
 
     [Column("avi_commentaireavis")]
     [StringLength(1024)]
