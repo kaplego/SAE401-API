@@ -6,27 +6,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
-[Table("messagechatbot")]
-[Index("Idclient", Name = "clientchatbot_fk")]
-[Index("Idmessage", Name = "messagechatbot_pk", IsUnique = true)]
+[Table("t_e_messagechatbot_msg")]
 public partial class Messagechatbot
 {
     [Key]
-    [Column("idmessage")]
+    [Column("msg_idmessage")]
     public int Idmessage { get; set; }
 
-    [Column("idclient")]
+    [Column("msg_idclient")]
     public int Idclient { get; set; }
 
-    [Column("contenumessage")]
+    [Column("msg_contenumessage")]
     [StringLength(512)]
     public string Contenumessage { get; set; } = null!;
 
-    [Column("reponsemessage")]
+    [Column("msg_reponsemessage")]
     [StringLength(1024)]
     public string Reponsemessage { get; set; } = null!;
 
-    [ForeignKey("Idclient")]
+    [ForeignKey(nameof(Idclient))]
     [InverseProperty("Messagechatbots")]
     public virtual Client IdclientNavigation { get; set; } = null!;
 }

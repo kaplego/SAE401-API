@@ -6,42 +6,39 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
-[Table("produit")]
-[Index("Idpays", Name = "paysorigine_fk")]
-[Index("Idproduit", Name = "produit_pk", IsUnique = true)]
-[Index("Idtypeproduit", Name = "produittypeproduit_fk")]
+[Table("t_e_produit_prd")]
 public partial class Produit
 {
     [Key]
-    [Column("idproduit")]
+    [Column("prd_idproduit")]
     public int Idproduit { get; set; }
 
-    [Column("idtypeproduit")]
+    [Column("prd_idtypeproduit")]
     public int Idtypeproduit { get; set; }
 
-    [Column("idpays")]
+    [Column("prd_idpays")]
     public int Idpays { get; set; }
 
-    [Column("nomproduit")]
+    [Column("prd_nomproduit")]
     [StringLength(256)]
     public string Nomproduit { get; set; } = null!;
 
-    [Column("sourcenotice")]
+    [Column("prd_sourcenotice")]
     [StringLength(256)]
     public string? Sourcenotice { get; set; }
 
-    [Column("sourceaspecttechnique")]
+    [Column("prd_sourceaspecttechnique")]
     [StringLength(256)]
     public string? Sourceaspecttechnique { get; set; }
 
-    [Column("delailivraison")]
+    [Column("prd_delailivraison")]
     public int Delailivraison { get; set; }
 
-    [Column("coutlivraison")]
+    [Column("prd_coutlivraison")]
     [Precision(10, 2)]
     public decimal Coutlivraison { get; set; }
 
-    [Column("nbpaiementmax")]
+    [Column("prd_nbpaiementmax")]
     public int Nbpaiementmax { get; set; }
 
     [InverseProperty("IdproduitNavigation")]
@@ -53,26 +50,26 @@ public partial class Produit
     [InverseProperty("IdproduitNavigation")]
     public virtual ICollection<Historiqueconsultation> Historiqueconsultations { get; set; } = new List<Historiqueconsultation>();
 
-    [ForeignKey("Idpays")]
+    [ForeignKey(nameof(Idpays))]
     [InverseProperty("Produits")]
     public virtual Pay IdpaysNavigation { get; set; } = null!;
 
-    [ForeignKey("Idtypeproduit")]
+    [ForeignKey(nameof(Idtypeproduit))]
     [InverseProperty("Produits")]
     public virtual Typeproduit IdtypeproduitNavigation { get; set; } = null!;
 
     [InverseProperty("IdproduitNavigation")]
     public virtual ICollection<Valeurattribut> Valeurattributs { get; set; } = new List<Valeurattribut>();
 
-    [ForeignKey("Idproduit")]
+    [ForeignKey(nameof(Idproduit))]
     [InverseProperty("Idproduits")]
     public virtual ICollection<Client> Idclients { get; set; } = new List<Client>();
 
-    [ForeignKey("Idproduit")]
-    [InverseProperty("Idproduits")]
-    public virtual ICollection<Produit> Idproduit2s { get; set; } = new List<Produit>();
+    [ForeignKey(nameof(Idproduitsimilaire2))]
+    [InverseProperty("Idproduitsimilaire2")]
+    public virtual ICollection<Produit> Idproduitsimilaire { get; set; } = new List<Produit>();
 
-    [ForeignKey("Idproduit2")]
-    [InverseProperty("Idproduit2s")]
-    public virtual ICollection<Produit> Idproduits { get; set; } = new List<Produit>();
+    [ForeignKey(nameof(Idproduitsimilaire))]
+    [InverseProperty("Idproduitsimilaire")]
+    public virtual ICollection<Produit> Idproduitsimilaire2 { get; set; } = new List<Produit>();
 }

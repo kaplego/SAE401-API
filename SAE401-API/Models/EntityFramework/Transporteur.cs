@@ -6,21 +6,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
-[Table("transporteur")]
-[Index("Idtransporteur", Name = "transporteur_pk", IsUnique = true)]
+[Table("t_e_transporteur_tpt")]
 public partial class Transporteur
 {
     [Key]
-    [Column("idtransporteur")]
+    [Column("tpt_idtransporteur")]
     public int Idtransporteur { get; set; }
 
-    [Column("nomtransporteur")]
+    [Column("tpt_nomtransporteur")]
     [StringLength(64)]
     public string Nomtransporteur { get; set; } = null!;
-
-    [Column("attribut_105")]
-    [StringLength(512)]
-    public string? Attribut105 { get; set; }
 
     [InverseProperty("IdtransporteurNavigation")]
     public virtual ICollection<Commande> Commandes { get; set; } = new List<Commande>();

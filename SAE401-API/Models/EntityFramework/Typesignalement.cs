@@ -6,15 +6,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
-[Table("typesignalement")]
-[Index("Idtypesignalement", Name = "typesignalement_pk", IsUnique = true)]
+[Table("t_e_typesignalement_tsg")]
 public partial class Typesignalement
 {
     [Key]
-    [Column("idtypesignalement")]
+    [Column("tsg_idtypesignalement")]
     public int Idtypesignalement { get; set; }
 
-    [Column("nomtypesignalement")]
+    [Column("tsg_nomtypesignalement")]
     [StringLength(64)]
     public string Nomtypesignalement { get; set; } = null!;
 

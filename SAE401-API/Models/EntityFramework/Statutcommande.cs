@@ -6,15 +6,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
-[Table("statutcommande")]
-[Index("Idstatut", Name = "statutcommande_pk", IsUnique = true)]
+[Table("t_e_statutcommande_scd")]
 public partial class Statutcommande
 {
     [Key]
-    [Column("idstatut")]
+    [Column("scd_idstatut")]
     public int Idstatut { get; set; }
 
-    [Column("nomstatut")]
+    [Column("scd_nomstatut")]
     [StringLength(64)]
     public string Nomstatut { get; set; } = null!;
 

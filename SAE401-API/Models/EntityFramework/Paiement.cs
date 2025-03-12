@@ -6,46 +6,42 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
-[Table("paiement")]
-[Index("Idpaiement", Name = "paiement_pk", IsUnique = true)]
-[Index("Idcommande", Name = "paiementcommande_fk")]
-[Index("Idtypepaiement", Name = "paiementtypepaiement_fk")]
-[Index("Idcartebancaire", Name = "utilise_fk")]
+[Table("t_e_paiement_pmt")]
 public partial class Paiement
 {
     [Key]
-    [Column("idpaiement")]
+    [Column("pmt_idpaiement")]
     public int Idpaiement { get; set; }
 
-    [Column("idcartebancaire")]
+    [Column("pmt_idcartebancaire")]
     public int? Idcartebancaire { get; set; }
 
-    [Column("idcommande")]
+    [Column("pmt_idcommande")]
     public int Idcommande { get; set; }
 
-    [Column("idtypepaiement")]
+    [Column("pmt_idtypepaiement")]
     public int Idtypepaiement { get; set; }
 
-    [Column("datepaiement")]
+    [Column("pmt_datepaiement")]
     public DateOnly Datepaiement { get; set; }
 
-    [Column("montantpaiement")]
+    [Column("pmt_montantpaiement")]
     [Precision(10, 2)]
     public decimal Montantpaiement { get; set; }
 
-    [Column("indicepaiement")]
+    [Column("pmt_indicepaiement")]
     [StringLength(256)]
     public string? Indicepaiement { get; set; }
 
-    [ForeignKey("Idcartebancaire")]
+    [ForeignKey(nameof(Idcartebancaire))]
     [InverseProperty("Paiements")]
     public virtual Cartebancaire? IdcartebancaireNavigation { get; set; }
 
-    [ForeignKey("Idcommande")]
+    [ForeignKey(nameof(Idcommande))]
     [InverseProperty("Paiements")]
     public virtual Commande IdcommandeNavigation { get; set; } = null!;
 
-    [ForeignKey("Idtypepaiement")]
+    [ForeignKey(nameof(Idtypepaiement))]
     [InverseProperty("Paiements")]
     public virtual Typepaiement IdtypepaiementNavigation { get; set; } = null!;
 }

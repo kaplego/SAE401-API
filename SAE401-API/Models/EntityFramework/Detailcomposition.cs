@@ -6,33 +6,30 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
-[PrimaryKey("Idproduit", "Idcouleur", "Idcomposition")]
-[Table("detailcomposition")]
-[Index("Idcomposition", Name = "detailcomposition2_fk")]
-[Index("Idproduit", "Idcouleur", Name = "detailcomposition_fk")]
-[Index("Idproduit", "Idcouleur", "Idcomposition", Name = "detailcomposition_pk", IsUnique = true)]
+[PrimaryKey(nameof(Idproduit), nameof(Idcouleur), nameof(Idcomposition))]
+[Table("t_j_detailcomposition_dcp")]
 public partial class Detailcomposition
 {
     [Key]
-    [Column("idproduit")]
+    [Column("dcp_idproduit")]
     public int Idproduit { get; set; }
 
     [Key]
-    [Column("idcouleur")]
+    [Column("dcp_idcouleur")]
     public int Idcouleur { get; set; }
 
     [Key]
-    [Column("idcomposition")]
+    [Column("dcp_idcomposition")]
     public int Idcomposition { get; set; }
 
-    [Column("quantitecomposition")]
+    [Column("dcp_quantitecomposition")]
     public int Quantitecomposition { get; set; }
 
     [ForeignKey("Idproduit, Idcouleur")]
     [InverseProperty("Detailcompositions")]
     public virtual Coloration Coloration { get; set; } = null!;
 
-    [ForeignKey("Idcomposition")]
+    [ForeignKey(nameof(Idcomposition))]
     [InverseProperty("Detailcompositions")]
     public virtual Compositionproduit IdcompositionNavigation { get; set; } = null!;
 }

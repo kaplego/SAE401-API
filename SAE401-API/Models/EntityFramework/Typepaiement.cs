@@ -6,15 +6,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
-[Table("typepaiement")]
-[Index("Idtypepaiement", Name = "typepaiement_pk", IsUnique = true)]
+[Table("t_e_typepaiement_tpm")]
 public partial class Typepaiement
 {
     [Key]
-    [Column("idtypepaiement")]
+    [Column("tpm_idtypepaiement")]
     public int Idtypepaiement { get; set; }
 
-    [Column("nomtypepaiement")]
+    [Column("tpm_nomtypepaiement")]
     [StringLength(64)]
     public string Nomtypepaiement { get; set; } = null!;
 

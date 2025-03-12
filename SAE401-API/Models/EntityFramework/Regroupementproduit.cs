@@ -6,19 +6,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
-[Table("regroupementproduit")]
-[Index("Idregroupement", Name = "regroupementproduit_pk", IsUnique = true)]
+[Table("t_e_regroupementproduit_rgp")]
 public partial class Regroupementproduit
 {
     [Key]
-    [Column("idregroupement")]
+    [Column("rgp_idregroupement")]
     public int Idregroupement { get; set; }
 
-    [Column("nomregroupement")]
+    [Column("rgp_nomregroupement")]
     [StringLength(64)]
     public string Nomregroupement { get; set; } = null!;
 
-    [ForeignKey("Idregroupement")]
+    [ForeignKey(nameof(Idregroupement))]
     [InverseProperty("Idregroupements")]
     public virtual ICollection<Coloration> Colorations { get; set; } = new List<Coloration>();
 }

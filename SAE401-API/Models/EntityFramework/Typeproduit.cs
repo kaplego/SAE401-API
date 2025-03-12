@@ -6,26 +6,24 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
-[Table("typeproduit")]
-[Index("Idcategorie", Name = "categorietypeproduit_fk")]
-[Index("Idtypeproduit", Name = "typeproduit_pk", IsUnique = true)]
+[Table("t_e_typeproduit_tpd")]
 public partial class Typeproduit
 {
     [Key]
-    [Column("idtypeproduit")]
+    [Column("tpd_idtypeproduit")]
     public int Idtypeproduit { get; set; }
 
-    [Column("idcategorie")]
+    [Column("tpd_idcategorie")]
     public int Idcategorie { get; set; }
 
-    [Column("nomtypeproduit")]
+    [Column("tpd_nomtypeproduit")]
     [StringLength(64)]
     public string Nomtypeproduit { get; set; } = null!;
 
     [InverseProperty("IdtypeproduitNavigation")]
     public virtual ICollection<Attributproduit> Attributproduits { get; set; } = new List<Attributproduit>();
 
-    [ForeignKey("Idcategorie")]
+    [ForeignKey(nameof(Idcategorie))]
     [InverseProperty("Typeproduits")]
     public virtual Categorieproduit IdcategorieNavigation { get; set; } = null!;
 

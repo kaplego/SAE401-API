@@ -6,30 +6,28 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
-[Table("professionel")]
-[Index("Idactivitepro", Name = "proactivitepro_fk")]
-[Index("Idclient", Name = "professionel_pk", IsUnique = true)]
+[Table("t_h_professionel_pro")]
 public partial class Professionel
 {
     [Key]
-    [Column("idclient")]
+    [Column("pro_idclient")]
     public int Idclient { get; set; }
 
-    [Column("idactivitepro")]
+    [Column("pro_idactivitepro")]
     public int Idactivitepro { get; set; }
 
-    [Column("nomsociete")]
+    [Column("pro_nomsociete")]
     public int Nomsociete { get; set; }
 
-    [Column("numtva")]
+    [Column("pro_numtva")]
     [StringLength(11)]
     public string Numtva { get; set; } = null!;
 
-    [ForeignKey("Idactivitepro")]
+    [ForeignKey(nameof(Idactivitepro))]
     [InverseProperty("Professionels")]
     public virtual Activitepro IdactiviteproNavigation { get; set; } = null!;
 
-    [ForeignKey("Idclient")]
+    [ForeignKey(nameof(Idclient))]
     [InverseProperty("Professionel")]
     public virtual Client IdclientNavigation { get; set; } = null!;
 }

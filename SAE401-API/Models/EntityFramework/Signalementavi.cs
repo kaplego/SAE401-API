@@ -6,38 +6,35 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
-[Table("signalementavis")]
-[Index("Idavis", Name = "avissignalementavis_fk")]
-[Index("Idsignalement", Name = "signalementavis_pk", IsUnique = true)]
-[Index("Idtypesignalement", Name = "signalementtypesignalement_fk")]
+[Table("t_e_signalementavis_sga")]
 public partial class Signalementavi
 {
     [Key]
-    [Column("idsignalement")]
+    [Column("sga_idsignalement")]
     public int Idsignalement { get; set; }
 
-    [Column("idavis")]
+    [Column("sga_idavis")]
     public int Idavis { get; set; }
 
-    [Column("idtypesignalement")]
+    [Column("sga_idtypesignalement")]
     public int Idtypesignalement { get; set; }
 
-    [Column("emailsignalement")]
+    [Column("sga_emailsignalement")]
     [StringLength(256)]
     public string Emailsignalement { get; set; } = null!;
 
-    [Column("datesignalement")]
+    [Column("sga_datesignalement")]
     public DateOnly Datesignalement { get; set; }
 
-    [Column("contenusignalement")]
+    [Column("sga_contenusignalement")]
     [StringLength(512)]
     public string Contenusignalement { get; set; } = null!;
 
-    [ForeignKey("Idavis")]
+    [ForeignKey(nameof(Idavis))]
     [InverseProperty("Signalementavis")]
     public virtual Avisproduit IdavisNavigation { get; set; } = null!;
 
-    [ForeignKey("Idtypesignalement")]
+    [ForeignKey(nameof(Idtypesignalement))]
     [InverseProperty("Signalementavis")]
     public virtual Typesignalement IdtypesignalementNavigation { get; set; } = null!;
 }

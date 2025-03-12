@@ -6,30 +6,29 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
-[Table("photo")]
-[Index("Idphoto", Name = "photo_pk", IsUnique = true)]
+[Table("t_e_photo_pho")]
 public partial class Photo
 {
     [Key]
-    [Column("idphoto")]
+    [Column("pho_idphoto")]
     public int Idphoto { get; set; }
 
-    [Column("sourcephoto")]
+    [Column("pho_sourcephoto")]
     [StringLength(256)]
     public string Sourcephoto { get; set; } = null!;
 
-    [Column("descriptionphoto")]
+    [Column("pho_descriptionphoto")]
     [StringLength(256)]
     public string? Descriptionphoto { get; set; }
 
     [InverseProperty("IdphotoNavigation")]
     public virtual ICollection<Categorieproduit> Categorieproduits { get; set; } = new List<Categorieproduit>();
 
-    [ForeignKey("Idphoto")]
+    [ForeignKey(nameof(Idphoto))]
     [InverseProperty("Idphotos")]
     public virtual ICollection<Coloration> Colorations { get; set; } = new List<Coloration>();
 
-    [ForeignKey("Idphoto")]
+    [ForeignKey(nameof(Idphoto))]
     [InverseProperty("Idphotos")]
     public virtual ICollection<Avisproduit> Idavis { get; set; } = new List<Avisproduit>();
 }

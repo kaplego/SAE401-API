@@ -6,33 +6,30 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
-[PrimaryKey("Idproduit", "Idcouleur", "Idclient")]
-[Table("detailpanier")]
-[Index("Idproduit", "Idcouleur", Name = "detailpanier2_fk")]
-[Index("Idclient", Name = "detailpanier_fk")]
-[Index("Idproduit", "Idcouleur", "Idclient", Name = "detailpanier_pk", IsUnique = true)]
+[PrimaryKey(nameof(Idproduit), nameof(Idcouleur), nameof(Idclient))]
+[Table("t_j_detailpanier_dpn")]
 public partial class Detailpanier
 {
     [Key]
-    [Column("idproduit")]
+    [Column("dpn_idproduit")]
     public int Idproduit { get; set; }
 
     [Key]
-    [Column("idcouleur")]
+    [Column("dpn_idcouleur")]
     public int Idcouleur { get; set; }
 
     [Key]
-    [Column("idclient")]
+    [Column("dpn_idclient")]
     public int Idclient { get; set; }
 
-    [Column("quantitepanier")]
+    [Column("dpn_quantitepanier")]
     public int Quantitepanier { get; set; }
 
     [ForeignKey("Idproduit, Idcouleur")]
     [InverseProperty("Detailpaniers")]
     public virtual Coloration Coloration { get; set; } = null!;
 
-    [ForeignKey("Idclient")]
+    [ForeignKey(nameof(Idclient))]
     [InverseProperty("Detailpaniers")]
     public virtual Client IdclientNavigation { get; set; } = null!;
 }

@@ -443,7 +443,7 @@ public partial class _DBMilibooContext : DbContext
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_produit_produitty_typeprod");
 
-            entity.HasMany(d => d.Idproduit2s).WithMany(p => p.Idproduits)
+            entity.HasMany(d => d.Idproduitsimilaire).WithMany(p => p.Idproduitsimilaire2)
                 .UsingEntity<Dictionary<string, object>>(
                     "Produitsimilaire",
                     r => r.HasOne<Produit>().WithMany()
@@ -465,7 +465,7 @@ public partial class _DBMilibooContext : DbContext
                         j.IndexerProperty<int>("Idproduit2").HasColumnName("idproduit2");
                     });
 
-            entity.HasMany(d => d.Idproduits).WithMany(p => p.Idproduit2s)
+            entity.HasMany(d => d.Idproduitsimilaire2).WithMany(p => p.Idproduitsimilaire)
                 .UsingEntity<Dictionary<string, object>>(
                     "Produitsimilaire",
                     r => r.HasOne<Produit>().WithMany()
