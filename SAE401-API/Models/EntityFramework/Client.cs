@@ -29,6 +29,7 @@ public partial class Client
 
     [Column("cli_emailclient")]
     [StringLength(256)]
+    [EmailAddress]
     public string Emailclient { get; set; } = null!;
 
     [Column("cli_telfixeclient")]
