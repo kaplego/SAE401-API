@@ -21,6 +21,7 @@ public partial class Couleur
 
     [Column("cou_rgbcouleur")]
     [StringLength(6)]
+    [RegularExpression(@"^[0-9A-Fa-f]+$", ErrorMessage = "La chaîne doit contenir uniquement des caractères hexadécimaux (0-9, A-F).")]
     public string Rgbcouleur { get; set; } = null!;
 
     [InverseProperty("IdcouleurNavigation")]

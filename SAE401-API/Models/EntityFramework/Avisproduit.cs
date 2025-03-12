@@ -23,6 +23,7 @@ public partial class Avisproduit
     public int Idclient { get; set; }
 
     [Column("avi_noteavis")]
+    [Range(minimum: 0, maximum: 4, ErrorMessage = "La note doit être comprise entre 0 et 4")]
     public int Noteavis { get; set; }
 
     [Column("avi_dateavis")]
