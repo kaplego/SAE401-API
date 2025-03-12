@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using SAE401_API.Validation;
 
 namespace SAE401_API.Models.EntityFramework;
 
@@ -28,6 +29,7 @@ public partial class Codepromo
     public bool Estvalide { get; set; }
 
     [Column("cod_dateexpirationcode")]
+    [FutureDateValidator]
     public DateTime? Dateexpirationcode { get; set; }
 
     [InverseProperty("IdcodepromoNavigation")]
