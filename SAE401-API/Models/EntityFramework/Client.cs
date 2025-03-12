@@ -24,7 +24,7 @@ public partial class Client
     public string Prenomclient { get; set; } = null!;
 
     [Column("cli_civiliteclient")]
-    [MaxLength(1)]
+    [RegularExpression(@"^(|[FHX]{1})$", ErrorMessage = "Le caractère doit être F, H ou X.")]
     public char? Civiliteclient { get; set; }
 
     [Column("cli_emailclient")]
@@ -52,6 +52,7 @@ public partial class Client
     public string Hashmdp { get; set; } = null!;
 
     [Column("cli_pointfideliteclient")]
+    [Range(0, int.MaxValue, ErrorMessage = "La valeur doit être supérieure ou égale à 0.")]
     public int Pointfideliteclient { get; set; }
 
     [Column("cli_newslettermiliboo")]

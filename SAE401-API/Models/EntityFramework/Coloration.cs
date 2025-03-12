@@ -19,12 +19,15 @@ public partial class Coloration
     public int Idcouleur { get; set; }
 
     [Column("col_prixvente", TypeName = "numeric(10, 2)")]
+    [Range(0.0, double.MaxValue, ErrorMessage = "La valeur doit être supérieure ou égale à 0.")]
     public decimal Prixvente { get; set; }
 
     [Column("col_prixsolde", TypeName = "numeric(10, 2)")]
+    [Range(0.0, double.MaxValue, ErrorMessage = "La valeur doit être supérieure ou égale à 0.")]
     public decimal? Prixsolde { get; set; }
 
     [Column("col_quantitestock")]
+    [Range(0, int.MaxValue, ErrorMessage = "La valeur doit être supérieure ou égale à 0.")]
     public int Quantitestock { get; set; }
 
     [Column("col_descriptioncoloration")]

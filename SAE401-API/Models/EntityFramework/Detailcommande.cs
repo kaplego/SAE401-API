@@ -23,6 +23,7 @@ public partial class Detailcommande
     public int Idcommande { get; set; }
 
     [Column("dcm_quantitecommande")]
+    [Range(1, int.MaxValue, ErrorMessage = "La valeur doit être supérieure ou égale à 1.")]
     public int Quantitecommande { get; set; }
 
     [ForeignKey("Idproduit, Idcouleur")]

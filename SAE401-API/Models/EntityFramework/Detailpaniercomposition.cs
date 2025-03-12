@@ -19,6 +19,7 @@ public partial class Detailpaniercomposition
     public int Idclient { get; set; }
 
     [Column("dpc_quantitepaniercomposition")]
+    [Range(1, int.MaxValue, ErrorMessage = "La valeur doit être supérieure ou égale à 1.")]
     public int Quantitepaniercomposition { get; set; }
 
     [ForeignKey(nameof(Idcomposition))]

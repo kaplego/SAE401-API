@@ -28,6 +28,7 @@ public partial class Paiement
     public DateTime Datepaiement { get; set; }
 
     [Column("pmt_montantpaiement", TypeName = "numeric(10, 2)")]
+    [Range(0.0001, double.MaxValue, ErrorMessage = "La valeur doit être strictement supérieure à 0.")]
     public decimal Montantpaiement { get; set; }
 
     [Column("pmt_indicepaiement")]

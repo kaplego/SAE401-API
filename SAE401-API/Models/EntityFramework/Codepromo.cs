@@ -21,6 +21,7 @@ public partial class Codepromo
     public string Nomcodepromo { get; set; } = null!;
 
     [Column("cod_valeurreduction", TypeName = "numeric(5, 2)")]
+    [Range(0.0001, double.MaxValue, ErrorMessage = "La valeur doit être strictement supérieure à 0.")]
     public decimal Valeurreduction { get; set; }
 
     [Column("cod_estvalide")]

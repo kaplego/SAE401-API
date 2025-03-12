@@ -23,6 +23,7 @@ public partial class Detailpanier
     public int Idclient { get; set; }
 
     [Column("dpn_quantitepanier")]
+    [Range(1, int.MaxValue, ErrorMessage = "La valeur doit être supérieure ou égale à 1.")]
     public int Quantitepanier { get; set; }
 
     [ForeignKey("Idproduit, Idcouleur")]

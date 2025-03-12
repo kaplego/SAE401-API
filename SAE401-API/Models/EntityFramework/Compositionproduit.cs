@@ -20,9 +20,11 @@ public partial class Compositionproduit
     public string? Nomcomposition { get; set; }
 
     [Column("cmp_prixventecomposition", TypeName = "numeric(10, 2)")]
+    [Range(0.0, double.MaxValue, ErrorMessage = "La valeur doit être supérieure ou égale à 0.")]
     public decimal Prixventecomposition { get; set; }
 
     [Column("cmp_prixsoldecomposition", TypeName = "numeric(10, 2)")]
+    [Range(0.0, double.MaxValue, ErrorMessage = "La valeur doit être supérieure ou égale à 0.")]
     public decimal? Prixsoldecomposition { get; set; }
 
     [Column("cmp_descriptioncomposition")]

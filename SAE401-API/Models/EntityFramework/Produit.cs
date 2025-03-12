@@ -37,9 +37,11 @@ public partial class Produit
     public int Delailivraison { get; set; }
 
     [Column("prd_coutlivraison", TypeName = "numeric(10, 2)")]
+    [Range(0, double.MaxValue, ErrorMessage = "La valeur doit être supérieure ou égale à 0.")]
     public decimal Coutlivraison { get; set; }
 
     [Column("prd_nbpaiementmax")]
+    [Range(1, int.MaxValue, ErrorMessage = "La valeur doit être supérieure ou égale à 1.")]
     public int Nbpaiementmax { get; set; }
 
     [InverseProperty("IdproduitNavigation")]
