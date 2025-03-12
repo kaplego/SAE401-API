@@ -30,4 +30,7 @@ public partial class Compositionproduit
 
     [InverseProperty("IdcompositionNavigation")]
     public virtual ICollection<Detailcomposition> Detailcompositions { get; set; } = new List<Detailcomposition>();
+
+    [InverseProperty("Composition")]
+    public virtual ICollection<Detailpaniercomposition> Detailpaniercompositions { get; set; } = new List<Detailpaniercomposition>();
 }

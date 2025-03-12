@@ -89,104 +89,101 @@ public partial class _DBMilibooContext : DbContext
     {
         modelBuilder.Entity<Activitepro>(entity =>
         {
-            entity.HasKey(e => e.Idactivitepro).HasName("pk_activitepro");
+            entity.HasKey(e => e.Idactivitepro).HasName("pk_act");
         });
 
         modelBuilder.Entity<Adresse>(entity =>
         {
-            entity.HasKey(e => e.Idadresse).HasName("pk_adresse");
+            entity.HasKey(e => e.Idadresse).HasName("pk_adr");
 
             entity.Property(e => e.Codeinsee).IsFixedLength();
             entity.Property(e => e.Codepostaladresse).IsFixedLength();
 
             entity.HasOne(d => d.CodeinseeNavigation).WithMany(p => p.Adresses)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_adresse_residedan_ville");
+                .HasConstraintName("fk_adr_vil");
 
             entity.HasOne(d => d.IdclientNavigation).WithMany(p => p.Adresses)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_adresse_adressecl_client");
+                .HasConstraintName("fk_adr_cli");
 
             entity.HasOne(d => d.IddepartementNavigation).WithMany(p => p.Adresses)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_adresse_estsitue_departem");
+                .HasConstraintName("fk_adr_dep");
 
             entity.HasOne(d => d.IdpaysNavigation).WithMany(p => p.Adresses)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_adresse_adressepa_pays");
+                .HasConstraintName("fk_adr_pay");
         });
 
         modelBuilder.Entity<Attributproduit>(entity =>
         {
-            entity.HasKey(e => e.Idattribut).HasName("pk_attributproduit");
+            entity.HasKey(e => e.Idattribut).HasName("pk_att");
 
             entity.HasOne(d => d.IdtypeproduitNavigation).WithMany(p => p.Attributproduits)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_attribut_attributt_typeprod");
+                .HasConstraintName("fk_att_tpd");
         });
 
         modelBuilder.Entity<Avisproduit>(entity =>
         {
-            entity.HasKey(e => e.Idavis).HasName("pk_avisproduit");
+            entity.HasKey(e => e.Idavis).HasName("pk_avi");
 
             entity.HasOne(d => d.IdclientNavigation).WithMany(p => p.Avisproduits)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_avisprod_avisclien_client");
+                .HasConstraintName("fk_avi_cli");
 
             entity.HasOne(d => d.IdproduitNavigation).WithMany(p => p.Avisproduits)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_avisprod_avispourp_produit");
+                .HasConstraintName("fk_avi_prd");
 
             entity.HasMany(d => d.Idphotos).WithMany(p => p.Idavis)
                 .UsingEntity<Dictionary<string, object>>(
-                    "Photoavi",
+                    "Photoavis",
                     r => r.HasOne<Photo>().WithMany()
                         .HasForeignKey("Idphoto")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("fk_photoavi_photoavis_photo"),
+                        .HasConstraintName("fk_pav_pho"),
                     l => l.HasOne<Avisproduit>().WithMany()
                         .HasForeignKey("Idavis")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("fk_photoavi_photoavis_avisprod"),
+                        .HasConstraintName("fk_pav_avi"),
                     j =>
                     {
-                        j.HasKey("Idavis", "Idphoto").HasName("pk_photoavis");
-                        j.ToTable("photoavis");
-                        j.HasIndex(new[] { "Idphoto" }, "photoavis2_fk");
-                        j.HasIndex(new[] { "Idavis" }, "photoavis_fk");
-                        j.HasIndex(new[] { "Idavis", "Idphoto" }, "photoavis_pk").IsUnique();
-                        j.IndexerProperty<int>("Idavis").HasColumnName("idavis");
-                        j.IndexerProperty<int>("Idphoto").HasColumnName("idphoto");
+                        j.HasKey("Idavis", "Idphoto").HasName("pk_pav");
+                        j.ToTable("t_j_photoavis_pav");
+                        j.IndexerProperty<int>("Idavis").HasColumnName("pav_idavis");
+                        j.IndexerProperty<int>("Idphoto").HasColumnName("pav_idphoto");
                     });
         });
 
         modelBuilder.Entity<Cartebancaire>(entity =>
         {
-            entity.HasKey(e => e.Idcartebancaire).HasName("pk_cartebancaire");
+            entity.HasKey(e => e.Idcartebancaire).HasName("pk_car");
 
             entity.Property(e => e.Numcartebancaire).IsFixedLength();
 
             entity.HasOne(d => d.IdclientNavigation).WithMany(p => p.Cartebancaires)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_carteban_carteclie_client");
+                .HasConstraintName("fk_car_cli");
         });
 
         modelBuilder.Entity<Categorieproduit>(entity =>
         {
-            entity.HasKey(e => e.Idcategorie).HasName("pk_categorieproduit");
+            entity.HasKey(e => e.Idcategorie).HasName("pk_cat");
 
             entity.HasOne(d => d.CatIdcategorieNavigation).WithMany(p => p.InverseCatIdcategorieNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_categori_categorie_categori");
+                .HasConstraintName("fk_cat_cat");
 
             entity.HasOne(d => d.IdphotoNavigation).WithMany(p => p.Categorieproduits)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_categori_photocate_photo");
+                .HasConstraintName("fk_cat_pho");
         });
 
         modelBuilder.Entity<Client>(entity =>
         {
-            entity.HasKey(e => e.Idclient).HasName("pk_client");
+            entity.HasKey(e => e.Idclient).HasName("pk_cli");
 
             entity.Property(e => e.Datecreationcompte).IsFixedLength();
             entity.Property(e => e.Hashmdp).IsFixedLength();
@@ -199,43 +196,40 @@ public partial class _DBMilibooContext : DbContext
                     r => r.HasOne<Produit>().WithMany()
                         .HasForeignKey("Idproduit")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("fk_aime_aime2_produit"),
+                        .HasConstraintName("fk_aim_prd"),
                     l => l.HasOne<Client>().WithMany()
                         .HasForeignKey("Idclient")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("fk_aime_aime_client"),
+                        .HasConstraintName("fk_aim_cli"),
                     j =>
                     {
-                        j.HasKey("Idclient", "Idproduit").HasName("pk_aime");
-                        j.ToTable("aime");
-                        j.HasIndex(new[] { "Idproduit" }, "aime2_fk");
-                        j.HasIndex(new[] { "Idclient" }, "aime_fk");
-                        j.HasIndex(new[] { "Idclient", "Idproduit" }, "aime_pk").IsUnique();
-                        j.IndexerProperty<int>("Idclient").HasColumnName("idclient");
-                        j.IndexerProperty<int>("Idproduit").HasColumnName("idproduit");
+                        j.HasKey("Idclient", "Idproduit").HasName("pk_aim");
+                        j.ToTable("t_j_aime_aim");
+                        j.IndexerProperty<int>("Idclient").HasColumnName("aim_idclient");
+                        j.IndexerProperty<int>("Idproduit").HasColumnName("aim_idproduit");
                     });
         });
 
         modelBuilder.Entity<Codepromo>(entity =>
         {
-            entity.HasKey(e => e.Idcodepromo).HasName("pk_codepromo");
+            entity.HasKey(e => e.Idcodepromo).HasName("pk_cod");
 
             entity.HasOne(d => d.IdclientNavigation).WithMany(p => p.Codepromos)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_codeprom_clientcod_client");
+                .HasConstraintName("fk_cod_cli");
         });
 
         modelBuilder.Entity<Coloration>(entity =>
         {
-            entity.HasKey(e => new { e.Idproduit, e.Idcouleur }).HasName("pk_coloration");
+            entity.HasKey(e => new { e.Idproduit, e.Idcouleur }).HasName("pk_col");
 
             entity.HasOne(d => d.IdcouleurNavigation).WithMany(p => p.Colorations)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_colorati_coloratio_couleur");
+                .HasConstraintName("fk_col_cou");
 
             entity.HasOne(d => d.IdproduitNavigation).WithMany(p => p.Colorations)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_colorati_coloratio_produit");
+                .HasConstraintName("fk_col_prd");
 
             entity.HasMany(d => d.Idphotos).WithMany(p => p.Colorations)
                 .UsingEntity<Dictionary<string, object>>(
@@ -243,21 +237,18 @@ public partial class _DBMilibooContext : DbContext
                     r => r.HasOne<Photo>().WithMany()
                         .HasForeignKey("Idphoto")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("fk_photopro_photoprod_photo"),
+                        .HasConstraintName("fk_ppc_pho"),
                     l => l.HasOne<Coloration>().WithMany()
                         .HasForeignKey("Idproduit", "Idcouleur")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("fk_photopro_photoprod_colorati"),
+                        .HasConstraintName("fk_ppc_col"),
                     j =>
                     {
-                        j.HasKey("Idproduit", "Idcouleur", "Idphoto").HasName("pk_photoproduitcoloration");
-                        j.ToTable("photoproduitcoloration");
-                        j.HasIndex(new[] { "Idproduit", "Idcouleur" }, "photoproduitcoloration2_fk");
-                        j.HasIndex(new[] { "Idphoto" }, "photoproduitcoloration_fk");
-                        j.HasIndex(new[] { "Idproduit", "Idcouleur", "Idphoto" }, "photoproduitcoloration_pk").IsUnique();
-                        j.IndexerProperty<int>("Idproduit").HasColumnName("idproduit");
-                        j.IndexerProperty<int>("Idcouleur").HasColumnName("idcouleur");
-                        j.IndexerProperty<int>("Idphoto").HasColumnName("idphoto");
+                        j.HasKey("Idproduit", "Idcouleur", "Idphoto").HasName("pk_ppc");
+                        j.ToTable("t_j_photoproduitcoloration_ppc");
+                        j.IndexerProperty<int>("Idproduit").HasColumnName("ppc_idproduit");
+                        j.IndexerProperty<int>("Idcouleur").HasColumnName("ppc_idcouleur");
+                        j.IndexerProperty<int>("Idphoto").HasColumnName("ppc_idphoto");
                     });
 
             entity.HasMany(d => d.Idregroupements).WithMany(p => p.Colorations)
@@ -266,231 +257,235 @@ public partial class _DBMilibooContext : DbContext
                     r => r.HasOne<Regroupementproduit>().WithMany()
                         .HasForeignKey("Idregroupement")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("fk_detailre_detailreg_regroupe"),
+                        .HasConstraintName("fk_drg_rgp"),
                     l => l.HasOne<Coloration>().WithMany()
                         .HasForeignKey("Idproduit", "Idcouleur")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("fk_detailre_detailreg_colorati"),
+                        .HasConstraintName("fk_drg_col"),
                     j =>
                     {
-                        j.HasKey("Idproduit", "Idcouleur", "Idregroupement").HasName("pk_detailregroupement");
-                        j.ToTable("detailregroupement");
-                        j.HasIndex(new[] { "Idproduit", "Idcouleur" }, "detailregroupement2_fk");
-                        j.HasIndex(new[] { "Idregroupement" }, "detailregroupement_fk");
-                        j.HasIndex(new[] { "Idproduit", "Idcouleur", "Idregroupement" }, "detailregroupement_pk").IsUnique();
-                        j.IndexerProperty<int>("Idproduit").HasColumnName("idproduit");
-                        j.IndexerProperty<int>("Idcouleur").HasColumnName("idcouleur");
-                        j.IndexerProperty<int>("Idregroupement").HasColumnName("idregroupement");
+                        j.HasKey("Idproduit", "Idcouleur", "Idregroupement").HasName("pk_drg");
+                        j.ToTable("t_j_detailregroupement_drg");
+                        j.IndexerProperty<int>("Idproduit").HasColumnName("drg_idproduit");
+                        j.IndexerProperty<int>("Idcouleur").HasColumnName("drg_idcouleur");
+                        j.IndexerProperty<int>("Idregroupement").HasColumnName("drg_idregroupement");
                     });
         });
 
         modelBuilder.Entity<Commande>(entity =>
         {
-            entity.HasKey(e => e.Idcommande).HasName("pk_commande");
+            entity.HasKey(e => e.Idcommande).HasName("pk_cmd");
 
             entity.HasOne(d => d.AdrIdadresseNavigation).WithMany(p => p.CommandeAdrIdadresseNavigations)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_commande_adressefa_adresse");
+                .HasConstraintName("fk_cmd_adr");
 
             entity.HasOne(d => d.IdadresseNavigation).WithMany(p => p.CommandeIdadresseNavigations)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_commande_adresseli_adresse");
+                .HasConstraintName("fk_cmd_adr2");
 
             entity.HasOne(d => d.IdclientNavigation).WithMany(p => p.Commandes)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_commande_clientcom_client");
+                .HasConstraintName("fk_cmd_cli");
 
             entity.HasOne(d => d.IdcodepromoNavigation).WithMany(p => p.Commandes)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_commande_codepromo_codeprom");
+                .HasConstraintName("fk_cmd_cod");
 
             entity.HasOne(d => d.IdstatutNavigation).WithMany(p => p.Commandes)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_commande_commandes_statutco");
+                .HasConstraintName("fk_cmd_scd");
 
             entity.HasOne(d => d.IdtransporteurNavigation).WithMany(p => p.Commandes)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_commande_transport_transpor");
+                .HasConstraintName("fk_cmd_tpt");
         });
 
         modelBuilder.Entity<Commandecomposition>(entity =>
         {
-            entity.HasKey(e => new { e.Idcomposition, e.Idcommande }).HasName("pk_commandecomposition");
+            entity.HasKey(e => new { e.Idcomposition, e.Idcommande }).HasName("pk_cmc");
 
             entity.HasOne(d => d.IdcommandeNavigation).WithMany(p => p.Commandecompositions)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_commande_commandec_commande");
+                .HasConstraintName("fk_cmc_cmd");
 
             entity.HasOne(d => d.IdcompositionNavigation).WithMany(p => p.Commandecompositions)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_commande_commandec_composit");
+                .HasConstraintName("fk_cmd_cmp");
         });
 
         modelBuilder.Entity<Compositionproduit>(entity =>
         {
-            entity.HasKey(e => e.Idcomposition).HasName("pk_compositionproduit");
+            entity.HasKey(e => e.Idcomposition).HasName("pk_cmp");
         });
 
         modelBuilder.Entity<Couleur>(entity =>
         {
-            entity.HasKey(e => e.Idcouleur).HasName("pk_couleur");
+            entity.HasKey(e => e.Idcouleur).HasName("pk_cou");
 
             entity.Property(e => e.Rgbcouleur).IsFixedLength();
         });
 
         modelBuilder.Entity<Departement>(entity =>
         {
-            entity.HasKey(e => e.Iddepartement).HasName("pk_departement");
+            entity.HasKey(e => e.Iddepartement).HasName("pk_dep");
         });
 
         modelBuilder.Entity<Detailcommande>(entity =>
         {
-            entity.HasKey(e => new { e.Idproduit, e.Idcouleur, e.Idcommande }).HasName("pk_detailcommande");
+            entity.HasKey(e => new { e.Idproduit, e.Idcouleur, e.Idcommande }).HasName("pk_dcm");
 
             entity.HasOne(d => d.IdcommandeNavigation).WithMany(p => p.Detailcommandes)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_detailco_detailcom_commande");
+                .HasConstraintName("fk_dcm_cmd");
 
             entity.HasOne(d => d.Coloration).WithMany(p => p.Detailcommandes)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_detailco_detailcom_colorati");
+                .HasConstraintName("fk_dcm_col");
         });
 
         modelBuilder.Entity<Detailcomposition>(entity =>
         {
-            entity.HasKey(e => new { e.Idproduit, e.Idcouleur, e.Idcomposition }).HasName("pk_detailcomposition");
+            entity.HasKey(e => new { e.Idproduit, e.Idcouleur, e.Idcomposition }).HasName("pk_dcp");
 
             entity.HasOne(d => d.IdcompositionNavigation).WithMany(p => p.Detailcompositions)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_detailco_detailcom_composit");
+                .HasConstraintName("fk_dcp_cmp");
 
             entity.HasOne(d => d.Coloration).WithMany(p => p.Detailcompositions)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_detailco_detailcom_colorati");
+                .HasConstraintName("fk_dcp_col");
         });
 
         modelBuilder.Entity<Detailpanier>(entity =>
         {
-            entity.HasKey(e => new { e.Idproduit, e.Idcouleur, e.Idclient }).HasName("pk_detailpanier");
+            entity.HasKey(e => new { e.Idproduit, e.Idcouleur, e.Idclient }).HasName("pk_dpn");
 
             entity.HasOne(d => d.IdclientNavigation).WithMany(p => p.Detailpaniers)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_detailpa_detailpan_client");
+                .HasConstraintName("fk_dpn_cli");
 
             entity.HasOne(d => d.Coloration).WithMany(p => p.Detailpaniers)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_detailpa_detailpan_colorati");
+                .HasConstraintName("fk_dpn_col");
+        });
+
+        modelBuilder.Entity<Detailpaniercomposition>(entity =>
+        {
+            entity.HasKey(e => new { e.Idcomposition, e.Idclient }).HasName("pk_dpc");
+
+            entity.HasOne(d => d.IdclientNavigation).WithMany(p => p.Detailpaniercompositions)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("fk_dpc_cli");
+
+            entity.HasOne(d => d.Composition).WithMany(p => p.Detailpaniercompositions)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("fk_dpc_col");
         });
 
         modelBuilder.Entity<Historiqueconsultation>(entity =>
         {
-            entity.HasKey(e => new { e.Idclient, e.Idproduit }).HasName("pk_historiqueconsultation");
+            entity.HasKey(e => new { e.Idclient, e.Idproduit }).HasName("pk_hst");
 
             entity.HasOne(d => d.IdclientNavigation).WithMany(p => p.Historiqueconsultations)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_historiq_historiqu_client");
+                .HasConstraintName("fk_hst_cli");
 
             entity.HasOne(d => d.IdproduitNavigation).WithMany(p => p.Historiqueconsultations)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_historiq_historiqu_produit");
+                .HasConstraintName("fk_hst_prd");
         });
 
         modelBuilder.Entity<Messagechatbot>(entity =>
         {
-            entity.HasKey(e => e.Idmessage).HasName("pk_messagechatbot");
+            entity.HasKey(e => e.Idmessage).HasName("pk_msg");
 
             entity.HasOne(d => d.IdclientNavigation).WithMany(p => p.Messagechatbots)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_messagec_clientcha_client");
+                .HasConstraintName("fk_msg_cli");
         });
 
         modelBuilder.Entity<Paiement>(entity =>
         {
-            entity.HasKey(e => e.Idpaiement).HasName("pk_paiement");
+            entity.HasKey(e => e.Idpaiement).HasName("pk_pmt");
 
             entity.HasOne(d => d.IdcartebancaireNavigation).WithMany(p => p.Paiements)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_paiement_utilise_carteban");
+                .HasConstraintName("fk_pmt_car");
 
             entity.HasOne(d => d.IdcommandeNavigation).WithMany(p => p.Paiements)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_paiement_paiementc_commande");
+                .HasConstraintName("fk_pmt_cmd");
 
             entity.HasOne(d => d.IdtypepaiementNavigation).WithMany(p => p.Paiements)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_paiement_paiementt_typepaie");
+                .HasConstraintName("fk_pmt_tpm");
         });
 
         modelBuilder.Entity<Pay>(entity =>
         {
-            entity.HasKey(e => e.Idpays).HasName("pk_pays");
+            entity.HasKey(e => e.Idpays).HasName("pk_pay");
         });
 
         modelBuilder.Entity<Photo>(entity =>
         {
-            entity.HasKey(e => e.Idphoto).HasName("pk_photo");
+            entity.HasKey(e => e.Idphoto).HasName("pk_pho");
         });
 
         modelBuilder.Entity<Produit>(entity =>
         {
-            entity.HasKey(e => e.Idproduit).HasName("pk_produit");
+            entity.HasKey(e => e.Idproduit).HasName("pk_prd");
 
             entity.HasOne(d => d.IdpaysNavigation).WithMany(p => p.Produits)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_produit_paysorigi_pays");
+                .HasConstraintName("fk_prd_pay");
 
             entity.HasOne(d => d.IdtypeproduitNavigation).WithMany(p => p.Produits)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_produit_produitty_typeprod");
+                .HasConstraintName("fk_prd_tpd");
 
             entity.HasMany(d => d.Idproduitsimilaire).WithMany(p => p.Idproduitsimilaire2)
                 .UsingEntity<Dictionary<string, object>>(
                     "Produitsimilaire",
                     r => r.HasOne<Produit>().WithMany()
-                        .HasForeignKey("Idproduit2")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("fk_produits_produitsi_produit2"),
-                    l => l.HasOne<Produit>().WithMany()
                         .HasForeignKey("Idproduit")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("fk_produits_produitsi_produit"),
+                        .HasConstraintName("fk_pds_prd"),
+                    l => l.HasOne<Produit>().WithMany()
+                        .HasForeignKey("Idproduit2")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasConstraintName("fk_pds_prd2"),
                     j =>
                     {
-                        j.HasKey("Idproduit", "Idproduit2").HasName("pk_produitsimilaire");
-                        j.ToTable("produitsimilaire");
-                        j.HasIndex(new[] { "Idproduit2" }, "produitsimilaire2_fk");
-                        j.HasIndex(new[] { "Idproduit" }, "produitsimilaire_fk");
-                        j.HasIndex(new[] { "Idproduit", "Idproduit2" }, "produitsimilaire_pk").IsUnique();
-                        j.IndexerProperty<int>("Idproduit").HasColumnName("idproduit");
-                        j.IndexerProperty<int>("Idproduit2").HasColumnName("idproduit2");
+                        j.HasKey("Idproduit", "Idproduit2").HasName("pk_pds");
+                        j.ToTable("t_j_produitsimilaire_pds");
+                        j.IndexerProperty<int>("Idproduit").HasColumnName("pds_idproduit");
+                        j.IndexerProperty<int>("Idproduit2").HasColumnName("pds_idproduit2");
                     });
 
             entity.HasMany(d => d.Idproduitsimilaire2).WithMany(p => p.Idproduitsimilaire)
                 .UsingEntity<Dictionary<string, object>>(
-                    "Produitsimilaire",
+                    "Produitsimilaire2",
                     r => r.HasOne<Produit>().WithMany()
-                        .HasForeignKey("Idproduit")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("fk_produits_produitsi_produit"),
-                    l => l.HasOne<Produit>().WithMany()
                         .HasForeignKey("Idproduit2")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("fk_produits_produitsi_produit2"),
+                        .HasConstraintName("fk_pds_prd2"),
+                    l => l.HasOne<Produit>().WithMany()
+                        .HasForeignKey("Idproduit")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasConstraintName("fk_pds_prd"),
                     j =>
                     {
-                        j.HasKey("Idproduit", "Idproduit2").HasName("pk_produitsimilaire");
-                        j.ToTable("produitsimilaire");
-                        j.HasIndex(new[] { "Idproduit2" }, "produitsimilaire2_fk");
-                        j.HasIndex(new[] { "Idproduit" }, "produitsimilaire_fk");
-                        j.HasIndex(new[] { "Idproduit", "Idproduit2" }, "produitsimilaire_pk").IsUnique();
-                        j.IndexerProperty<int>("Idproduit").HasColumnName("idproduit");
-                        j.IndexerProperty<int>("Idproduit2").HasColumnName("idproduit2");
+                        j.HasKey("Idproduit", "Idproduit2").HasName("pk_pds2");
+                        j.ToTable("t_j_produitsimilaire_pds2");
+                        j.IndexerProperty<int>("Idproduit2").HasColumnName("pds_idproduit2");
+                        j.IndexerProperty<int>("Idproduit").HasColumnName("pds_idproduit");
                     });
         });
 
         modelBuilder.Entity<Professionel>(entity =>
         {
-            entity.HasKey(e => e.Idclient).HasName("pk_professionel");
+            entity.HasKey(e => e.Idclient).HasName("pk_pro");
 
             entity.Property(e => e.Idclient).ValueGeneratedNever();
             entity.Property(e => e.Nomsociete).ValueGeneratedOnAdd();
@@ -498,76 +493,76 @@ public partial class _DBMilibooContext : DbContext
 
             entity.HasOne(d => d.IdactiviteproNavigation).WithMany(p => p.Professionels)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_professi_proactivi_activite");
+                .HasConstraintName("fk_pro_act");
 
             entity.HasOne(d => d.IdclientNavigation).WithOne(p => p.Professionel)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_professi_heritagep_client");
+                .HasConstraintName("fk_pro_cli");
         });
 
         modelBuilder.Entity<Regroupementproduit>(entity =>
         {
-            entity.HasKey(e => e.Idregroupement).HasName("pk_regroupementproduit");
+            entity.HasKey(e => e.Idregroupement).HasName("pk_rgp");
         });
 
         modelBuilder.Entity<Signalementavi>(entity =>
         {
-            entity.HasKey(e => e.Idsignalement).HasName("pk_signalementavis");
+            entity.HasKey(e => e.Idsignalement).HasName("pk_sga");
 
             entity.HasOne(d => d.IdavisNavigation).WithMany(p => p.Signalementavis)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_signalem_avissigna_avisprod");
+                .HasConstraintName("fk_sga_avi");
 
             entity.HasOne(d => d.IdtypesignalementNavigation).WithMany(p => p.Signalementavis)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_signalem_signaleme_typesign");
+                .HasConstraintName("fk_sga_tsg");
         });
 
         modelBuilder.Entity<Statutcommande>(entity =>
         {
-            entity.HasKey(e => e.Idstatut).HasName("pk_statutcommande");
+            entity.HasKey(e => e.Idstatut).HasName("pk_scd");
         });
 
         modelBuilder.Entity<Transporteur>(entity =>
         {
-            entity.HasKey(e => e.Idtransporteur).HasName("pk_transporteur");
+            entity.HasKey(e => e.Idtransporteur).HasName("pk_tpt");
         });
 
         modelBuilder.Entity<Typepaiement>(entity =>
         {
-            entity.HasKey(e => e.Idtypepaiement).HasName("pk_typepaiement");
+            entity.HasKey(e => e.Idtypepaiement).HasName("pk_tpm");
         });
 
         modelBuilder.Entity<Typeproduit>(entity =>
         {
-            entity.HasKey(e => e.Idtypeproduit).HasName("pk_typeproduit");
+            entity.HasKey(e => e.Idtypeproduit).HasName("pk_tpd");
 
             entity.HasOne(d => d.IdcategorieNavigation).WithMany(p => p.Typeproduits)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_typeprod_categorie_categori");
+                .HasConstraintName("fk_tpd_cat");
         });
 
         modelBuilder.Entity<Typesignalement>(entity =>
         {
-            entity.HasKey(e => e.Idtypesignalement).HasName("pk_typesignalement");
+            entity.HasKey(e => e.Idtypesignalement).HasName("pk_tsg");
         });
 
         modelBuilder.Entity<Valeurattribut>(entity =>
         {
-            entity.HasKey(e => new { e.Idattribut, e.Idproduit }).HasName("pk_valeurattribut");
+            entity.HasKey(e => new { e.Idattribut, e.Idproduit }).HasName("pk_val");
 
             entity.HasOne(d => d.IdattributNavigation).WithMany(p => p.Valeurattributs)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_valeurat_valeuratt_attribut");
+                .HasConstraintName("fk_val_att");
 
             entity.HasOne(d => d.IdproduitNavigation).WithMany(p => p.Valeurattributs)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("fk_valeurat_valeuratt_produit");
+                .HasConstraintName("fk_val_prd");
         });
 
         modelBuilder.Entity<Ville>(entity =>
         {
-            entity.HasKey(e => e.Codeinsee).HasName("pk_ville");
+            entity.HasKey(e => e.Codeinsee).HasName("pk_vil");
 
             entity.Property(e => e.Codeinsee).IsFixedLength();
         });

@@ -73,6 +73,9 @@ public partial class Client
     public virtual ICollection<Detailpanier> Detailpaniers { get; set; } = new List<Detailpanier>();
 
     [InverseProperty("IdclientNavigation")]
+    public virtual ICollection<Detailpaniercomposition> Detailpaniercompositions { get; set; } = new List<Detailpaniercomposition>();
+
+    [InverseProperty("IdclientNavigation")]
     public virtual ICollection<Historiqueconsultation> Historiqueconsultations { get; set; } = new List<Historiqueconsultation>();
 
     [InverseProperty("IdclientNavigation")]
