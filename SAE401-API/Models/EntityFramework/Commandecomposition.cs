@@ -6,29 +6,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
-[PrimaryKey("Idcomposition", "Idcommande")]
-[Table("commandecomposition")]
-[Index("Idcommande", Name = "commandecomposition2_fk")]
-[Index("Idcomposition", Name = "commandecomposition_fk")]
-[Index("Idcomposition", "Idcommande", Name = "commandecomposition_pk", IsUnique = true)]
+[PrimaryKey(nameof(Idcomposition), nameof(Idcommande))]
+[Table("t_j_commandecomposition_cmc")]
 public partial class Commandecomposition
 {
     [Key]
-    [Column("idcomposition")]
+    [Column("cmc_idcomposition")]
     public int Idcomposition { get; set; }
 
     [Key]
-    [Column("idcommande")]
+    [Column("cmc_idcommande")]
     public int Idcommande { get; set; }
 
-    [Column("quantitecompositioncommande")]
+    [Column("cmc_quantitecompositioncommande")]
     public int Quantitecompositioncommande { get; set; }
 
-    [ForeignKey("Idcommande")]
+    [ForeignKey(nameof(Idcommande))]
     [InverseProperty("Commandecompositions")]
     public virtual Commande IdcommandeNavigation { get; set; } = null!;
 
-    [ForeignKey("Idcomposition")]
+    [ForeignKey(nameof(Idcomposition))]
     [InverseProperty("Commandecompositions")]
     public virtual Compositionproduit IdcompositionNavigation { get; set; } = null!;
 }

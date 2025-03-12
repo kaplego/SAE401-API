@@ -6,33 +6,30 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
-[PrimaryKey("Idproduit", "Idcouleur", "Idcommande")]
-[Table("detailcommande")]
-[Index("Idcommande", Name = "detailcommande2_fk")]
-[Index("Idproduit", "Idcouleur", Name = "detailcommande_fk")]
-[Index("Idproduit", "Idcouleur", "Idcommande", Name = "detailcommande_pk", IsUnique = true)]
+[PrimaryKey(nameof(Idproduit), nameof(Idcouleur), nameof(Idcommande))]
+[Table("t_j_detailcommande_dcm")]
 public partial class Detailcommande
 {
     [Key]
-    [Column("idproduit")]
+    [Column("dcm_idproduit")]
     public int Idproduit { get; set; }
 
     [Key]
-    [Column("idcouleur")]
+    [Column("dcm_idcouleur")]
     public int Idcouleur { get; set; }
 
     [Key]
-    [Column("idcommande")]
+    [Column("dcm_idcommande")]
     public int Idcommande { get; set; }
 
-    [Column("quantitecommande")]
+    [Column("dcm_quantitecommande")]
     public int Quantitecommande { get; set; }
 
     [ForeignKey("Idproduit, Idcouleur")]
     [InverseProperty("Detailcommandes")]
     public virtual Coloration Coloration { get; set; } = null!;
 
-    [ForeignKey("Idcommande")]
+    [ForeignKey(nameof(Idcommande))]
     [InverseProperty("Detailcommandes")]
     public virtual Commande IdcommandeNavigation { get; set; } = null!;
 }

@@ -6,38 +6,35 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
-[Table("categorieproduit")]
-[Index("CatIdcategorie", Name = "categoriecategorie_fk")]
-[Index("Idcategorie", Name = "categorieproduit_pk", IsUnique = true)]
-[Index("Idphoto", Name = "photocategorie_fk")]
+[Table("t_e_categorieproduit_cat")]
 public partial class Categorieproduit
 {
     [Key]
-    [Column("idcategorie")]
+    [Column("cat_idcategorie")]
     public int Idcategorie { get; set; }
 
-    [Column("cat_idcategorie")]
+    [Column("cat_idcategorie2")]
     public int? CatIdcategorie { get; set; }
 
-    [Column("idphoto")]
+    [Column("cat_idphoto")]
     public int? Idphoto { get; set; }
 
-    [Column("nomcategorie")]
+    [Column("cat_nomcategorie")]
     [StringLength(64)]
     public string Nomcategorie { get; set; } = null!;
 
-    [Column("descriptioncategorie")]
+    [Column("cat_descriptioncategorie")]
     [StringLength(512)]
     public string? Descriptioncategorie { get; set; }
 
-    [Column("estfiltrable")]
+    [Column("cat_estfiltrable")]
     public bool Estfiltrable { get; set; }
 
-    [ForeignKey("CatIdcategorie")]
+    [ForeignKey(nameof(CatIdcategorie))]
     [InverseProperty("InverseCatIdcategorieNavigation")]
     public virtual Categorieproduit? CatIdcategorieNavigation { get; set; }
 
-    [ForeignKey("Idphoto")]
+    [ForeignKey(nameof(Idphoto))]
     [InverseProperty("Categorieproduits")]
     public virtual Photo? IdphotoNavigation { get; set; }
 

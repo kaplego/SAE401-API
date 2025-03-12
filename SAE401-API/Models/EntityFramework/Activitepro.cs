@@ -6,15 +6,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
-[Table("activitepro")]
-[Index("Idactivitepro", Name = "activitepro_pk", IsUnique = true)]
+[Table("t_e_activitepro_act")]
 public partial class Activitepro
 {
     [Key]
-    [Column("idactivitepro")]
+    [Column("act_idactivitepro")]
     public int Idactivitepro { get; set; }
 
-    [Column("nomactivitepro")]
+    [Column("act_nomactivitepro")]
     [StringLength(64)]
     public string Nomactivitepro { get; set; } = null!;
 

@@ -6,53 +6,52 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
-[Table("client")]
-[Index("Idclient", Name = "client_pk", IsUnique = true)]
+[Table("t_e_client_cli")]
 public partial class Client
 {
     [Key]
-    [Column("idclient")]
+    [Column("cli_idclient")]
     public int Idclient { get; set; }
 
-    [Column("nomclient")]
+    [Column("cli_nomclient")]
     [StringLength(64)]
     public string Nomclient { get; set; } = null!;
 
-    [Column("prenomclient")]
+    [Column("cli_prenomclient")]
     [StringLength(64)]
     public string Prenomclient { get; set; } = null!;
 
-    [Column("civiliteclient")]
+    [Column("cli_civiliteclient")]
     [MaxLength(1)]
     public char? Civiliteclient { get; set; }
 
-    [Column("emailclient")]
+    [Column("cli_emailclient")]
     [StringLength(256)]
     public string Emailclient { get; set; } = null!;
 
-    [Column("telfixeclient")]
+    [Column("cli_telfixeclient")]
     [StringLength(11)]
     public string? Telfixeclient { get; set; }
 
-    [Column("telportableclient")]
+    [Column("cli_telportableclient")]
     [StringLength(11)]
     public string Telportableclient { get; set; } = null!;
 
-    [Column("datecreationcompte")]
+    [Column("cli_datecreationcompte")]
     [StringLength(11)]
     public string Datecreationcompte { get; set; } = null!;
 
-    [Column("hashmdp")]
+    [Column("cli_hashmdp")]
     [StringLength(256)]
     public string Hashmdp { get; set; } = null!;
 
-    [Column("pointfideliteclient")]
+    [Column("cli_pointfideliteclient")]
     public int Pointfideliteclient { get; set; }
 
-    [Column("newslettermiliboo")]
+    [Column("cli_newslettermiliboo")]
     public bool Newslettermiliboo { get; set; }
 
-    [Column("newsletterpartenaires")]
+    [Column("cli_newsletterpartenaires")]
     public bool Newsletterpartenaires { get; set; }
 
     [InverseProperty("IdclientNavigation")]
@@ -82,7 +81,7 @@ public partial class Client
     [InverseProperty("IdclientNavigation")]
     public virtual Professionel? Professionel { get; set; }
 
-    [ForeignKey("Idclient")]
+    [ForeignKey(nameof(Idclient))]
     [InverseProperty("Idclients")]
     public virtual ICollection<Produit> Idproduits { get; set; } = new List<Produit>();
 }

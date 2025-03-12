@@ -6,37 +6,34 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
-[PrimaryKey("Idproduit", "Idcouleur")]
-[Table("coloration")]
-[Index("Idproduit", "Idcouleur", Name = "coloration_pk", IsUnique = true)]
-[Index("Idcouleur", Name = "colorationcouleur_fk")]
-[Index("Idproduit", Name = "colorationproduit_fk")]
+[PrimaryKey(nameof(Idproduit), nameof(Idcouleur))]
+[Table("t_j_coloration_col")]
 public partial class Coloration
 {
     [Key]
-    [Column("idproduit")]
+    [Column("col_idproduit")]
     public int Idproduit { get; set; }
 
     [Key]
-    [Column("idcouleur")]
+    [Column("col_idcouleur")]
     public int Idcouleur { get; set; }
 
     [Column("prixvente")]
     [Precision(10, 2)]
     public decimal Prixvente { get; set; }
 
-    [Column("prixsolde")]
+    [Column("col_prixsolde")]
     [Precision(10, 2)]
     public decimal? Prixsolde { get; set; }
 
-    [Column("quantitestock")]
+    [Column("col_quantitestock")]
     public int Quantitestock { get; set; }
 
-    [Column("descriptioncoloration")]
+    [Column("col_descriptioncoloration")]
     [StringLength(2048)]
     public string? Descriptioncoloration { get; set; }
 
-    [Column("estvisible")]
+    [Column("col_estvisible")]
     public bool Estvisible { get; set; }
 
     [InverseProperty("Coloration")]
@@ -48,11 +45,11 @@ public partial class Coloration
     [InverseProperty("Coloration")]
     public virtual ICollection<Detailpanier> Detailpaniers { get; set; } = new List<Detailpanier>();
 
-    [ForeignKey("Idcouleur")]
+    [ForeignKey(nameof(Idcouleur))]
     [InverseProperty("Colorations")]
     public virtual Couleur IdcouleurNavigation { get; set; } = null!;
 
-    [ForeignKey("Idproduit")]
+    [ForeignKey(nameof(Idproduit))]
     [InverseProperty("Colorations")]
     public virtual Produit IdproduitNavigation { get; set; } = null!;
 

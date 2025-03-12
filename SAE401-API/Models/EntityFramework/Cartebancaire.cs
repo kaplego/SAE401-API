@@ -6,33 +6,31 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
-[Table("cartebancaire")]
-[Index("Idcartebancaire", Name = "cartebancaire_pk", IsUnique = true)]
-[Index("Idclient", Name = "carteclient_fk")]
+[Table("t_e_cartebancaire_car")]
 public partial class Cartebancaire
 {
     [Key]
-    [Column("idcartebancaire")]
+    [Column("car_idcartebancaire")]
     public int Idcartebancaire { get; set; }
 
-    [Column("idclient")]
+    [Column("car_idclient")]
     public int Idclient { get; set; }
 
-    [Column("nomcartebancaire")]
+    [Column("car_nomcartebancaire")]
     [StringLength(32)]
     public string? Nomcartebancaire { get; set; }
 
-    [Column("dateenregistement")]
+    [Column("car_dateenregistement")]
     public DateOnly Dateenregistement { get; set; }
 
-    [Column("numcartebancaire")]
+    [Column("car_numcartebancaire")]
     [StringLength(16)]
     public string Numcartebancaire { get; set; } = null!;
 
-    [Column("dateexpirationcarte")]
+    [Column("car_dateexpirationcarte")]
     public DateOnly Dateexpirationcarte { get; set; }
 
-    [ForeignKey("Idclient")]
+    [ForeignKey(nameof(Idclient))]
     [InverseProperty("Cartebancaires")]
     public virtual Client IdclientNavigation { get; set; } = null!;
 

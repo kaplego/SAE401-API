@@ -6,48 +6,45 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
-[Table("avisproduit")]
-[Index("Idclient", Name = "avisclient_fk")]
-[Index("Idproduit", Name = "avispourproduit_fk")]
-[Index("Idavis", Name = "avisproduit_pk", IsUnique = true)]
+[Table("t_e_avisproduit_avi")]
 public partial class Avisproduit
 {
     [Key]
-    [Column("idavis")]
+    [Column("avi_idavis")]
     public int Idavis { get; set; }
 
-    [Column("idproduit")]
+    [Column("avi_idproduit")]
     public int Idproduit { get; set; }
 
-    [Column("idclient")]
+    [Column("avi_idclient")]
     public int Idclient { get; set; }
 
-    [Column("noteavis")]
+    [Column("avi_noteavis")]
     public int Noteavis { get; set; }
 
-    [Column("dateavis")]
+    [Column("avi_dateavis")]
     public DateOnly Dateavis { get; set; }
 
-    [Column("commentaireavis")]
+    [Column("avi_commentaireavis")]
     [StringLength(1024)]
     public string? Commentaireavis { get; set; }
 
-    [Column("reponsemiliboo")]
+    [Column("avi_reponsemiliboo")]
     [StringLength(1024)]
     public string? Reponsemiliboo { get; set; }
 
-    [ForeignKey("Idclient")]
+    [ForeignKey(nameof(Idclient))]
     [InverseProperty("Avisproduits")]
     public virtual Client IdclientNavigation { get; set; } = null!;
 
-    [ForeignKey("Idproduit")]
+    [ForeignKey(nameof(Idproduit))]
     [InverseProperty("Avisproduits")]
     public virtual Produit IdproduitNavigation { get; set; } = null!;
 
     [InverseProperty("IdavisNavigation")]
     public virtual ICollection<Signalementavi> Signalementavis { get; set; } = new List<Signalementavi>();
 
-    [ForeignKey("Idavis")]
+    [ForeignKey(nameof(Idavis))]
     [InverseProperty("Idavis")]
     public virtual ICollection<Photo> Idphotos { get; set; } = new List<Photo>();
 }

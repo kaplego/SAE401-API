@@ -6,19 +6,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
-[Table("couleur")]
-[Index("Idcouleur", Name = "couleur_pk", IsUnique = true)]
+[Table("t_e_couleur_cou")]
 public partial class Couleur
 {
     [Key]
-    [Column("idcouleur")]
+    [Column("cou_idcouleur")]
     public int Idcouleur { get; set; }
 
-    [Column("nomcouleur")]
+    [Column("cou_nomcouleur")]
     [StringLength(64)]
     public string Nomcouleur { get; set; } = null!;
 
-    [Column("rgbcouleur")]
+    [Column("cou_rgbcouleur")]
     [StringLength(6)]
     public string Rgbcouleur { get; set; } = null!;
 

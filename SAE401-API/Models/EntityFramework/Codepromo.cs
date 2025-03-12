@@ -6,36 +6,34 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
-[Table("codepromo")]
-[Index("Idclient", Name = "clientcodepromo_fk")]
-[Index("Idcodepromo", Name = "codepromo_pk", IsUnique = true)]
+[Table("t_e_codepromo_cod")]
 public partial class Codepromo
 {
     [Key]
-    [Column("idcodepromo")]
+    [Column("cod_idcodepromo")]
     public int Idcodepromo { get; set; }
 
-    [Column("idclient")]
+    [Column("cod_idclient")]
     public int? Idclient { get; set; }
 
-    [Column("nomcodepromo")]
+    [Column("cod_nomcodepromo")]
     [StringLength(16)]
     public string Nomcodepromo { get; set; } = null!;
 
-    [Column("valeurreduction")]
+    [Column("cod_valeurreduction")]
     [Precision(5, 2)]
     public decimal Valeurreduction { get; set; }
 
-    [Column("estvalide")]
+    [Column("cod_estvalide")]
     public bool Estvalide { get; set; }
 
-    [Column("dateexpirationcode")]
+    [Column("cod_dateexpirationcode")]
     public DateOnly? Dateexpirationcode { get; set; }
 
     [InverseProperty("IdcodepromoNavigation")]
     public virtual ICollection<Commande> Commandes { get; set; } = new List<Commande>();
 
-    [ForeignKey("Idclient")]
+    [ForeignKey(nameof(Idclient))]
     [InverseProperty("Codepromos")]
     public virtual Client? IdclientNavigation { get; set; }
 }

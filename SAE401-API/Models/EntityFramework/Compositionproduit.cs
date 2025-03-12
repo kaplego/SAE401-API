@@ -6,23 +6,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
-[Table("compositionproduit")]
-[Index("Idcomposition", Name = "compositionproduit_pk", IsUnique = true)]
+[Table("t_e_compositionproduit_cmp")]
 public partial class Compositionproduit
 {
     [Key]
-    [Column("idcomposition")]
+    [Column("cmp_idcomposition")]
     public int Idcomposition { get; set; }
 
-    [Column("prixventecomposition")]
+    [Column("cmp_prixventecomposition")]
     [Precision(10, 2)]
     public decimal Prixventecomposition { get; set; }
 
-    [Column("prixsoldecomposition")]
+    [Column("cmp_prixsoldecomposition")]
     [Precision(10, 2)]
     public decimal? Prixsoldecomposition { get; set; }
 
-    [Column("descriptioncomposition")]
+    [Column("cmp_descriptioncomposition")]
     [StringLength(2048)]
     public string? Descriptioncomposition { get; set; }
 

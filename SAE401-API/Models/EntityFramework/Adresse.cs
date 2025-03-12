@@ -6,48 +6,43 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
-[Table("adresse")]
-[Index("Idadresse", Name = "adresse_pk", IsUnique = true)]
-[Index("Idclient", Name = "adresseclient_fk")]
-[Index("Idpays", Name = "adressepays_fk")]
-[Index("Iddepartement", Name = "estsitue_fk")]
-[Index("Codeinsee", Name = "residedans_fk")]
+[Table("t_e_adresse_adr")]
 public partial class Adresse
 {
     [Key]
-    [Column("idadresse")]
+    [Column("adr_idadresse")]
     public int Idadresse { get; set; }
 
-    [Column("idpays")]
+    [Column("adr_idpays")]
     public int Idpays { get; set; }
 
-    [Column("codeinsee")]
+    [Column("adr_codeinsee")]
     [StringLength(5)]
     public string Codeinsee { get; set; } = null!;
 
-    [Column("idclient")]
+    [Column("adr_idclient")]
     public int Idclient { get; set; }
 
-    [Column("iddepartement")]
+    [Column("adr_iddepartement")]
     public int Iddepartement { get; set; }
 
-    [Column("nomadresse")]
+    [Column("adr_nomadresse")]
     [StringLength(32)]
     public string? Nomadresse { get; set; }
 
-    [Column("numerorue")]
+    [Column("adr_numerorue")]
     [StringLength(8)]
     public string? Numerorue { get; set; }
 
-    [Column("nomrue")]
+    [Column("adr_nomrue")]
     [StringLength(128)]
     public string Nomrue { get; set; } = null!;
 
-    [Column("codepostaladresse")]
+    [Column("adr_codepostaladresse")]
     [StringLength(5)]
     public string Codepostaladresse { get; set; } = null!;
 
-    [ForeignKey("Codeinsee")]
+    [ForeignKey(nameof(Codeinsee))]
     [InverseProperty("Adresses")]
     public virtual Ville CodeinseeNavigation { get; set; } = null!;
 
@@ -57,15 +52,15 @@ public partial class Adresse
     [InverseProperty("IdadresseNavigation")]
     public virtual ICollection<Commande> CommandeIdadresseNavigations { get; set; } = new List<Commande>();
 
-    [ForeignKey("Idclient")]
+    [ForeignKey(nameof(Idclient))]
     [InverseProperty("Adresses")]
     public virtual Client IdclientNavigation { get; set; } = null!;
 
-    [ForeignKey("Iddepartement")]
+    [ForeignKey(nameof(Iddepartement))]
     [InverseProperty("Adresses")]
     public virtual Departement IddepartementNavigation { get; set; } = null!;
 
-    [ForeignKey("Idpays")]
+    [ForeignKey(nameof(Idpays))]
     [InverseProperty("Adresses")]
     public virtual Pay IdpaysNavigation { get; set; } = null!;
 }

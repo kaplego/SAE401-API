@@ -6,52 +6,45 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
-[Table("commande")]
-[Index("AdrIdadresse", Name = "adressefacturation_fk")]
-[Index("Idadresse", Name = "adresselivraison_fk")]
-[Index("Idclient", Name = "clientcommande_fk")]
-[Index("Idcodepromo", Name = "codepromocommande_fk")]
-[Index("Idcommande", Name = "commande_pk", IsUnique = true)]
-[Index("Idstatut", Name = "commandestatut_fk")]
-[Index("Idtransporteur", Name = "transportcommande_fk")]
+[Table("t_e_commande_cmd")]
 public partial class Commande
 {
     [Key]
-    [Column("idcommande")]
+    [Column("cmd_idcommande")]
     public int Idcommande { get; set; }
 
-    [Column("idclient")]
+    [Column("cmd_idclient")]
     public int Idclient { get; set; }
 
-    [Column("idadresse")]
+    [Column("cmd_idadresse")]
     public int Idadresse { get; set; }
 
-    [Column("idcodepromo")]
+    [Column("cmd_idcodepromo")]
     public int? Idcodepromo { get; set; }
 
-    [Column("adr_idadresse")]
+    [Column("cmd_adr_idadresse")]
     public int AdrIdadresse { get; set; }
 
-    [Column("idstatut")]
+    [Column("cmd_idstatut")]
     public int Idstatut { get; set; }
 
-    [Column("idtransporteur")]
+    [Column("cmd_idtransporteur")]
     public int Idtransporteur { get; set; }
 
-    [Column("datecommande")]
+    [Column("cmd_datecommande")]
     public DateOnly Datecommande { get; set; }
 
-    [Column("avecassurance")]
+    [Column("cmd_avecassurance")]
     public bool Avecassurance { get; set; }
 
-    [Column("aveclivraisonexpress")]
+    [Column("cmd_aveclivraisonexpress")]
     public bool Aveclivraisonexpress { get; set; }
 
-    [Column("instructionlivraison")]
+    [Column("cmd_instructionlivraison")]
     [StringLength(512)]
     public string? Instructionlivraison { get; set; }
 
-    [ForeignKey("AdrIdadresse")]
+    [ForeignKey(nameof(AdrIdadresse))]
     [InverseProperty("CommandeAdrIdadresseNavigations")]
     public virtual Adresse AdrIdadresseNavigation { get; set; } = null!;
 
@@ -61,23 +54,23 @@ public partial class Commande
     [InverseProperty("IdcommandeNavigation")]
     public virtual ICollection<Detailcommande> Detailcommandes { get; set; } = new List<Detailcommande>();
 
-    [ForeignKey("Idadresse")]
+    [ForeignKey(nameof(Idadresse))]
     [InverseProperty("CommandeIdadresseNavigations")]
     public virtual Adresse IdadresseNavigation { get; set; } = null!;
 
-    [ForeignKey("Idclient")]
+    [ForeignKey(nameof(Idclient))]
     [InverseProperty("Commandes")]
     public virtual Client IdclientNavigation { get; set; } = null!;
 
-    [ForeignKey("Idcodepromo")]
+    [ForeignKey(nameof(Idcodepromo))]
     [InverseProperty("Commandes")]
     public virtual Codepromo? IdcodepromoNavigation { get; set; }
 
-    [ForeignKey("Idstatut")]
+    [ForeignKey(nameof(Idstatut))]
     [InverseProperty("Commandes")]
     public virtual Statutcommande IdstatutNavigation { get; set; } = null!;
 
-    [ForeignKey("Idtransporteur")]
+    [ForeignKey(nameof(Idtransporteur))]
     [InverseProperty("Commandes")]
     public virtual Transporteur IdtransporteurNavigation { get; set; } = null!;
 
