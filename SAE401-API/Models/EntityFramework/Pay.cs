@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 namespace SAE401_API.Models.EntityFramework;
 
 [Table("t_e_pays_pay")]
+[Index(nameof(Nompays), Name = "ix_t_e_pays_pay_nompays", IsUnique = true)]
+
 public partial class Pay
 {
     [Key]

@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 namespace SAE401_API.Models.EntityFramework;
 
 [Table("t_e_typepaiement_tpm")]
+[Index(nameof(Nomtypepaiement), Name = "ix_t_e_typepaiement_tpm_nomtypepaiement", IsUnique = true)]
+
 public partial class Typepaiement
 {
     [Key]

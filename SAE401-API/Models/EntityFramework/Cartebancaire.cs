@@ -7,6 +7,9 @@ using Microsoft.EntityFrameworkCore;
 namespace SAE401_API.Models.EntityFramework;
 
 [Table("t_e_cartebancaire_car")]
+[Index(nameof(Idclient),nameof(Nomcartebancaire), Name = "ix_t_e_cartebancaire_car_idclient_nomcartebancaire", IsUnique = true)]
+[Index(nameof(Idclient), nameof(Numcartebancaire), Name = "ix_t_e_cartebancaire_car_idclient_numcartebancaire", IsUnique = true)]
+
 public partial class Cartebancaire
 {
     [Key]

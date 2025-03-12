@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 namespace SAE401_API.Models.EntityFramework;
 
 [Table("t_e_signalementavis_sga")]
+[Index(nameof(Idavis),nameof(Emailsignalement), Name = "ix_t_e_signalementavis_sga_idavis_emailsignalement", IsUnique = true)]
+
 public partial class Signalementavi
 {
     [Key]

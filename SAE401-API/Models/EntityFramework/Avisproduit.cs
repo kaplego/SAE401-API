@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 namespace SAE401_API.Models.EntityFramework;
 
 [Table("t_e_avisproduit_avi")]
+[Index(nameof(Idclient),nameof(Idproduit), Name = "ix_t_e_avisproduit_avi_idclient_idproduit", IsUnique = true)]
+
 public partial class Avisproduit
 {
     [Key]

@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 namespace SAE401_API.Models.EntityFramework;
 
 [Table("t_e_couleur_cou")]
+[Index(nameof(Nomcouleur), Name = "ix_t_e_couleur_cou_nomcouleur", IsUnique = true)]
+
 public partial class Couleur
 {
     [Key]

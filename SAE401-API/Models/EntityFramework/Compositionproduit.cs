@@ -7,11 +7,17 @@ using Microsoft.EntityFrameworkCore;
 namespace SAE401_API.Models.EntityFramework;
 
 [Table("t_e_compositionproduit_cmp")]
+[Index(nameof(Nomcomposition), Name = "ix_t_e_compositionproduit_cmp_nomcomposition", IsUnique = true)]
+
 public partial class Compositionproduit
 {
     [Key]
     [Column("cmp_idcomposition")]
     public int Idcomposition { get; set; }
+
+    [Column("cmp_nomcomposition")]
+    [StringLength(150)]
+    public string? Nomcomposition { get; set; }
 
     [Column("cmp_prixventecomposition", TypeName = "numeric(10, 2)")]
     public decimal Prixventecomposition { get; set; }
