@@ -21,14 +21,14 @@ public partial class Cartebancaire
     public string? Nomcartebancaire { get; set; }
 
     [Column("car_dateenregistement")]
-    public DateOnly Dateenregistement { get; set; }
+    public DateTime Dateenregistement { get; set; }
 
     [Column("car_numcartebancaire")]
     [StringLength(16)]
     public string Numcartebancaire { get; set; } = null!;
 
     [Column("car_dateexpirationcarte")]
-    public DateOnly Dateexpirationcarte { get; set; }
+    public DateTime Dateexpirationcarte { get; set; }
 
     [ForeignKey(nameof(Idclient))]
     [InverseProperty("Cartebancaires")]

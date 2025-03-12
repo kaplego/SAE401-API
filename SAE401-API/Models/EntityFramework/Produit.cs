@@ -34,8 +34,7 @@ public partial class Produit
     [Column("prd_delailivraison")]
     public int Delailivraison { get; set; }
 
-    [Column("prd_coutlivraison")]
-    [Precision(10, 2)]
+    [Column("prd_coutlivraison", TypeName = "numeric(10, 2)")]
     public decimal Coutlivraison { get; set; }
 
     [Column("prd_nbpaiementmax")]

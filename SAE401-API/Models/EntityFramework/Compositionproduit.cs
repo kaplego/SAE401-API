@@ -13,12 +13,10 @@ public partial class Compositionproduit
     [Column("cmp_idcomposition")]
     public int Idcomposition { get; set; }
 
-    [Column("cmp_prixventecomposition")]
-    [Precision(10, 2)]
+    [Column("cmp_prixventecomposition", TypeName = "numeric(10, 2)")]
     public decimal Prixventecomposition { get; set; }
 
-    [Column("cmp_prixsoldecomposition")]
-    [Precision(10, 2)]
+    [Column("cmp_prixsoldecomposition", TypeName = "numeric(10, 2)")]
     public decimal? Prixsoldecomposition { get; set; }
 
     [Column("cmp_descriptioncomposition")]

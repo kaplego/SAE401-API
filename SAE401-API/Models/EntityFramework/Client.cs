@@ -38,8 +38,7 @@ public partial class Client
     public string Telportableclient { get; set; } = null!;
 
     [Column("cli_datecreationcompte")]
-    [StringLength(11)]
-    public string Datecreationcompte { get; set; } = null!;
+    public DateTime? Datecreationcompte { get; set; } = null!;
 
     [Column("cli_hashmdp")]
     [StringLength(256)]

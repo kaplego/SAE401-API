@@ -32,7 +32,7 @@ public partial class Commande
     public int Idtransporteur { get; set; }
 
     [Column("cmd_datecommande")]
-    public DateOnly Datecommande { get; set; }
+    public DateTime Datecommande { get; set; }
 
     [Column("cmd_avecassurance")]
     public bool Avecassurance { get; set; }

@@ -24,7 +24,7 @@ public partial class Signalementavi
     public string Emailsignalement { get; set; } = null!;
 
     [Column("sga_datesignalement")]
-    public DateOnly Datesignalement { get; set; }
+    public DateTime Datesignalement { get; set; }
 
     [Column("sga_contenusignalement")]
     [StringLength(512)]

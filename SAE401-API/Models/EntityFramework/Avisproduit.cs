@@ -23,7 +23,7 @@ public partial class Avisproduit
     public int Noteavis { get; set; }
 
     [Column("avi_dateavis")]
-    public DateOnly Dateavis { get; set; }
+    public DateTime Dateavis { get; set; }
 
     [Column("avi_commentaireavis")]
     [StringLength(1024)]
