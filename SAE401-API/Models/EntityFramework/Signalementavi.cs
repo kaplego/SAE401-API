@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using SAE401_API.Validation;
 
 namespace SAE401_API.Models.EntityFramework;
 
@@ -26,6 +27,7 @@ public partial class Signalementavi
     public string Emailsignalement { get; set; } = null!;
 
     [Column("sga_datesignalement")]
+    [DateValidator]
     public DateTime Datesignalement { get; set; }
 
     [Column("sga_contenusignalement")]

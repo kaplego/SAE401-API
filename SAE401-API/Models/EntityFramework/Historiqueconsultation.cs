@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using SAE401_API.Validation;
 
 namespace SAE401_API.Models.EntityFramework;
 
@@ -19,6 +20,7 @@ public partial class Historiqueconsultation
     public int Idproduit { get; set; }
 
     [Column("hst_dateconsultation")]
+    [DateValidator]
     public DateTime Dateconsultation { get; set; }
 
     [ForeignKey(nameof(Idclient))]

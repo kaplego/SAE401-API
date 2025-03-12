@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using SAE401_API.Validation;
 
 namespace SAE401_API.Models.EntityFramework;
 
@@ -23,6 +24,7 @@ public partial class Paiement
     public int Idtypepaiement { get; set; }
 
     [Column("pmt_datepaiement")]
+    [DateValidator]
     public DateTime Datepaiement { get; set; }
 
     [Column("pmt_montantpaiement", TypeName = "numeric(10, 2)")]

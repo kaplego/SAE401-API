@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using SAE401_API.Validation;
 
 namespace SAE401_API.Models.EntityFramework;
 
@@ -24,6 +25,7 @@ public partial class Cartebancaire
     public string? Nomcartebancaire { get; set; }
 
     [Column("car_dateenregistement")]
+    [DateValidator]
     public DateTime Dateenregistement { get; set; }
 
     [Column("car_numcartebancaire")]

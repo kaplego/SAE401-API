@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using SAE401_API.Validation;
 
 namespace SAE401_API.Models.EntityFramework;
 
@@ -25,6 +26,7 @@ public partial class Avisproduit
     public int Noteavis { get; set; }
 
     [Column("avi_dateavis")]
+    [DateValidator]
     public DateTime Dateavis { get; set; }
 
     [Column("avi_commentaireavis")]
