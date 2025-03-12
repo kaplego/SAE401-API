@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 namespace SAE401_API.Models.EntityFramework;
 
 [Table("t_e_statutcommande_scd")]
+[Index(nameof(Nomstatut), Name = "ix_t_e_statutcommande_scd_nomstatut", IsUnique = true)]
+
 public partial class Statutcommande
 {
     [Key]

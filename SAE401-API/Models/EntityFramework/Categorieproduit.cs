@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Net.Sockets;
 using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
 [Table("t_e_categorieproduit_cat")]
+[Index(nameof(Nomcategorie), Name = "ix_t_e_categorieproduit_cat_nomcategorie", IsUnique = true)]
+
 public partial class Categorieproduit
 {
     [Key]

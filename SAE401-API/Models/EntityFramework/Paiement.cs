@@ -23,10 +23,9 @@ public partial class Paiement
     public int Idtypepaiement { get; set; }
 
     [Column("pmt_datepaiement")]
-    public DateOnly Datepaiement { get; set; }
+    public DateTime Datepaiement { get; set; }
 
-    [Column("pmt_montantpaiement")]
-    [Precision(10, 2)]
+    [Column("pmt_montantpaiement", TypeName = "numeric(10, 2)")]
     public decimal Montantpaiement { get; set; }
 
     [Column("pmt_indicepaiement")]

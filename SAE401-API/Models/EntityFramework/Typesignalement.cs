@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 namespace SAE401_API.Models.EntityFramework;
 
 [Table("t_e_typesignalement_tsg")]
+[Index(nameof(Nomtypesignalement), Name = "ix_t_e_typesignalement_tsg_nomtypesignalement", IsUnique = true)]
+
 public partial class Typesignalement
 {
     [Key]

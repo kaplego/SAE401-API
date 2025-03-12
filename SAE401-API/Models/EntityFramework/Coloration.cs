@@ -18,12 +18,10 @@ public partial class Coloration
     [Column("col_idcouleur")]
     public int Idcouleur { get; set; }
 
-    [Column("prixvente")]
-    [Precision(10, 2)]
+    [Column("col_prixvente", TypeName = "numeric(10, 2)")]
     public decimal Prixvente { get; set; }
 
-    [Column("col_prixsolde")]
-    [Precision(10, 2)]
+    [Column("col_prixsolde", TypeName = "numeric(10, 2)")]
     public decimal? Prixsolde { get; set; }
 
     [Column("col_quantitestock")]

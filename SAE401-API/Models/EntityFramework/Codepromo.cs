@@ -20,15 +20,14 @@ public partial class Codepromo
     [StringLength(16)]
     public string Nomcodepromo { get; set; } = null!;
 
-    [Column("cod_valeurreduction")]
-    [Precision(5, 2)]
+    [Column("cod_valeurreduction", TypeName = "numeric(5, 2)")]
     public decimal Valeurreduction { get; set; }
 
     [Column("cod_estvalide")]
     public bool Estvalide { get; set; }
 
     [Column("cod_dateexpirationcode")]
-    public DateOnly? Dateexpirationcode { get; set; }
+    public DateTime? Dateexpirationcode { get; set; }
 
     [InverseProperty("IdcodepromoNavigation")]
     public virtual ICollection<Commande> Commandes { get; set; } = new List<Commande>();

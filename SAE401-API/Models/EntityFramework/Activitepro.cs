@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace SAE401_API.Models.EntityFramework;
 
 [Table("t_e_activitepro_act")]
+[Index(nameof(Nomactivitepro), Name = "ix_t_e_activitepro_act_nomactivitepro", IsUnique = true)]
 public partial class Activitepro
 {
     [Key]

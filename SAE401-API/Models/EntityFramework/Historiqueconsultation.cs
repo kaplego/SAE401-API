@@ -19,7 +19,7 @@ public partial class Historiqueconsultation
     public int Idproduit { get; set; }
 
     [Column("hst_dateconsultation")]
-    public DateOnly Dateconsultation { get; set; }
+    public DateTime Dateconsultation { get; set; }
 
     [ForeignKey(nameof(Idclient))]
     [InverseProperty("Historiqueconsultations")]

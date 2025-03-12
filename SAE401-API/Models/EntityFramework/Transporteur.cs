@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 namespace SAE401_API.Models.EntityFramework;
 
 [Table("t_e_transporteur_tpt")]
+[Index(nameof(Nomtransporteur), Name = "ix_t_e_transporteur_tpt_nomtransporteur", IsUnique = true)]
+
 public partial class Transporteur
 {
     [Key]

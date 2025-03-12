@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 namespace SAE401_API.Models.EntityFramework;
 
 [Table("t_e_signalementavis_sga")]
+[Index(nameof(Idavis),nameof(Emailsignalement), Name = "ix_t_e_signalementavis_sga_idavis_emailsignalement", IsUnique = true)]
+
 public partial class Signalementavi
 {
     [Key]
@@ -24,7 +26,7 @@ public partial class Signalementavi
     public string Emailsignalement { get; set; } = null!;
 
     [Column("sga_datesignalement")]
-    public DateOnly Datesignalement { get; set; }
+    public DateTime Datesignalement { get; set; }
 
     [Column("sga_contenusignalement")]
     [StringLength(512)]

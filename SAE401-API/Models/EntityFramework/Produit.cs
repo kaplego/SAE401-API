@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 namespace SAE401_API.Models.EntityFramework;
 
 [Table("t_e_produit_prd")]
+[Index(nameof(Nomproduit), Name = "ix_t_e_produit_prd_nomproduit", IsUnique = true)]
+
 public partial class Produit
 {
     [Key]
@@ -34,8 +36,7 @@ public partial class Produit
     [Column("prd_delailivraison")]
     public int Delailivraison { get; set; }
 
-    [Column("prd_coutlivraison")]
-    [Precision(10, 2)]
+    [Column("prd_coutlivraison", TypeName = "numeric(10, 2)")]
     public decimal Coutlivraison { get; set; }
 
     [Column("prd_nbpaiementmax")]

@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 namespace SAE401_API.Models.EntityFramework;
 
 [Table("t_e_regroupementproduit_rgp")]
+[Index(nameof(Nomregroupement), Name = "ix_t_e_regroupementproduit_rgp_nomregroupement", IsUnique = true)]
+
 public partial class Regroupementproduit
 {
     [Key]

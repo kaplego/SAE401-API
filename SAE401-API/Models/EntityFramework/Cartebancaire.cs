@@ -7,6 +7,9 @@ using Microsoft.EntityFrameworkCore;
 namespace SAE401_API.Models.EntityFramework;
 
 [Table("t_e_cartebancaire_car")]
+[Index(nameof(Idclient),nameof(Nomcartebancaire), Name = "ix_t_e_cartebancaire_car_idclient_nomcartebancaire", IsUnique = true)]
+[Index(nameof(Idclient), nameof(Numcartebancaire), Name = "ix_t_e_cartebancaire_car_idclient_numcartebancaire", IsUnique = true)]
+
 public partial class Cartebancaire
 {
     [Key]
@@ -21,14 +24,14 @@ public partial class Cartebancaire
     public string? Nomcartebancaire { get; set; }
 
     [Column("car_dateenregistement")]
-    public DateOnly Dateenregistement { get; set; }
+    public DateTime Dateenregistement { get; set; }
 
     [Column("car_numcartebancaire")]
     [StringLength(16)]
     public string Numcartebancaire { get; set; } = null!;
 
     [Column("car_dateexpirationcarte")]
-    public DateOnly Dateexpirationcarte { get; set; }
+    public DateTime Dateexpirationcarte { get; set; }
 
     [ForeignKey(nameof(Idclient))]
     [InverseProperty("Cartebancaires")]

@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 namespace SAE401_API.Models.EntityFramework;
 
 [Table("t_e_avisproduit_avi")]
+[Index(nameof(Idclient),nameof(Idproduit), Name = "ix_t_e_avisproduit_avi_idclient_idproduit", IsUnique = true)]
+
 public partial class Avisproduit
 {
     [Key]
@@ -23,7 +25,7 @@ public partial class Avisproduit
     public int Noteavis { get; set; }
 
     [Column("avi_dateavis")]
-    public DateOnly Dateavis { get; set; }
+    public DateTime Dateavis { get; set; }
 
     [Column("avi_commentaireavis")]
     [StringLength(1024)]
