@@ -40,6 +40,8 @@ public partial class Adresse
 
     [Column("adr_codepostaladresse")]
     [StringLength(5)]
+    [RegularExpression(@"^[0-9][A0-9][0-9]{3}$", ErrorMessage = "Le code postale doit commencer par un chiffre, suivi d'un 'A' ou d'un chiffre, puis de 3 autres chiffres.")]
+
     public string Codepostaladresse { get; set; } = null!;
 
     [ForeignKey(nameof(Codeinsee))]

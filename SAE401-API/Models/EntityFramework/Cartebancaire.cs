@@ -28,6 +28,8 @@ public partial class Cartebancaire
 
     [Column("car_numcartebancaire")]
     [StringLength(16)]
+    [RegularExpression(@"^[0-9]{16}$", ErrorMessage = "Le numéro de carte doit contenir 16 chiffres.")]
+
     public string Numcartebancaire { get; set; } = null!;
 
     [Column("car_dateexpirationcarte")]

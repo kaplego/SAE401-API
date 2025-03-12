@@ -21,6 +21,7 @@ public partial class Professionel
 
     [Column("pro_numtva")]
     [StringLength(11)]
+    [RegularExpression(@"^[0-9]{11}$", ErrorMessage = "Le numéro de TVA doit contenir 11 chiffres.")]
     public string Numtva { get; set; } = null!;
 
     [ForeignKey(nameof(Idactivitepro))]

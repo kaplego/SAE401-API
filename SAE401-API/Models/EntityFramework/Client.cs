@@ -33,10 +33,14 @@ public partial class Client
 
     [Column("cli_telfixeclient")]
     [StringLength(11)]
+    [RegularExpression(@"^[0-9]{11}$", ErrorMessage = "Le numéro de fixe doit contenir 11 chiffres.")]
+
     public string? Telfixeclient { get; set; }
 
     [Column("cli_telportableclient")]
     [StringLength(11)]
+    [RegularExpression(@"^[0-9]{11}$", ErrorMessage = "Le numéro de mobile doit contenir 11 chiffres.")]
+
     public string Telportableclient { get; set; } = null!;
 
     [Column("cli_datecreationcompte")]
