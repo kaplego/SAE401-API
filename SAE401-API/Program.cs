@@ -3,6 +3,10 @@ using SAE401_API.Models.EntityFramework;
 using DotNetEnv;
 using SAE401_API.Models.Repository;
 using SAE401_API.Models.DataManager;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using SAE401_API.Models;
 
 Env.Load();
 

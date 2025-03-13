@@ -49,6 +49,8 @@ public partial class _DBMilibooContext : DbContext
 
     public virtual DbSet<Detailpanier> Detailpaniers { get; set; }
 
+    public virtual DbSet<Detailpanier> Produitsimilaires { get; set; }
+
     public virtual DbSet<Historiqueconsultation> Historiqueconsultations { get; set; }
 
     public virtual DbSet<Messagechatbot> Messagechatbots { get; set; }
@@ -370,6 +372,19 @@ public partial class _DBMilibooContext : DbContext
                 .HasConstraintName("fk_dpn_col");
         });
 
+        modelBuilder.Entity<Produitsimilaire>(entity =>
+        {
+            entity.HasKey(e => new { e.Idproduit, e.Idproduit2 }).HasName("pk_pds");
+
+            entity.HasOne(d => d.IdproduitNavigation).WithMany(p => p.Idproduitsimilaire)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("fk_dps_prd");
+
+            entity.HasOne(d => d.IdproduitNavigation2).WithMany(p => p.Idproduitsimilaire2)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("fk_dps_prd2");
+        });
+
         modelBuilder.Entity<Detailpaniercomposition>(entity =>
         {
             entity.HasKey(e => new { e.Idcomposition, e.Idclient }).HasName("pk_dpc");
@@ -443,44 +458,6 @@ public partial class _DBMilibooContext : DbContext
             entity.HasOne(d => d.IdtypeproduitNavigation).WithMany(p => p.Produits)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_prd_tpd");
-
-            entity.HasMany(d => d.Idproduitsimilaire).WithMany(p => p.Idproduitsimilaire2)
-                .UsingEntity<Dictionary<string, object>>(
-                    "Produitsimilaire",
-                    r => r.HasOne<Produit>().WithMany()
-                        .HasForeignKey("Idproduit")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("fk_pds_prd"),
-                    l => l.HasOne<Produit>().WithMany()
-                        .HasForeignKey("Idproduit2")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("fk_pds_prd2"),
-                    j =>
-                    {
-                        j.HasKey("Idproduit", "Idproduit2").HasName("pk_pds");
-                        j.ToTable("t_j_produitsimilaire_pds");
-                        j.IndexerProperty<int>("Idproduit").HasColumnName("pds_idproduit");
-                        j.IndexerProperty<int>("Idproduit2").HasColumnName("pds_idproduit2");
-                    });
-
-            entity.HasMany(d => d.Idproduitsimilaire2).WithMany(p => p.Idproduitsimilaire)
-                .UsingEntity<Dictionary<string, object>>(
-                    "Produitsimilaire2",
-                    r => r.HasOne<Produit>().WithMany()
-                        .HasForeignKey("Idproduit2")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("fk_pds_prd2"),
-                    l => l.HasOne<Produit>().WithMany()
-                        .HasForeignKey("Idproduit")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("fk_pds_prd"),
-                    j =>
-                    {
-                        j.HasKey("Idproduit", "Idproduit2").HasName("pk_pds2");
-                        j.ToTable("t_j_produitsimilaire_pds2");
-                        j.IndexerProperty<int>("Idproduit2").HasColumnName("pds_idproduit2");
-                        j.IndexerProperty<int>("Idproduit").HasColumnName("pds_idproduit");
-                    });
         });
 
         modelBuilder.Entity<Professionel>(entity =>

@@ -68,11 +68,9 @@ public partial class Produit
     [InverseProperty("Idproduits")]
     public virtual ICollection<Client> Idclients { get; set; } = new List<Client>();
 
-    [ForeignKey(nameof(Idproduitsimilaire2))]
-    [InverseProperty("Idproduitsimilaire2")]
-    public virtual ICollection<Produit> Idproduitsimilaire { get; set; } = new List<Produit>();
+    [InverseProperty("IdproduitNavigation")]
+    public virtual ICollection<Produitsimilaire> Idproduitsimilaire { get; set; } = new List<Produitsimilaire>();
 
-    [ForeignKey(nameof(Idproduitsimilaire))]
-    [InverseProperty("Idproduitsimilaire")]
-    public virtual ICollection<Produit> Idproduitsimilaire2 { get; set; } = new List<Produit>();
+    [InverseProperty("IdproduitNavigation2")]
+    public virtual ICollection<Produitsimilaire> Idproduitsimilaire2 { get; set; } = new List<Produitsimilaire>();
 }
