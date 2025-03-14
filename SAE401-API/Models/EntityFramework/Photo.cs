@@ -24,11 +24,9 @@ public partial class Photo
     [InverseProperty("IdphotoNavigation")]
     public virtual ICollection<Categorieproduit> Categorieproduits { get; set; } = new List<Categorieproduit>();
 
-    [ForeignKey(nameof(Idphoto))]
-    [InverseProperty("Idphotos")]
-    public virtual ICollection<Coloration> Colorations { get; set; } = new List<Coloration>();
+    [InverseProperty("IdphotoNavigation")]
+    public virtual ICollection<Photoavi> Photoavis { get; set; } = null!;
 
-    [ForeignKey(nameof(Idphoto))]
-    [InverseProperty("Idphotos")]
-    public virtual ICollection<Avisproduit> Idavis { get; set; } = new List<Avisproduit>();
+    [InverseProperty("IdphotoNavigation")]
+    public virtual ICollection<Photocoloration> Photocolorations { get; set; } = null!;
 }

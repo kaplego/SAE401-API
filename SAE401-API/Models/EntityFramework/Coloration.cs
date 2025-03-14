@@ -54,11 +54,9 @@ public partial class Coloration
     [InverseProperty("Colorations")]
     public virtual Produit IdproduitNavigation { get; set; } = null!;
 
-    [ForeignKey("Idproduit, Idcouleur")]
     [InverseProperty("Colorations")]
-    public virtual ICollection<Photo> Idphotos { get; set; } = new List<Photo>();
+    public virtual ICollection<Photocoloration> Photocolorations { get; set; } = new List<Photocoloration>();
 
-    [ForeignKey("Idproduit, Idcouleur")]
     [InverseProperty("Colorations")]
-    public virtual ICollection<Regroupementproduit> Idregroupements { get; set; } = new List<Regroupementproduit>();
+    public virtual ICollection<Detailregroupement> Detailregroupements { get; set; } = new List<Detailregroupement>();
 }

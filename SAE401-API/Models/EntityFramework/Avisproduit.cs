@@ -50,7 +50,7 @@ public partial class Avisproduit
     [InverseProperty("IdavisNavigation")]
     public virtual ICollection<Signalementavi> Signalementavis { get; set; } = new List<Signalementavi>();
 
-    [ForeignKey(nameof(Idavis))]
-    [InverseProperty("Idavis")]
-    public virtual ICollection<Photo> Idphotos { get; set; } = new List<Photo>();
+    [InverseProperty("IdavisNavigation")]
+    public virtual ICollection<Photoavi> Photoavis { get; set; } = new List<Photoavi>();
+
 }

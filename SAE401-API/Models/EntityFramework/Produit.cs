@@ -64,13 +64,12 @@ public partial class Produit
     [InverseProperty("IdproduitNavigation")]
     public virtual ICollection<Valeurattribut> Valeurattributs { get; set; } = new List<Valeurattribut>();
 
-    [ForeignKey(nameof(Idproduit))]
-    [InverseProperty("Idproduits")]
-    public virtual ICollection<Client> Idclients { get; set; } = new List<Client>();
-
     [InverseProperty("IdproduitNavigation")]
     public virtual ICollection<Produitsimilaire> Idproduitsimilaire { get; set; } = new List<Produitsimilaire>();
 
     [InverseProperty("IdproduitNavigation2")]
     public virtual ICollection<Produitsimilaire> Idproduitsimilaire2 { get; set; } = new List<Produitsimilaire>();
+
+    [InverseProperty("IdproduitNavigation")]
+    public virtual ICollection<Aime> Aimes { get; set; } = new List<Aime>();
 }

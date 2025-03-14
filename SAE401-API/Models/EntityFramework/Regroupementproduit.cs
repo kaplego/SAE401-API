@@ -19,7 +19,6 @@ public partial class Regroupementproduit
     [StringLength(64)]
     public string Nomregroupement { get; set; } = null!;
 
-    [ForeignKey(nameof(Idregroupement))]
-    [InverseProperty("Idregroupements")]
-    public virtual ICollection<Coloration> Colorations { get; set; } = new List<Coloration>();
+    [InverseProperty("IdregroupementNavigation")]
+    public virtual ICollection<Detailregroupement> Detailregroupements { get; set; } = new List<Detailregroupement>();
 }

@@ -79,6 +79,9 @@ public partial class Client
     public virtual ICollection<Detailpanier> Detailpaniers { get; set; } = new List<Detailpanier>();
 
     [InverseProperty("IdclientNavigation")]
+    public virtual ICollection<Aime> Aimes { get; set; } = new List<Aime>();
+
+    [InverseProperty("IdclientNavigation")]
     public virtual ICollection<Detailpaniercomposition> Detailpaniercompositions { get; set; } = new List<Detailpaniercomposition>();
 
     [InverseProperty("IdclientNavigation")]
@@ -89,8 +92,4 @@ public partial class Client
 
     [InverseProperty("IdclientNavigation")]
     public virtual Professionel? Professionel { get; set; }
-
-    [ForeignKey(nameof(Idclient))]
-    [InverseProperty("Idclients")]
-    public virtual ICollection<Produit> Idproduits { get; set; } = new List<Produit>();
 }

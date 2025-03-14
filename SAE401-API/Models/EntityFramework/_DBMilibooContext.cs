@@ -19,6 +19,8 @@ public partial class _DBMilibooContext : DbContext
 
     public virtual DbSet<Adresse> Adresses { get; set; }
 
+    public virtual DbSet<Aime> Aimes { get; set; }
+
     public virtual DbSet<Attributproduit> Attributproduits { get; set; }
 
     public virtual DbSet<Avisproduit> Avisproduits { get; set; }
@@ -49,6 +51,8 @@ public partial class _DBMilibooContext : DbContext
 
     public virtual DbSet<Detailpanier> Detailpaniers { get; set; }
 
+    public virtual DbSet<Detailregroupement> Detailregroupements { get; set; }
+
     public virtual DbSet<Detailpanier> Produitsimilaires { get; set; }
 
     public virtual DbSet<Historiqueconsultation> Historiqueconsultations { get; set; }
@@ -60,6 +64,10 @@ public partial class _DBMilibooContext : DbContext
     public virtual DbSet<Pay> Pays { get; set; }
 
     public virtual DbSet<Photo> Photos { get; set; }
+
+    public virtual DbSet<Photoavi> Photoavis { get; set; }
+
+    public virtual DbSet<Photocoloration> Photocolorations { get; set; }
 
     public virtual DbSet<Produit> Produits { get; set; }
 
@@ -82,10 +90,6 @@ public partial class _DBMilibooContext : DbContext
     public virtual DbSet<Valeurattribut> Valeurattributs { get; set; }
 
     public virtual DbSet<Ville> Villes { get; set; }
-
-//    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-//        => optionsBuilder.UseNpgsql("Server=localhost;port=5432;Database=Test; uid=postgres; password=postgres;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -118,6 +122,19 @@ public partial class _DBMilibooContext : DbContext
                 .HasConstraintName("fk_adr_pay");
         });
 
+        modelBuilder.Entity<Aime>(entity =>
+        {
+            entity.HasKey(e => new { e.Idclient, e.Idproduit }).HasName("pk_aim");
+
+            entity.HasOne(d => d.IdclientNavigation).WithMany(p => p.Aimes)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("fk_aim_cli");
+
+            entity.HasOne(d => d.IdproduitNavigation).WithMany(p => p.Aimes)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("fk_aim_prd");
+        });
+
         modelBuilder.Entity<Attributproduit>(entity =>
         {
             entity.HasKey(e => e.Idattribut).HasName("pk_att");
@@ -138,25 +155,6 @@ public partial class _DBMilibooContext : DbContext
             entity.HasOne(d => d.IdproduitNavigation).WithMany(p => p.Avisproduits)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_avi_prd");
-
-            entity.HasMany(d => d.Idphotos).WithMany(p => p.Idavis)
-                .UsingEntity<Dictionary<string, object>>(
-                    "Photoavis",
-                    r => r.HasOne<Photo>().WithMany()
-                        .HasForeignKey("Idphoto")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("fk_pav_pho"),
-                    l => l.HasOne<Avisproduit>().WithMany()
-                        .HasForeignKey("Idavis")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("fk_pav_avi"),
-                    j =>
-                    {
-                        j.HasKey("Idavis", "Idphoto").HasName("pk_pav");
-                        j.ToTable("t_j_photoavis_pav");
-                        j.IndexerProperty<int>("Idavis").HasColumnName("pav_idavis");
-                        j.IndexerProperty<int>("Idphoto").HasColumnName("pav_idphoto");
-                    });
         });
 
         modelBuilder.Entity<Cartebancaire>(entity =>
@@ -191,25 +189,6 @@ public partial class _DBMilibooContext : DbContext
             entity.Property(e => e.Hashmdp).IsFixedLength();
             entity.Property(e => e.Telfixeclient).IsFixedLength();
             entity.Property(e => e.Telportableclient).IsFixedLength();
-
-            entity.HasMany(d => d.Idproduits).WithMany(p => p.Idclients)
-                .UsingEntity<Dictionary<string, object>>(
-                    "Aime",
-                    r => r.HasOne<Produit>().WithMany()
-                        .HasForeignKey("Idproduit")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("fk_aim_prd"),
-                    l => l.HasOne<Client>().WithMany()
-                        .HasForeignKey("Idclient")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("fk_aim_cli"),
-                    j =>
-                    {
-                        j.HasKey("Idclient", "Idproduit").HasName("pk_aim");
-                        j.ToTable("t_j_aime_aim");
-                        j.IndexerProperty<int>("Idclient").HasColumnName("aim_idclient");
-                        j.IndexerProperty<int>("Idproduit").HasColumnName("aim_idproduit");
-                    });
         });
 
         modelBuilder.Entity<Codepromo>(entity =>
@@ -232,46 +211,6 @@ public partial class _DBMilibooContext : DbContext
             entity.HasOne(d => d.IdproduitNavigation).WithMany(p => p.Colorations)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_col_prd");
-
-            entity.HasMany(d => d.Idphotos).WithMany(p => p.Colorations)
-                .UsingEntity<Dictionary<string, object>>(
-                    "Photoproduitcoloration",
-                    r => r.HasOne<Photo>().WithMany()
-                        .HasForeignKey("Idphoto")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("fk_ppc_pho"),
-                    l => l.HasOne<Coloration>().WithMany()
-                        .HasForeignKey("Idproduit", "Idcouleur")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("fk_ppc_col"),
-                    j =>
-                    {
-                        j.HasKey("Idproduit", "Idcouleur", "Idphoto").HasName("pk_ppc");
-                        j.ToTable("t_j_photoproduitcoloration_ppc");
-                        j.IndexerProperty<int>("Idproduit").HasColumnName("ppc_idproduit");
-                        j.IndexerProperty<int>("Idcouleur").HasColumnName("ppc_idcouleur");
-                        j.IndexerProperty<int>("Idphoto").HasColumnName("ppc_idphoto");
-                    });
-
-            entity.HasMany(d => d.Idregroupements).WithMany(p => p.Colorations)
-                .UsingEntity<Dictionary<string, object>>(
-                    "Detailregroupement",
-                    r => r.HasOne<Regroupementproduit>().WithMany()
-                        .HasForeignKey("Idregroupement")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("fk_drg_rgp"),
-                    l => l.HasOne<Coloration>().WithMany()
-                        .HasForeignKey("Idproduit", "Idcouleur")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("fk_drg_col"),
-                    j =>
-                    {
-                        j.HasKey("Idproduit", "Idcouleur", "Idregroupement").HasName("pk_drg");
-                        j.ToTable("t_j_detailregroupement_drg");
-                        j.IndexerProperty<int>("Idproduit").HasColumnName("drg_idproduit");
-                        j.IndexerProperty<int>("Idcouleur").HasColumnName("drg_idcouleur");
-                        j.IndexerProperty<int>("Idregroupement").HasColumnName("drg_idregroupement");
-                    });
         });
 
         modelBuilder.Entity<Commande>(entity =>
@@ -372,6 +311,19 @@ public partial class _DBMilibooContext : DbContext
                 .HasConstraintName("fk_dpn_col");
         });
 
+        modelBuilder.Entity<Detailregroupement>(entity =>
+        {
+            entity.HasKey(e => new { e.Idproduit, e.Idcouleur, e.Idregroupement }).HasName("pk_drg");
+
+            entity.HasOne(d => d.Colorations).WithMany(p => p.Detailregroupements)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("fk_drg_col");
+
+            entity.HasOne(d => d.IdregroupementNavigation).WithMany(p => p.Detailregroupements)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("fk_drg_rgp");
+        });
+
         modelBuilder.Entity<Produitsimilaire>(entity =>
         {
             entity.HasKey(e => new { e.Idproduit, e.Idproduit2 }).HasName("pk_pds");
@@ -445,6 +397,32 @@ public partial class _DBMilibooContext : DbContext
         modelBuilder.Entity<Photo>(entity =>
         {
             entity.HasKey(e => e.Idphoto).HasName("pk_pho");
+        });
+
+        modelBuilder.Entity<Photoavi>(entity =>
+        {
+            entity.HasKey(e => new { e.Idavis, e.Idphoto }).HasName("pk_pav");
+
+            entity.HasOne(d => d.IdavisNavigation).WithMany(p => p.Photoavis)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("fk_pav_avi");
+
+            entity.HasOne(d => d.IdphotoNavigation).WithMany(p => p.Photoavis)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("fk_pav_pho");
+        });
+
+        modelBuilder.Entity<Photocoloration>(entity =>
+        {
+            entity.HasKey(e => new { e.Idproduit, e.Idcouleur, e.Idphoto }).HasName("pk_pco");
+
+            entity.HasOne(d => d.Colorations).WithMany(p => p.Photocolorations)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("fk_pco_col");
+
+            entity.HasOne(d => d.IdphotoNavigation).WithMany(p => p.Photocolorations)
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName("fk_pco_pho");
         });
 
         modelBuilder.Entity<Produit>(entity =>
