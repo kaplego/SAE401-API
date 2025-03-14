@@ -172,8 +172,10 @@ namespace SAE401_API.Migrations
                         .HasColumnName("avi_commentaireavis");
 
                     b.Property<DateTime>("Dateavis")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("avi_dateavis");
+                        .HasColumnName("avi_dateavis")
+                        .HasDefaultValueSql("now()");
 
                     b.Property<int>("Idclient")
                         .HasColumnType("integer")
@@ -213,8 +215,10 @@ namespace SAE401_API.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Idcartebancaire"));
 
                     b.Property<DateTime>("Dateenregistement")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("car_dateenregistement");
+                        .HasColumnName("car_dateenregistement")
+                        .HasDefaultValueSql("now()");
 
                     b.Property<DateTime>("Dateexpirationcarte")
                         .HasColumnType("timestamp with time zone")
@@ -308,8 +312,10 @@ namespace SAE401_API.Migrations
 
                     b.Property<DateTime?>("Datecreationcompte")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("cli_datecreationcompte")
+                        .HasDefaultValueSql("now()")
                         .IsFixedLength();
 
                     b.Property<string>("Emailclient")
@@ -326,11 +332,15 @@ namespace SAE401_API.Migrations
                         .IsFixedLength();
 
                     b.Property<bool>("Newslettermiliboo")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
+                        .HasDefaultValue(false)
                         .HasColumnName("cli_newslettermiliboo");
 
                     b.Property<bool>("Newsletterpartenaires")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
+                        .HasDefaultValue(false)
                         .HasColumnName("cli_newsletterpartenaires");
 
                     b.Property<string>("Nomclient")
@@ -340,7 +350,9 @@ namespace SAE401_API.Migrations
                         .HasColumnName("cli_nomclient");
 
                     b.Property<int>("Pointfideliteclient")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
+                        .HasDefaultValue(0)
                         .HasColumnName("cli_pointfideliteclient");
 
                     b.Property<string>("Prenomclient")
@@ -385,7 +397,9 @@ namespace SAE401_API.Migrations
                         .HasColumnName("cod_dateexpirationcode");
 
                     b.Property<bool>("Estvalide")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
+                        .HasDefaultValue(true)
                         .HasColumnName("cod_estvalide");
 
                     b.Property<int?>("Idclient")
@@ -426,7 +440,9 @@ namespace SAE401_API.Migrations
                         .HasColumnName("col_descriptioncoloration");
 
                     b.Property<bool>("Estvisible")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
+                        .HasDefaultValue(false)
                         .HasColumnName("col_estvisible");
 
                     b.Property<decimal?>("Prixsolde")
@@ -463,16 +479,22 @@ namespace SAE401_API.Migrations
                         .HasColumnName("cmd_adr_idadresse");
 
                     b.Property<bool>("Avecassurance")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
+                        .HasDefaultValue(false)
                         .HasColumnName("cmd_avecassurance");
 
                     b.Property<bool>("Aveclivraisonexpress")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
+                        .HasDefaultValue(false)
                         .HasColumnName("cmd_aveclivraisonexpress");
 
                     b.Property<DateTime>("Datecommande")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("cmd_datecommande");
+                        .HasColumnName("cmd_datecommande")
+                        .HasDefaultValueSql("now()");
 
                     b.Property<int>("Idadresse")
                         .HasColumnType("integer")
@@ -759,8 +781,10 @@ namespace SAE401_API.Migrations
                         .HasColumnName("hst_idproduit");
 
                     b.Property<DateTime>("Dateconsultation")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("hst_dateconsultation");
+                        .HasColumnName("hst_dateconsultation")
+                        .HasDefaultValueSql("now()");
 
                     b.HasKey("Idclient", "Idproduit")
                         .HasName("pk_hst");
@@ -813,8 +837,10 @@ namespace SAE401_API.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Idpaiement"));
 
                     b.Property<DateTime>("Datepaiement")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("pmt_datepaiement");
+                        .HasColumnName("pmt_datepaiement")
+                        .HasDefaultValueSql("now()");
 
                     b.Property<int?>("Idcartebancaire")
                         .HasColumnType("integer")
@@ -953,7 +979,9 @@ namespace SAE401_API.Migrations
                         .HasColumnName("prd_coutlivraison");
 
                     b.Property<int>("Delailivraison")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
+                        .HasDefaultValue(72)
                         .HasColumnName("prd_delailivraison");
 
                     b.Property<int>("Idpays")
@@ -965,7 +993,9 @@ namespace SAE401_API.Migrations
                         .HasColumnName("prd_idtypeproduit");
 
                     b.Property<int>("Nbpaiementmax")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
+                        .HasDefaultValue(1)
                         .HasColumnName("prd_nbpaiementmax");
 
                     b.Property<string>("Nomproduit")
@@ -1087,8 +1117,10 @@ namespace SAE401_API.Migrations
                         .HasColumnName("sga_contenusignalement");
 
                     b.Property<DateTime>("Datesignalement")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("sga_datesignalement");
+                        .HasColumnName("sga_datesignalement")
+                        .HasDefaultValueSql("now()");
 
                     b.Property<string>("Emailsignalement")
                         .IsRequired()

@@ -148,6 +148,9 @@ public partial class _DBMilibooContext : DbContext
         {
             entity.HasKey(e => e.Idavis).HasName("pk_avi");
 
+            entity.Property(e => e.Dateavis)
+                .HasDefaultValueSql("now()");
+
             entity.HasOne(d => d.IdclientNavigation).WithMany(p => p.Avisproduits)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_avi_cli");
@@ -159,6 +162,9 @@ public partial class _DBMilibooContext : DbContext
 
         modelBuilder.Entity<Cartebancaire>(entity =>
         {
+            entity.Property(e => e.Dateenregistement)
+                .HasDefaultValueSql("now()");
+
             entity.HasKey(e => e.Idcartebancaire).HasName("pk_car");
 
             entity.Property(e => e.Numcartebancaire).IsFixedLength();
@@ -185,7 +191,16 @@ public partial class _DBMilibooContext : DbContext
         {
             entity.HasKey(e => e.Idclient).HasName("pk_cli");
 
-            entity.Property(e => e.Datecreationcompte).IsFixedLength();
+            entity.Property(e => e.Datecreationcompte)
+                .IsFixedLength()
+                .HasDefaultValueSql("now()");
+            entity.Property(e => e.Pointfideliteclient)
+                .HasDefaultValue(0);
+            entity.Property(e => e.Newslettermiliboo)
+                .HasDefaultValue(false);
+            entity.Property(e => e.Newsletterpartenaires)
+                .HasDefaultValue(false);
+
             entity.Property(e => e.Hashmdp).IsFixedLength();
             entity.Property(e => e.Telfixeclient).IsFixedLength();
             entity.Property(e => e.Telportableclient).IsFixedLength();
@@ -195,6 +210,9 @@ public partial class _DBMilibooContext : DbContext
         {
             entity.HasKey(e => e.Idcodepromo).HasName("pk_cod");
 
+            entity.Property(e => e.Estvalide)
+                .HasDefaultValue(true);
+
             entity.HasOne(d => d.IdclientNavigation).WithMany(p => p.Codepromos)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_cod_cli");
@@ -203,6 +221,9 @@ public partial class _DBMilibooContext : DbContext
         modelBuilder.Entity<Coloration>(entity =>
         {
             entity.HasKey(e => new { e.Idproduit, e.Idcouleur }).HasName("pk_col");
+
+            entity.Property(e => e.Estvisible)
+                .HasDefaultValue(false);
 
             entity.HasOne(d => d.IdcouleurNavigation).WithMany(p => p.Colorations)
                 .OnDelete(DeleteBehavior.Restrict)
@@ -216,6 +237,13 @@ public partial class _DBMilibooContext : DbContext
         modelBuilder.Entity<Commande>(entity =>
         {
             entity.HasKey(e => e.Idcommande).HasName("pk_cmd");
+
+            entity.Property(e => e.Datecommande)
+                .HasDefaultValueSql("now()");
+            entity.Property(e => e.Avecassurance)
+                .HasDefaultValue(false);
+            entity.Property(e => e.Aveclivraisonexpress)
+                .HasDefaultValue(false);
 
             entity.HasOne(d => d.AdrIdadresseNavigation).WithMany(p => p.CommandeAdrIdadresseNavigations)
                 .OnDelete(DeleteBehavior.Restrict)
@@ -354,6 +382,9 @@ public partial class _DBMilibooContext : DbContext
         {
             entity.HasKey(e => new { e.Idclient, e.Idproduit }).HasName("pk_hst");
 
+            entity.Property(e => e.Dateconsultation)
+                .HasDefaultValueSql("now()");
+
             entity.HasOne(d => d.IdclientNavigation).WithMany(p => p.Historiqueconsultations)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_hst_cli");
@@ -375,6 +406,9 @@ public partial class _DBMilibooContext : DbContext
         modelBuilder.Entity<Paiement>(entity =>
         {
             entity.HasKey(e => e.Idpaiement).HasName("pk_pmt");
+
+            entity.Property(e => e.Datepaiement)
+                .HasDefaultValueSql("now()");
 
             entity.HasOne(d => d.IdcartebancaireNavigation).WithMany(p => p.Paiements)
                 .OnDelete(DeleteBehavior.Restrict)
@@ -429,6 +463,11 @@ public partial class _DBMilibooContext : DbContext
         {
             entity.HasKey(e => e.Idproduit).HasName("pk_prd");
 
+            entity.Property(e => e.Delailivraison)
+                .HasDefaultValue(72);
+            entity.Property(e => e.Nbpaiementmax)
+                .HasDefaultValue(1);
+
             entity.HasOne(d => d.IdpaysNavigation).WithMany(p => p.Produits)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_prd_pay");
@@ -463,6 +502,9 @@ public partial class _DBMilibooContext : DbContext
         modelBuilder.Entity<Signalementavi>(entity =>
         {
             entity.HasKey(e => e.Idsignalement).HasName("pk_sga");
+
+            entity.Property(e => e.Datesignalement)
+                .HasDefaultValueSql("now()");
 
             entity.HasOne(d => d.IdavisNavigation).WithMany(p => p.Signalementavis)
                 .OnDelete(DeleteBehavior.Restrict)

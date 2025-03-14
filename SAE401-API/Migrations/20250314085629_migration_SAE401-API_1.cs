@@ -37,11 +37,11 @@ namespace SAE401_API.Migrations
                     cli_emailclient = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     cli_telfixeclient = table.Column<string>(type: "character(11)", fixedLength: true, maxLength: 11, nullable: true),
                     cli_telportableclient = table.Column<string>(type: "character(11)", fixedLength: true, maxLength: 11, nullable: false),
-                    cli_datecreationcompte = table.Column<DateTime>(type: "timestamp with time zone", fixedLength: true, nullable: false),
+                    cli_datecreationcompte = table.Column<DateTime>(type: "timestamp with time zone", fixedLength: true, nullable: false, defaultValueSql: "now()"),
                     cli_hashmdp = table.Column<string>(type: "character(256)", fixedLength: true, maxLength: 256, nullable: false),
-                    cli_pointfideliteclient = table.Column<int>(type: "integer", nullable: false),
-                    cli_newslettermiliboo = table.Column<bool>(type: "boolean", nullable: false),
-                    cli_newsletterpartenaires = table.Column<bool>(type: "boolean", nullable: false)
+                    cli_pointfideliteclient = table.Column<int>(type: "integer", nullable: false, defaultValue: 0),
+                    cli_newslettermiliboo = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    cli_newsletterpartenaires = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
                 {
@@ -203,7 +203,7 @@ namespace SAE401_API.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     car_idclient = table.Column<int>(type: "integer", nullable: false),
                     car_nomcartebancaire = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: true),
-                    car_dateenregistement = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    car_dateenregistement = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
                     car_numcartebancaire = table.Column<string>(type: "character(16)", fixedLength: true, maxLength: 16, nullable: false),
                     car_dateexpirationcarte = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -227,7 +227,7 @@ namespace SAE401_API.Migrations
                     cod_idclient = table.Column<int>(type: "integer", nullable: true),
                     cod_nomcodepromo = table.Column<string>(type: "character varying(16)", maxLength: 16, nullable: false),
                     cod_valeurreduction = table.Column<decimal>(type: "numeric(5,2)", nullable: false),
-                    cod_estvalide = table.Column<bool>(type: "boolean", nullable: false),
+                    cod_estvalide = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true),
                     cod_dateexpirationcode = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
@@ -419,9 +419,9 @@ namespace SAE401_API.Migrations
                     cmd_adr_idadresse = table.Column<int>(type: "integer", nullable: false),
                     cmd_idstatut = table.Column<int>(type: "integer", nullable: false),
                     cmd_idtransporteur = table.Column<int>(type: "integer", nullable: false),
-                    cmd_datecommande = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    cmd_avecassurance = table.Column<bool>(type: "boolean", nullable: false),
-                    cmd_aveclivraisonexpress = table.Column<bool>(type: "boolean", nullable: false),
+                    cmd_datecommande = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
+                    cmd_avecassurance = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    cmd_aveclivraisonexpress = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
                     cmd_instructionlivraison = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: true)
                 },
                 constraints: table =>
@@ -496,9 +496,9 @@ namespace SAE401_API.Migrations
                     prd_nomproduit = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     prd_sourcenotice = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     prd_sourceaspecttechnique = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
-                    prd_delailivraison = table.Column<int>(type: "integer", nullable: false),
+                    prd_delailivraison = table.Column<int>(type: "integer", nullable: false, defaultValue: 72),
                     prd_coutlivraison = table.Column<decimal>(type: "numeric(10,2)", nullable: false),
-                    prd_nbpaiementmax = table.Column<int>(type: "integer", nullable: false)
+                    prd_nbpaiementmax = table.Column<int>(type: "integer", nullable: false, defaultValue: 1)
                 },
                 constraints: table =>
                 {
@@ -526,7 +526,7 @@ namespace SAE401_API.Migrations
                     pmt_idcartebancaire = table.Column<int>(type: "integer", nullable: true),
                     pmt_idcommande = table.Column<int>(type: "integer", nullable: false),
                     pmt_idtypepaiement = table.Column<int>(type: "integer", nullable: false),
-                    pmt_datepaiement = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    pmt_datepaiement = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
                     pmt_montantpaiement = table.Column<decimal>(type: "numeric(10,2)", nullable: false),
                     pmt_indicepaiement = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true)
                 },
@@ -587,7 +587,7 @@ namespace SAE401_API.Migrations
                     avi_idproduit = table.Column<int>(type: "integer", nullable: false),
                     avi_idclient = table.Column<int>(type: "integer", nullable: false),
                     avi_noteavis = table.Column<int>(type: "integer", nullable: false),
-                    avi_dateavis = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    avi_dateavis = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
                     avi_commentaireavis = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
                     avi_reponsemiliboo = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true)
                 },
@@ -642,7 +642,7 @@ namespace SAE401_API.Migrations
                     col_prixsolde = table.Column<decimal>(type: "numeric(10,2)", nullable: true),
                     col_quantitestock = table.Column<int>(type: "integer", nullable: false),
                     col_descriptioncoloration = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: true),
-                    col_estvisible = table.Column<bool>(type: "boolean", nullable: false)
+                    col_estvisible = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
                 {
@@ -667,7 +667,7 @@ namespace SAE401_API.Migrations
                 {
                     hst_idclient = table.Column<int>(type: "integer", nullable: false),
                     hst_idproduit = table.Column<int>(type: "integer", nullable: false),
-                    hst_dateconsultation = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    hst_dateconsultation = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()")
                 },
                 constraints: table =>
                 {
@@ -744,7 +744,7 @@ namespace SAE401_API.Migrations
                     sga_idavis = table.Column<int>(type: "integer", nullable: false),
                     sga_idtypesignalement = table.Column<int>(type: "integer", nullable: false),
                     sga_emailsignalement = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
-                    sga_datesignalement = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    sga_datesignalement = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
                     sga_contenusignalement = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: false)
                 },
                 constraints: table =>
