@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace SAE401_API.Migrations
 {
     /// <inheritdoc />
-    public partial class migration_SAE401API_1 : Migration
+    public partial class SAE401API_migration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -268,8 +268,7 @@ namespace SAE401_API.Migrations
                 {
                     pro_idclient = table.Column<int>(type: "integer", nullable: false),
                     pro_idactivitepro = table.Column<int>(type: "integer", nullable: false),
-                    pro_nomsociete = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    pro_nomsociete = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     pro_numtva = table.Column<string>(type: "character(11)", fixedLength: true, maxLength: 11, nullable: false)
                 },
                 constraints: table =>
@@ -769,11 +768,11 @@ namespace SAE401_API.Migrations
                 columns: table => new
                 {
                     pav_idavis = table.Column<int>(type: "integer", nullable: false),
-                    aim_idproduit = table.Column<int>(type: "integer", nullable: false)
+                    pav_idproduit = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_pav", x => new { x.pav_idavis, x.aim_idproduit });
+                    table.PrimaryKey("pk_pav", x => new { x.pav_idavis, x.pav_idproduit });
                     table.ForeignKey(
                         name: "fk_pav_avi",
                         column: x => x.pav_idavis,
@@ -782,7 +781,7 @@ namespace SAE401_API.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "fk_pav_pho",
-                        column: x => x.aim_idproduit,
+                        column: x => x.pav_idproduit,
                         principalTable: "t_e_photo_pho",
                         principalColumn: "pho_idphoto",
                         onDelete: ReferentialAction.Restrict);
@@ -1185,9 +1184,9 @@ namespace SAE401_API.Migrations
                 column: "hst_idproduit");
 
             migrationBuilder.CreateIndex(
-                name: "IX_t_j_photoavis_pav_aim_idproduit",
+                name: "IX_t_j_photoavis_pav_pav_idproduit",
                 table: "t_j_photoavis_pav",
-                column: "aim_idproduit");
+                column: "pav_idproduit");
 
             migrationBuilder.CreateIndex(
                 name: "IX_t_j_photocoloration_pco_pco_idphoto",

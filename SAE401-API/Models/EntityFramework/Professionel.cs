@@ -17,7 +17,8 @@ public partial class Professionel
     public int Idactivitepro { get; set; }
 
     [Column("pro_nomsociete")]
-    public int Nomsociete { get; set; }
+    [StringLength(256)]
+    public string Nomsociete { get; set; } = null!;
 
     [Column("pro_numtva")]
     [StringLength(11)]

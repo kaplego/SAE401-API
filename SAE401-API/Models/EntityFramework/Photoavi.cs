@@ -15,7 +15,7 @@ public partial class Photoavi
     public int Idavis { get; set; }
 
     [Key]
-    [Column("aim_idproduit")]
+    [Column("pav_idproduit")]
     public int Idphoto { get; set; }
 
     [ForeignKey(nameof(Idavis))]

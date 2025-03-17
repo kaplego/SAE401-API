@@ -933,7 +933,7 @@ namespace SAE401_API.Migrations
 
                     b.Property<int>("Idphoto")
                         .HasColumnType("integer")
-                        .HasColumnName("aim_idproduit");
+                        .HasColumnName("pav_idproduit");
 
                     b.HasKey("Idavis", "Idphoto")
                         .HasName("pk_pav");
@@ -1055,12 +1055,12 @@ namespace SAE401_API.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("pro_idactivitepro");
 
-                    b.Property<int>("Nomsociete")
+                    b.Property<string>("Nomsociete")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
                         .HasColumnName("pro_nomsociete");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Nomsociete"));
 
                     b.Property<string>("Numtva")
                         .IsRequired()

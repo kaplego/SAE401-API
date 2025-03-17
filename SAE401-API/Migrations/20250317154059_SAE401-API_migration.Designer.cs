@@ -12,8 +12,8 @@ using SAE401_API.Models.EntityFramework;
 namespace SAE401_API.Migrations
 {
     [DbContext(typeof(_DBMilibooContext))]
-    [Migration("20250314085629_migration_SAE401-API_1")]
-    partial class migration_SAE401API_1
+    [Migration("20250317154059_SAE401-API_migration")]
+    partial class SAE401API_migration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -936,7 +936,7 @@ namespace SAE401_API.Migrations
 
                     b.Property<int>("Idphoto")
                         .HasColumnType("integer")
-                        .HasColumnName("aim_idproduit");
+                        .HasColumnName("pav_idproduit");
 
                     b.HasKey("Idavis", "Idphoto")
                         .HasName("pk_pav");
@@ -1058,12 +1058,12 @@ namespace SAE401_API.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("pro_idactivitepro");
 
-                    b.Property<int>("Nomsociete")
+                    b.Property<string>("Nomsociete")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
                         .HasColumnName("pro_nomsociete");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Nomsociete"));
 
                     b.Property<string>("Numtva")
                         .IsRequired()
