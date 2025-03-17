@@ -20,24 +20,24 @@ namespace SAE401_API.Models.DataManager
             milibooContext = context;
         }
 
-        public async Task<ActionResult<IEnumerable<Produit>>>GetAllAsync()
+        public async Task<ActionResult<IEnumerable<Produit>>>GetAllProduitAsync()
         {
             return await milibooContext.Produits.ToListAsync();
         }
 
-        public async Task<ActionResult<Produit>> GetByIdAsync(int id)
+        public async Task<ActionResult<Produit>> GetProduitByIdAsync(int id)
         {
             return await milibooContext.Produits.FirstOrDefaultAsync(p => p.Idproduit == id);
         }
 
-        public async Task AddAsync(Produit entity)
+        public async Task AddProduitAsync(Produit entity)
         {
             await milibooContext.Produits.AddAsync(entity);
             await milibooContext.SaveChangesAsync();
         }
 
 
-        public async Task UpdateAsync(Produit produit,Produit entity)
+        public async Task UpdateProduitAsync(Produit produit,Produit entity)
         {
             milibooContext.Entry(produit).State = EntityState.Modified;
             produit.Idproduit = entity.Idproduit;
@@ -52,7 +52,7 @@ namespace SAE401_API.Models.DataManager
             await milibooContext.SaveChangesAsync();
         }
 
-        public async Task  DeleteAsync(Produit produit)
+        public async Task  DeleteProduitAsync(Produit produit)
         {
             milibooContext.Produits.Remove(produit);
             await milibooContext.SaveChangesAsync();

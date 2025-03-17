@@ -26,14 +26,14 @@ namespace SAE401_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Produit>>> GetProduits()
         {
-            return await dataRepository.GetAllAsync();
+            return await dataRepository.GetAllProduitAsync();
         }
 
         // GET: api/Produits/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Produit>> GetProduit(int id)
         {
-            var produit =await dataRepository.GetByIdAsync(id);
+            var produit =await dataRepository.GetProduitByIdAsync(id);
 
             if (produit == null)
             {
@@ -53,7 +53,7 @@ namespace SAE401_API.Controllers
                 return BadRequest();
             }
 
-            var produitToUpdate = await dataRepository.GetByIdAsync(id);
+            var produitToUpdate = await dataRepository.GetProduitByIdAsync(id);
 
             if (produitToUpdate == null)
             {
@@ -62,7 +62,7 @@ namespace SAE401_API.Controllers
 
             else
             {
-                await dataRepository.UpdateAsync(produitToUpdate.Value, produit);
+                await dataRepository.UpdateProduitAsync(produitToUpdate.Value, produit);
                 return NoContent();
             }
         }
@@ -78,7 +78,7 @@ namespace SAE401_API.Controllers
             return BadRequest(ModelState); 
             }
 
-            await dataRepository.AddAsync(produit);
+            await dataRepository.AddProduitAsync(produit);
 
             return CreatedAtAction("GetProduit", new { id = produit.Idproduit }, produit);
         }
@@ -87,13 +87,13 @@ namespace SAE401_API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduit(int id)
         {
-            var produit =  await dataRepository.GetByIdAsync(id);
+            var produit =  await dataRepository.GetProduitByIdAsync(id);
             if (produit == null)
             {
                 return NotFound();
             }
 
-            await dataRepository.DeleteAsync(produit.Value);
+            await dataRepository.DeleteProduitAsync(produit.Value);
             return NoContent();
         }
 
