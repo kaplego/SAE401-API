@@ -35,7 +35,7 @@ namespace SAE401_API.Controllers
         {
             var produit =await dataRepository.GetProduitByIdAsync(id);
 
-            if (produit == null)
+            if (produit.Value == null)
             {
                 return NotFound();
             }
@@ -55,7 +55,7 @@ namespace SAE401_API.Controllers
 
             var produitToUpdate = await dataRepository.GetProduitByIdAsync(id);
 
-            if (produitToUpdate == null)
+            if (produitToUpdate.Value == null)
             {
                 return NotFound();
             }
@@ -88,7 +88,7 @@ namespace SAE401_API.Controllers
         public async Task<IActionResult> DeleteProduit(int id)
         {
             var produit =  await dataRepository.GetProduitByIdAsync(id);
-            if (produit == null)
+            if (produit.Value == null)
             {
                 return NotFound();
             }
