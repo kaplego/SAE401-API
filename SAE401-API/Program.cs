@@ -36,6 +36,13 @@ builder.Services.AddAuthorization(config =>
 
 var app = builder.Build();
 
+app.UseCors(policy =>
+    policy.AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
+
+app.UseStaticFiles();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
