@@ -694,16 +694,16 @@ namespace SAE401_API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_pds", x => new { x.pds_idproduit, x.pds_idproduit2 });
+                    table.PrimaryKey("pk_pds", x => new { x.pds_idproduit2, x.pds_idproduit });
                     table.ForeignKey(
                         name: "fk_dps_prd",
-                        column: x => x.pds_idproduit2,
+                        column: x => x.pds_idproduit,
                         principalTable: "t_e_produit_prd",
                         principalColumn: "prd_idproduit",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "fk_dps_prd2",
-                        column: x => x.pds_idproduit,
+                        column: x => x.pds_idproduit2,
                         principalTable: "t_e_produit_prd",
                         principalColumn: "prd_idproduit",
                         onDelete: ReferentialAction.Restrict);
@@ -1194,9 +1194,9 @@ namespace SAE401_API.Migrations
                 column: "pco_idphoto");
 
             migrationBuilder.CreateIndex(
-                name: "IX_t_j_produitsimilaire_pds_pds_idproduit2",
+                name: "IX_t_j_produitsimilaire_pds_pds_idproduit",
                 table: "t_j_produitsimilaire_pds",
-                column: "pds_idproduit2");
+                column: "pds_idproduit");
 
             migrationBuilder.CreateIndex(
                 name: "IX_t_j_valeurattribut_val_val_idproduit",

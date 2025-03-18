@@ -23,6 +23,6 @@ public partial class Photoavi
     public virtual Avisproduit AviNavigation { get; set; } = null!;
 
     [ForeignKey(nameof(Idphoto))]
-    [InverseProperty(nameof(Photo.PhotocolsNavigation))]
+    [InverseProperty(nameof(Photo.PhotoavisNavigation))]
     public virtual Photo PhotoNavigation { get; set; } = null!;
 }

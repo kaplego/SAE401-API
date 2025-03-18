@@ -261,10 +261,6 @@ namespace SAE401_API.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Idcategorie"));
 
-                    b.Property<int?>("CatIdcategorie")
-                        .HasColumnType("integer")
-                        .HasColumnName("cat_idcategorie2");
-
                     b.Property<string>("Descriptioncategorie")
                         .HasMaxLength(512)
                         .HasColumnType("character varying(512)")
@@ -273,6 +269,10 @@ namespace SAE401_API.Migrations
                     b.Property<bool>("Estfiltrable")
                         .HasColumnType("boolean")
                         .HasColumnName("cat_estfiltrable");
+
+                    b.Property<int?>("IdcategorieParent")
+                        .HasColumnType("integer")
+                        .HasColumnName("cat_idcategorie2");
 
                     b.Property<int?>("Idphoto")
                         .HasColumnType("integer")
@@ -287,7 +287,7 @@ namespace SAE401_API.Migrations
                     b.HasKey("Idcategorie")
                         .HasName("pk_cat");
 
-                    b.HasIndex("CatIdcategorie");
+                    b.HasIndex("IdcategorieParent");
 
                     b.HasIndex("Idphoto");
 
@@ -474,10 +474,6 @@ namespace SAE401_API.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Idcommande"));
 
-                    b.Property<int>("AdrIdadresse")
-                        .HasColumnType("integer")
-                        .HasColumnName("cmd_adr_idadresse");
-
                     b.Property<bool>("Avecassurance")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
@@ -496,7 +492,11 @@ namespace SAE401_API.Migrations
                         .HasColumnName("cmd_datecommande")
                         .HasDefaultValueSql("now()");
 
-                    b.Property<int>("Idadresse")
+                    b.Property<int>("IdadresseFact")
+                        .HasColumnType("integer")
+                        .HasColumnName("cmd_adr_idadresse");
+
+                    b.Property<int>("IdadresseLivr")
                         .HasColumnType("integer")
                         .HasColumnName("cmd_idadresse");
 
@@ -524,9 +524,9 @@ namespace SAE401_API.Migrations
                     b.HasKey("Idcommande")
                         .HasName("pk_cmd");
 
-                    b.HasIndex("AdrIdadresse");
+                    b.HasIndex("IdadresseFact");
 
-                    b.HasIndex("Idadresse");
+                    b.HasIndex("IdadresseLivr");
 
                     b.HasIndex("Idclient");
 
@@ -1029,18 +1029,18 @@ namespace SAE401_API.Migrations
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Produitsimilaire", b =>
                 {
-                    b.Property<int>("Idproduit")
-                        .HasColumnType("integer")
-                        .HasColumnName("pds_idproduit");
-
-                    b.Property<int>("Idproduit2")
+                    b.Property<int>("IdproduitSim")
                         .HasColumnType("integer")
                         .HasColumnName("pds_idproduit2");
 
-                    b.HasKey("Idproduit", "Idproduit2")
+                    b.Property<int>("IdproduitRef")
+                        .HasColumnType("integer")
+                        .HasColumnName("pds_idproduit");
+
+                    b.HasKey("IdproduitSim", "IdproduitRef")
                         .HasName("pk_pds");
 
-                    b.HasIndex("Idproduit2");
+                    b.HasIndex("IdproduitRef");
 
                     b.ToTable("t_j_produitsimilaire_pds");
                 });
@@ -1318,738 +1318,738 @@ namespace SAE401_API.Migrations
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Adresse", b =>
                 {
-                    b.HasOne("SAE401_API.Models.EntityFramework.Ville", "CodeinseeNavigation")
-                        .WithMany("Adresses")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Ville", "VilleNavigation")
+                        .WithMany("AdressesNavigation")
                         .HasForeignKey("Codeinsee")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_adr_vil");
 
-                    b.HasOne("SAE401_API.Models.EntityFramework.Client", "IdclientNavigation")
-                        .WithMany("Adresses")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Client", "ClientNavigation")
+                        .WithMany("AdressesNavigation")
                         .HasForeignKey("Idclient")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_adr_cli");
 
-                    b.HasOne("SAE401_API.Models.EntityFramework.Departement", "IddepartementNavigation")
-                        .WithMany("Adresses")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Departement", "DepartementNavigation")
+                        .WithMany("AdressesNavigation")
                         .HasForeignKey("Iddepartement")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_adr_dep");
 
-                    b.HasOne("SAE401_API.Models.EntityFramework.Pay", "IdpaysNavigation")
-                        .WithMany("Adresses")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Pay", "PayNavigation")
+                        .WithMany("AdressesNavigation")
                         .HasForeignKey("Idpays")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_adr_pay");
 
-                    b.Navigation("CodeinseeNavigation");
+                    b.Navigation("ClientNavigation");
 
-                    b.Navigation("IdclientNavigation");
+                    b.Navigation("DepartementNavigation");
 
-                    b.Navigation("IddepartementNavigation");
+                    b.Navigation("PayNavigation");
 
-                    b.Navigation("IdpaysNavigation");
+                    b.Navigation("VilleNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Aime", b =>
                 {
-                    b.HasOne("SAE401_API.Models.EntityFramework.Client", "IdclientNavigation")
-                        .WithMany("Aimes")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Client", "ClientNavigation")
+                        .WithMany("AimesNavigation")
                         .HasForeignKey("Idclient")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_aim_cli");
 
-                    b.HasOne("SAE401_API.Models.EntityFramework.Produit", "IdproduitNavigation")
-                        .WithMany("Aimes")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Produit", "ProduitNavigation")
+                        .WithMany("AimesNavigation")
                         .HasForeignKey("Idproduit")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_aim_prd");
 
-                    b.Navigation("IdclientNavigation");
+                    b.Navigation("ClientNavigation");
 
-                    b.Navigation("IdproduitNavigation");
+                    b.Navigation("ProduitNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Attributproduit", b =>
                 {
-                    b.HasOne("SAE401_API.Models.EntityFramework.Typeproduit", "IdtypeproduitNavigation")
-                        .WithMany("Attributproduits")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Typeproduit", "TypeproduitNavigation")
+                        .WithMany("AttributsNavigation")
                         .HasForeignKey("Idtypeproduit")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_att_tpd");
 
-                    b.Navigation("IdtypeproduitNavigation");
+                    b.Navigation("TypeproduitNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Avisproduit", b =>
                 {
-                    b.HasOne("SAE401_API.Models.EntityFramework.Client", "IdclientNavigation")
-                        .WithMany("Avisproduits")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Client", "ClientNavigation")
+                        .WithMany("AvisNavigation")
                         .HasForeignKey("Idclient")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_avi_cli");
 
-                    b.HasOne("SAE401_API.Models.EntityFramework.Produit", "IdproduitNavigation")
-                        .WithMany("Avisproduits")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Produit", "ProduitNavigation")
+                        .WithMany("AvisNavigation")
                         .HasForeignKey("Idproduit")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_avi_prd");
 
-                    b.Navigation("IdclientNavigation");
+                    b.Navigation("ClientNavigation");
 
-                    b.Navigation("IdproduitNavigation");
+                    b.Navigation("ProduitNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Cartebancaire", b =>
                 {
-                    b.HasOne("SAE401_API.Models.EntityFramework.Client", "IdclientNavigation")
-                        .WithMany("Cartebancaires")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Client", "ClientNavigation")
+                        .WithMany("CartesNavigation")
                         .HasForeignKey("Idclient")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_car_cli");
 
-                    b.Navigation("IdclientNavigation");
+                    b.Navigation("ClientNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Categorieproduit", b =>
                 {
-                    b.HasOne("SAE401_API.Models.EntityFramework.Categorieproduit", "CatIdcategorieNavigation")
-                        .WithMany("InverseCatIdcategorieNavigation")
-                        .HasForeignKey("CatIdcategorie")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Categorieproduit", "CategorieParenteNavigation")
+                        .WithMany("CategorieEnfanteNavigation")
+                        .HasForeignKey("IdcategorieParent")
                         .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("fk_cat_cat");
 
-                    b.HasOne("SAE401_API.Models.EntityFramework.Photo", "IdphotoNavigation")
-                        .WithMany("Categorieproduits")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Photo", "PhotoNavigation")
+                        .WithMany("CategoriesNavigation")
                         .HasForeignKey("Idphoto")
                         .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("fk_cat_pho");
 
-                    b.Navigation("CatIdcategorieNavigation");
+                    b.Navigation("CategorieParenteNavigation");
 
-                    b.Navigation("IdphotoNavigation");
+                    b.Navigation("PhotoNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Codepromo", b =>
                 {
-                    b.HasOne("SAE401_API.Models.EntityFramework.Client", "IdclientNavigation")
-                        .WithMany("Codepromos")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Client", "ClientNavigation")
+                        .WithMany("CodesNavigation")
                         .HasForeignKey("Idclient")
                         .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("fk_cod_cli");
 
-                    b.Navigation("IdclientNavigation");
+                    b.Navigation("ClientNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Coloration", b =>
                 {
-                    b.HasOne("SAE401_API.Models.EntityFramework.Couleur", "IdcouleurNavigation")
-                        .WithMany("Colorations")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Couleur", "CouleurNavigation")
+                        .WithMany("ColorationsNavigation")
                         .HasForeignKey("Idcouleur")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_col_cou");
 
-                    b.HasOne("SAE401_API.Models.EntityFramework.Produit", "IdproduitNavigation")
-                        .WithMany("Colorations")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Produit", "ProduitNavigation")
+                        .WithMany("ColorationsNavigation")
                         .HasForeignKey("Idproduit")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_col_prd");
 
-                    b.Navigation("IdcouleurNavigation");
+                    b.Navigation("CouleurNavigation");
 
-                    b.Navigation("IdproduitNavigation");
+                    b.Navigation("ProduitNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Commande", b =>
                 {
-                    b.HasOne("SAE401_API.Models.EntityFramework.Adresse", "AdrIdadresseNavigation")
-                        .WithMany("CommandeAdrIdadresseNavigations")
-                        .HasForeignKey("AdrIdadresse")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Adresse", "AdresseFactNavigation")
+                        .WithMany("CommandeFactNavigation")
+                        .HasForeignKey("IdadresseFact")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_cmd_adr");
 
-                    b.HasOne("SAE401_API.Models.EntityFramework.Adresse", "IdadresseNavigation")
-                        .WithMany("CommandeIdadresseNavigations")
-                        .HasForeignKey("Idadresse")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Adresse", "AdresseLivrNavigation")
+                        .WithMany("CommandeLivrNavigation")
+                        .HasForeignKey("IdadresseLivr")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_cmd_adr2");
 
-                    b.HasOne("SAE401_API.Models.EntityFramework.Client", "IdclientNavigation")
-                        .WithMany("Commandes")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Client", "ClientNavigation")
+                        .WithMany("CommandesNavigation")
                         .HasForeignKey("Idclient")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_cmd_cli");
 
-                    b.HasOne("SAE401_API.Models.EntityFramework.Codepromo", "IdcodepromoNavigation")
-                        .WithMany("Commandes")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Codepromo", "CodeNavigation")
+                        .WithMany("CommandesNavigation")
                         .HasForeignKey("Idcodepromo")
                         .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("fk_cmd_cod");
 
-                    b.HasOne("SAE401_API.Models.EntityFramework.Statutcommande", "IdstatutNavigation")
-                        .WithMany("Commandes")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Statutcommande", "StatutNavigation")
+                        .WithMany("CommandesNavigation")
                         .HasForeignKey("Idstatut")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_cmd_scd");
 
-                    b.HasOne("SAE401_API.Models.EntityFramework.Transporteur", "IdtransporteurNavigation")
-                        .WithMany("Commandes")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Transporteur", "TransporteurNavigation")
+                        .WithMany("CommandesNavigation")
                         .HasForeignKey("Idtransporteur")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_cmd_tpt");
 
-                    b.Navigation("AdrIdadresseNavigation");
+                    b.Navigation("AdresseFactNavigation");
 
-                    b.Navigation("IdadresseNavigation");
+                    b.Navigation("AdresseLivrNavigation");
 
-                    b.Navigation("IdclientNavigation");
+                    b.Navigation("ClientNavigation");
 
-                    b.Navigation("IdcodepromoNavigation");
+                    b.Navigation("CodeNavigation");
 
-                    b.Navigation("IdstatutNavigation");
+                    b.Navigation("StatutNavigation");
 
-                    b.Navigation("IdtransporteurNavigation");
+                    b.Navigation("TransporteurNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Commandecomposition", b =>
                 {
-                    b.HasOne("SAE401_API.Models.EntityFramework.Commande", "IdcommandeNavigation")
-                        .WithMany("Commandecompositions")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Commande", "CommandeNavigation")
+                        .WithMany("DetailsCompositionNavigation")
                         .HasForeignKey("Idcommande")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_cmc_cmd");
 
-                    b.HasOne("SAE401_API.Models.EntityFramework.Compositionproduit", "IdcompositionNavigation")
-                        .WithMany("Commandecompositions")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Compositionproduit", "CompositionNavigation")
+                        .WithMany("CommandesNavigation")
                         .HasForeignKey("Idcomposition")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_cmd_cmp");
 
-                    b.Navigation("IdcommandeNavigation");
+                    b.Navigation("CommandeNavigation");
 
-                    b.Navigation("IdcompositionNavigation");
+                    b.Navigation("CompositionNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Detailcommande", b =>
                 {
-                    b.HasOne("SAE401_API.Models.EntityFramework.Commande", "IdcommandeNavigation")
-                        .WithMany("Detailcommandes")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Commande", "CommandeNavigation")
+                        .WithMany("DetailsProduitNavigation")
                         .HasForeignKey("Idcommande")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_dcm_cmd");
 
-                    b.HasOne("SAE401_API.Models.EntityFramework.Coloration", "Coloration")
-                        .WithMany("Detailcommandes")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Coloration", "ColorationNavigation")
+                        .WithMany("DetailsCommandeNavigation")
                         .HasForeignKey("Idproduit", "Idcouleur")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_dcm_col");
 
-                    b.Navigation("Coloration");
+                    b.Navigation("ColorationNavigation");
 
-                    b.Navigation("IdcommandeNavigation");
+                    b.Navigation("CommandeNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Detailcomposition", b =>
                 {
-                    b.HasOne("SAE401_API.Models.EntityFramework.Compositionproduit", "IdcompositionNavigation")
-                        .WithMany("Detailcompositions")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Compositionproduit", "CompositionNavigation")
+                        .WithMany("DetailsNavigation")
                         .HasForeignKey("Idcomposition")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_dcp_cmp");
 
-                    b.HasOne("SAE401_API.Models.EntityFramework.Coloration", "Coloration")
-                        .WithMany("Detailcompositions")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Coloration", "ColorationNavigation")
+                        .WithMany("DetailsCompositionNavigation")
                         .HasForeignKey("Idproduit", "Idcouleur")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_dcp_col");
 
-                    b.Navigation("Coloration");
+                    b.Navigation("ColorationNavigation");
 
-                    b.Navigation("IdcompositionNavigation");
+                    b.Navigation("CompositionNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Detailpanier", b =>
                 {
-                    b.HasOne("SAE401_API.Models.EntityFramework.Client", "IdclientNavigation")
-                        .WithMany("Detailpaniers")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Client", "ClientNavigation")
+                        .WithMany("PaniersProduitNavigation")
                         .HasForeignKey("Idclient")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_dpn_cli");
 
-                    b.HasOne("SAE401_API.Models.EntityFramework.Coloration", "Coloration")
-                        .WithMany("Detailpaniers")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Coloration", "ColorationNavigation")
+                        .WithMany("DetailsPanierNavigation")
                         .HasForeignKey("Idproduit", "Idcouleur")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_dpn_col");
 
-                    b.Navigation("Coloration");
+                    b.Navigation("ClientNavigation");
 
-                    b.Navigation("IdclientNavigation");
+                    b.Navigation("ColorationNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Detailpaniercomposition", b =>
                 {
-                    b.HasOne("SAE401_API.Models.EntityFramework.Client", "IdclientNavigation")
-                        .WithMany("Detailpaniercompositions")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Client", "ClientNavigation")
+                        .WithMany("PaniersCompositionNavigation")
                         .HasForeignKey("Idclient")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_dpc_cli");
 
-                    b.HasOne("SAE401_API.Models.EntityFramework.Compositionproduit", "Composition")
-                        .WithMany("Detailpaniercompositions")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Compositionproduit", "CompositionNavigation")
+                        .WithMany("PaniersNavigation")
                         .HasForeignKey("Idcomposition")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_dpc_col");
 
-                    b.Navigation("Composition");
+                    b.Navigation("ClientNavigation");
 
-                    b.Navigation("IdclientNavigation");
+                    b.Navigation("CompositionNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Detailregroupement", b =>
                 {
-                    b.HasOne("SAE401_API.Models.EntityFramework.Regroupementproduit", "IdregroupementNavigation")
-                        .WithMany("Detailregroupements")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Regroupementproduit", "RegroupementNavigation")
+                        .WithMany("DetailsNavigation")
                         .HasForeignKey("Idregroupement")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_drg_rgp");
 
-                    b.HasOne("SAE401_API.Models.EntityFramework.Coloration", "Colorations")
-                        .WithMany("Detailregroupements")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Coloration", "ColorationsNavigation")
+                        .WithMany("DetailRegroupementNavigation")
                         .HasForeignKey("Idproduit", "Idcouleur")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_drg_col");
 
-                    b.Navigation("Colorations");
+                    b.Navigation("ColorationsNavigation");
 
-                    b.Navigation("IdregroupementNavigation");
+                    b.Navigation("RegroupementNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Historiqueconsultation", b =>
                 {
-                    b.HasOne("SAE401_API.Models.EntityFramework.Client", "IdclientNavigation")
-                        .WithMany("Historiqueconsultations")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Client", "ClientNavigation")
+                        .WithMany("HistoriquesNavigation")
                         .HasForeignKey("Idclient")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_hst_cli");
 
-                    b.HasOne("SAE401_API.Models.EntityFramework.Produit", "IdproduitNavigation")
-                        .WithMany("Historiqueconsultations")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Produit", "ProduitNavigation")
+                        .WithMany("HistoriquesNavigation")
                         .HasForeignKey("Idproduit")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_hst_prd");
 
-                    b.Navigation("IdclientNavigation");
+                    b.Navigation("ClientNavigation");
 
-                    b.Navigation("IdproduitNavigation");
+                    b.Navigation("ProduitNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Messagechatbot", b =>
                 {
-                    b.HasOne("SAE401_API.Models.EntityFramework.Client", "IdclientNavigation")
-                        .WithMany("Messagechatbots")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Client", "ClientNavigation")
+                        .WithMany("MessagesNavigation")
                         .HasForeignKey("Idclient")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_msg_cli");
 
-                    b.Navigation("IdclientNavigation");
+                    b.Navigation("ClientNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Paiement", b =>
                 {
-                    b.HasOne("SAE401_API.Models.EntityFramework.Cartebancaire", "IdcartebancaireNavigation")
-                        .WithMany("Paiements")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Cartebancaire", "CarteNavigation")
+                        .WithMany("PaiementsNavigation")
                         .HasForeignKey("Idcartebancaire")
                         .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("fk_pmt_car");
 
-                    b.HasOne("SAE401_API.Models.EntityFramework.Commande", "IdcommandeNavigation")
-                        .WithMany("Paiements")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Commande", "CommandeNavigation")
+                        .WithMany("PaiementsNavigation")
                         .HasForeignKey("Idcommande")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_pmt_cmd");
 
-                    b.HasOne("SAE401_API.Models.EntityFramework.Typepaiement", "IdtypepaiementNavigation")
-                        .WithMany("Paiements")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Typepaiement", "TypeNavigation")
+                        .WithMany("PaiementsNavigation")
                         .HasForeignKey("Idtypepaiement")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_pmt_tpm");
 
-                    b.Navigation("IdcartebancaireNavigation");
+                    b.Navigation("CarteNavigation");
 
-                    b.Navigation("IdcommandeNavigation");
+                    b.Navigation("CommandeNavigation");
 
-                    b.Navigation("IdtypepaiementNavigation");
+                    b.Navigation("TypeNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Photoavi", b =>
                 {
-                    b.HasOne("SAE401_API.Models.EntityFramework.Avisproduit", "IdavisNavigation")
-                        .WithMany("Photoavis")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Avisproduit", "AviNavigation")
+                        .WithMany("PhotoavisNavigation")
                         .HasForeignKey("Idavis")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_pav_avi");
 
-                    b.HasOne("SAE401_API.Models.EntityFramework.Photo", "IdphotoNavigation")
-                        .WithMany("Photoavis")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Photo", "PhotoNavigation")
+                        .WithMany("PhotoavisNavigation")
                         .HasForeignKey("Idphoto")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_pav_pho");
 
-                    b.Navigation("IdavisNavigation");
+                    b.Navigation("AviNavigation");
 
-                    b.Navigation("IdphotoNavigation");
+                    b.Navigation("PhotoNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Photocoloration", b =>
                 {
-                    b.HasOne("SAE401_API.Models.EntityFramework.Photo", "IdphotoNavigation")
-                        .WithMany("Photocolorations")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Photo", "PhotoNavigation")
+                        .WithMany("PhotocolsNavigation")
                         .HasForeignKey("Idphoto")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_pco_pho");
 
-                    b.HasOne("SAE401_API.Models.EntityFramework.Coloration", "Colorations")
-                        .WithMany("Photocolorations")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Coloration", "ColorationNavigation")
+                        .WithMany("PhotocolsNavigation")
                         .HasForeignKey("Idproduit", "Idcouleur")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_pco_col");
 
-                    b.Navigation("Colorations");
+                    b.Navigation("ColorationNavigation");
 
-                    b.Navigation("IdphotoNavigation");
+                    b.Navigation("PhotoNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Produit", b =>
                 {
-                    b.HasOne("SAE401_API.Models.EntityFramework.Pay", "IdpaysNavigation")
-                        .WithMany("Produits")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Pay", "PayNavigation")
+                        .WithMany("ProduitsNavigation")
                         .HasForeignKey("Idpays")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_prd_pay");
 
-                    b.HasOne("SAE401_API.Models.EntityFramework.Typeproduit", "IdtypeproduitNavigation")
-                        .WithMany("Produits")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Typeproduit", "TypeNavigation")
+                        .WithMany("ProduitsNavigation")
                         .HasForeignKey("Idtypeproduit")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_prd_tpd");
 
-                    b.Navigation("IdpaysNavigation");
+                    b.Navigation("PayNavigation");
 
-                    b.Navigation("IdtypeproduitNavigation");
+                    b.Navigation("TypeNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Produitsimilaire", b =>
                 {
-                    b.HasOne("SAE401_API.Models.EntityFramework.Produit", "IdproduitNavigation2")
-                        .WithMany("Idproduitsimilaire2")
-                        .HasForeignKey("Idproduit")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("fk_dps_prd2");
-
-                    b.HasOne("SAE401_API.Models.EntityFramework.Produit", "IdproduitNavigation")
-                        .WithMany("Idproduitsimilaire")
-                        .HasForeignKey("Idproduit2")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Produit", "ProduitRefNavigation")
+                        .WithMany("SimilaireRefNavigation")
+                        .HasForeignKey("IdproduitRef")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_dps_prd");
 
-                    b.Navigation("IdproduitNavigation");
+                    b.HasOne("SAE401_API.Models.EntityFramework.Produit", "ProduitSimNavigation")
+                        .WithMany("SimilaireSimNavigation")
+                        .HasForeignKey("IdproduitSim")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_dps_prd2");
 
-                    b.Navigation("IdproduitNavigation2");
+                    b.Navigation("ProduitRefNavigation");
+
+                    b.Navigation("ProduitSimNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Professionel", b =>
                 {
-                    b.HasOne("SAE401_API.Models.EntityFramework.Activitepro", "IdactiviteproNavigation")
-                        .WithMany("Professionels")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Activitepro", "ActiviteproNavigation")
+                        .WithMany("ProfessionelsNavigation")
                         .HasForeignKey("Idactivitepro")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_pro_act");
 
-                    b.HasOne("SAE401_API.Models.EntityFramework.Client", "IdclientNavigation")
-                        .WithOne("Professionel")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Client", "ClientNavigation")
+                        .WithOne("ProfessionelNavigation")
                         .HasForeignKey("SAE401_API.Models.EntityFramework.Professionel", "Idclient")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_pro_cli");
 
-                    b.Navigation("IdactiviteproNavigation");
+                    b.Navigation("ActiviteproNavigation");
 
-                    b.Navigation("IdclientNavigation");
+                    b.Navigation("ClientNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Signalementavi", b =>
                 {
-                    b.HasOne("SAE401_API.Models.EntityFramework.Avisproduit", "IdavisNavigation")
-                        .WithMany("Signalementavis")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Avisproduit", "AviNavigation")
+                        .WithMany("SignalementsNavigation")
                         .HasForeignKey("Idavis")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_sga_avi");
 
-                    b.HasOne("SAE401_API.Models.EntityFramework.Typesignalement", "IdtypesignalementNavigation")
-                        .WithMany("Signalementavis")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Typesignalement", "TypeNavigation")
+                        .WithMany("SignalementsNavigation")
                         .HasForeignKey("Idtypesignalement")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_sga_tsg");
 
-                    b.Navigation("IdavisNavigation");
+                    b.Navigation("AviNavigation");
 
-                    b.Navigation("IdtypesignalementNavigation");
+                    b.Navigation("TypeNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Typeproduit", b =>
                 {
-                    b.HasOne("SAE401_API.Models.EntityFramework.Categorieproduit", "IdcategorieNavigation")
-                        .WithMany("Typeproduits")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Categorieproduit", "CategorieNavigation")
+                        .WithMany("TypesNavigation")
                         .HasForeignKey("Idcategorie")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_tpd_cat");
 
-                    b.Navigation("IdcategorieNavigation");
+                    b.Navigation("CategorieNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Valeurattribut", b =>
                 {
-                    b.HasOne("SAE401_API.Models.EntityFramework.Attributproduit", "IdattributNavigation")
-                        .WithMany("Valeurattributs")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Attributproduit", "AttributNavigation")
+                        .WithMany("ValeursNavigation")
                         .HasForeignKey("Idattribut")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_val_att");
 
-                    b.HasOne("SAE401_API.Models.EntityFramework.Produit", "IdproduitNavigation")
-                        .WithMany("Valeurattributs")
+                    b.HasOne("SAE401_API.Models.EntityFramework.Produit", "ProduitNavigation")
+                        .WithMany("ValeursNavigation")
                         .HasForeignKey("Idproduit")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_val_prd");
 
-                    b.Navigation("IdattributNavigation");
+                    b.Navigation("AttributNavigation");
 
-                    b.Navigation("IdproduitNavigation");
+                    b.Navigation("ProduitNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Activitepro", b =>
                 {
-                    b.Navigation("Professionels");
+                    b.Navigation("ProfessionelsNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Adresse", b =>
                 {
-                    b.Navigation("CommandeAdrIdadresseNavigations");
+                    b.Navigation("CommandeFactNavigation");
 
-                    b.Navigation("CommandeIdadresseNavigations");
+                    b.Navigation("CommandeLivrNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Attributproduit", b =>
                 {
-                    b.Navigation("Valeurattributs");
+                    b.Navigation("ValeursNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Avisproduit", b =>
                 {
-                    b.Navigation("Photoavis");
+                    b.Navigation("PhotoavisNavigation");
 
-                    b.Navigation("Signalementavis");
+                    b.Navigation("SignalementsNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Cartebancaire", b =>
                 {
-                    b.Navigation("Paiements");
+                    b.Navigation("PaiementsNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Categorieproduit", b =>
                 {
-                    b.Navigation("InverseCatIdcategorieNavigation");
+                    b.Navigation("CategorieEnfanteNavigation");
 
-                    b.Navigation("Typeproduits");
+                    b.Navigation("TypesNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Client", b =>
                 {
-                    b.Navigation("Adresses");
+                    b.Navigation("AdressesNavigation");
 
-                    b.Navigation("Aimes");
+                    b.Navigation("AimesNavigation");
 
-                    b.Navigation("Avisproduits");
+                    b.Navigation("AvisNavigation");
 
-                    b.Navigation("Cartebancaires");
+                    b.Navigation("CartesNavigation");
 
-                    b.Navigation("Codepromos");
+                    b.Navigation("CodesNavigation");
 
-                    b.Navigation("Commandes");
+                    b.Navigation("CommandesNavigation");
 
-                    b.Navigation("Detailpaniercompositions");
+                    b.Navigation("HistoriquesNavigation");
 
-                    b.Navigation("Detailpaniers");
+                    b.Navigation("MessagesNavigation");
 
-                    b.Navigation("Historiqueconsultations");
+                    b.Navigation("PaniersCompositionNavigation");
 
-                    b.Navigation("Messagechatbots");
+                    b.Navigation("PaniersProduitNavigation");
 
-                    b.Navigation("Professionel");
+                    b.Navigation("ProfessionelNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Codepromo", b =>
                 {
-                    b.Navigation("Commandes");
+                    b.Navigation("CommandesNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Coloration", b =>
                 {
-                    b.Navigation("Detailcommandes");
+                    b.Navigation("DetailRegroupementNavigation");
 
-                    b.Navigation("Detailcompositions");
+                    b.Navigation("DetailsCommandeNavigation");
 
-                    b.Navigation("Detailpaniers");
+                    b.Navigation("DetailsCompositionNavigation");
 
-                    b.Navigation("Detailregroupements");
+                    b.Navigation("DetailsPanierNavigation");
 
-                    b.Navigation("Photocolorations");
+                    b.Navigation("PhotocolsNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Commande", b =>
                 {
-                    b.Navigation("Commandecompositions");
+                    b.Navigation("DetailsCompositionNavigation");
 
-                    b.Navigation("Detailcommandes");
+                    b.Navigation("DetailsProduitNavigation");
 
-                    b.Navigation("Paiements");
+                    b.Navigation("PaiementsNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Compositionproduit", b =>
                 {
-                    b.Navigation("Commandecompositions");
+                    b.Navigation("CommandesNavigation");
 
-                    b.Navigation("Detailcompositions");
+                    b.Navigation("DetailsNavigation");
 
-                    b.Navigation("Detailpaniercompositions");
+                    b.Navigation("PaniersNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Couleur", b =>
                 {
-                    b.Navigation("Colorations");
+                    b.Navigation("ColorationsNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Departement", b =>
                 {
-                    b.Navigation("Adresses");
+                    b.Navigation("AdressesNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Pay", b =>
                 {
-                    b.Navigation("Adresses");
+                    b.Navigation("AdressesNavigation");
 
-                    b.Navigation("Produits");
+                    b.Navigation("ProduitsNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Photo", b =>
                 {
-                    b.Navigation("Categorieproduits");
+                    b.Navigation("CategoriesNavigation");
 
-                    b.Navigation("Photoavis");
+                    b.Navigation("PhotoavisNavigation");
 
-                    b.Navigation("Photocolorations");
+                    b.Navigation("PhotocolsNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Produit", b =>
                 {
-                    b.Navigation("Aimes");
+                    b.Navigation("AimesNavigation");
 
-                    b.Navigation("Avisproduits");
+                    b.Navigation("AvisNavigation");
 
-                    b.Navigation("Colorations");
+                    b.Navigation("ColorationsNavigation");
 
-                    b.Navigation("Historiqueconsultations");
+                    b.Navigation("HistoriquesNavigation");
 
-                    b.Navigation("Idproduitsimilaire");
+                    b.Navigation("SimilaireRefNavigation");
 
-                    b.Navigation("Idproduitsimilaire2");
+                    b.Navigation("SimilaireSimNavigation");
 
-                    b.Navigation("Valeurattributs");
+                    b.Navigation("ValeursNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Regroupementproduit", b =>
                 {
-                    b.Navigation("Detailregroupements");
+                    b.Navigation("DetailsNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Statutcommande", b =>
                 {
-                    b.Navigation("Commandes");
+                    b.Navigation("CommandesNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Transporteur", b =>
                 {
-                    b.Navigation("Commandes");
+                    b.Navigation("CommandesNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Typepaiement", b =>
                 {
-                    b.Navigation("Paiements");
+                    b.Navigation("PaiementsNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Typeproduit", b =>
                 {
-                    b.Navigation("Attributproduits");
+                    b.Navigation("AttributsNavigation");
 
-                    b.Navigation("Produits");
+                    b.Navigation("ProduitsNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Typesignalement", b =>
                 {
-                    b.Navigation("Signalementavis");
+                    b.Navigation("SignalementsNavigation");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Ville", b =>
                 {
-                    b.Navigation("Adresses");
+                    b.Navigation("AdressesNavigation");
                 });
 #pragma warning restore 612, 618
         }

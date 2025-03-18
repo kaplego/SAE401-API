@@ -37,10 +37,10 @@ public partial class Coloration
     [Column("col_estvisible")]
     public bool Estvisible { get; set; }
 
-    [InverseProperty(nameof(Detailcommande.CommandeNavigation))]
+    [InverseProperty(nameof(Detailcommande.ColorationNavigation))]
     public virtual ICollection<Detailcommande> DetailsCommandeNavigation { get; set; } = new List<Detailcommande>();
 
-    [InverseProperty(nameof(Detailcomposition.CompositionNavigation))]
+    [InverseProperty(nameof(Detailcomposition.ColorationNavigation))]
     public virtual ICollection<Detailcomposition> DetailsCompositionNavigation { get; set; } = new List<Detailcomposition>();
 
     [InverseProperty(nameof(Detailpanier.ColorationNavigation))]
