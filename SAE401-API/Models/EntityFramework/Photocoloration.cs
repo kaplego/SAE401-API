@@ -23,10 +23,10 @@ public partial class Photocoloration
     public int Idphoto { get; set; }
 
     [ForeignKey("Idproduit, Idcouleur")]
-    [InverseProperty("Photocolorations")]
-    public virtual Coloration Colorations { get; set; } = null!;
+    [InverseProperty(nameof(Coloration.PhotocolsNavigation))]
+    public virtual Coloration ColorationNavigation { get; set; } = null!;
 
     [ForeignKey(nameof(Idphoto))]
-    [InverseProperty("Photocolorations")]
-    public virtual Photo IdphotoNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Photo.PhotocolsNavigation))]
+    public virtual Photo PhotoNavigation { get; set; } = null!;
 }

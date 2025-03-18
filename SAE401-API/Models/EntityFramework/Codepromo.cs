@@ -32,10 +32,10 @@ public partial class Codepromo
     [FutureDateValidator]
     public DateTime? Dateexpirationcode { get; set; }
 
-    [InverseProperty("IdcodepromoNavigation")]
-    public virtual ICollection<Commande> Commandes { get; set; } = new List<Commande>();
+    [InverseProperty(nameof(Commande.CodeNavigation))]
+    public virtual ICollection<Commande> CommandesNavigation { get; set; } = new List<Commande>();
 
     [ForeignKey(nameof(Idclient))]
-    [InverseProperty("Codepromos")]
-    public virtual Client? IdclientNavigation { get; set; }
+    [InverseProperty(nameof(Client.CodesNavigation))]
+    public virtual Client? ClientNavigation { get; set; }
 }

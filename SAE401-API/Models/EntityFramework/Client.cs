@@ -60,36 +60,36 @@ public partial class Client
     [Column("cli_newsletterpartenaires")]
     public bool Newsletterpartenaires { get; set; }
 
-    [InverseProperty("IdclientNavigation")]
-    public virtual ICollection<Adresse> Adresses { get; set; } = new List<Adresse>();
+    [InverseProperty(nameof(Adresse.ClientNavigation))]
+    public virtual ICollection<Adresse> AdressesNavigation { get; set; } = new List<Adresse>();
 
-    [InverseProperty("IdclientNavigation")]
-    public virtual ICollection<Avisproduit> Avisproduits { get; set; } = new List<Avisproduit>();
+    [InverseProperty(nameof(Avisproduit.ClientNavigation))]
+    public virtual ICollection<Avisproduit> AvisNavigation { get; set; } = new List<Avisproduit>();
 
-    [InverseProperty("IdclientNavigation")]
-    public virtual ICollection<Cartebancaire> Cartebancaires { get; set; } = new List<Cartebancaire>();
+    [InverseProperty(nameof(Cartebancaire.ClientNavigation))]
+    public virtual ICollection<Cartebancaire> CartesNavigation { get; set; } = new List<Cartebancaire>();
 
-    [InverseProperty("IdclientNavigation")]
-    public virtual ICollection<Codepromo> Codepromos { get; set; } = new List<Codepromo>();
+    [InverseProperty(nameof(Codepromo.ClientNavigation))]
+    public virtual ICollection<Codepromo> CodesNavigation { get; set; } = new List<Codepromo>();
 
-    [InverseProperty("IdclientNavigation")]
-    public virtual ICollection<Commande> Commandes { get; set; } = new List<Commande>();
+    [InverseProperty(nameof(Commande.ClientNavigation))]
+    public virtual ICollection<Commande> CommandesNavigation { get; set; } = new List<Commande>();
 
-    [InverseProperty("IdclientNavigation")]
-    public virtual ICollection<Detailpanier> Detailpaniers { get; set; } = new List<Detailpanier>();
+    [InverseProperty(nameof(Detailpanier.ClientNavigation))]
+    public virtual ICollection<Detailpanier> PaniersProduitNavigation { get; set; } = new List<Detailpanier>();
 
-    [InverseProperty("IdclientNavigation")]
-    public virtual ICollection<Aime> Aimes { get; set; } = new List<Aime>();
+    [InverseProperty(nameof(Aime.ClientNavigation))]
+    public virtual ICollection<Aime> AimesNavigation { get; set; } = new List<Aime>();
 
-    [InverseProperty("IdclientNavigation")]
-    public virtual ICollection<Detailpaniercomposition> Detailpaniercompositions { get; set; } = new List<Detailpaniercomposition>();
+    [InverseProperty(nameof(Detailpaniercomposition.ClientNavigation))]
+    public virtual ICollection<Detailpaniercomposition> PaniersCompositionNavigation { get; set; } = new List<Detailpaniercomposition>();
 
-    [InverseProperty("IdclientNavigation")]
-    public virtual ICollection<Historiqueconsultation> Historiqueconsultations { get; set; } = new List<Historiqueconsultation>();
+    [InverseProperty(nameof(Historiqueconsultation.ClientNavigation))]
+    public virtual ICollection<Historiqueconsultation> HistoriquesNavigation { get; set; } = new List<Historiqueconsultation>();
 
-    [InverseProperty("IdclientNavigation")]
-    public virtual ICollection<Messagechatbot> Messagechatbots { get; set; } = new List<Messagechatbot>();
+    [InverseProperty(nameof(Messagechatbot.ClientNavigation))]
+    public virtual ICollection<Messagechatbot> MessagesNavigation { get; set; } = new List<Messagechatbot>();
 
-    [InverseProperty("IdclientNavigation")]
-    public virtual Professionel? Professionel { get; set; }
+    [InverseProperty(nameof(Professionel.ClientNavigation))]
+    public virtual Professionel? ProfessionelNavigation { get; set; }
 }

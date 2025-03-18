@@ -23,9 +23,9 @@ public partial class Attributproduit
     public string Nomattribut { get; set; } = null!;
 
     [ForeignKey(nameof(Idtypeproduit))]
-    [InverseProperty("Attributproduits")]
-    public virtual Typeproduit IdtypeproduitNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Typeproduit.AttributsNavigation))]
+    public virtual Typeproduit TypeproduitNavigation { get; set; } = null!;
 
-    [InverseProperty("IdattributNavigation")]
-    public virtual ICollection<Valeurattribut> Valeurattributs { get; set; } = new List<Valeurattribut>();
+    [InverseProperty(nameof(Valeurattribut.AttributNavigation))]
+    public virtual ICollection<Valeurattribut> ValeursNavigation { get; set; } = new List<Valeurattribut>();
 }

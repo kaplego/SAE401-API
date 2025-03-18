@@ -19,9 +19,9 @@ public partial class Pay
     [StringLength(32)]
     public string Nompays { get; set; } = null!;
 
-    [InverseProperty("IdpaysNavigation")]
-    public virtual ICollection<Adresse> Adresses { get; set; } = new List<Adresse>();
+    [InverseProperty(nameof(Adresse.PayNavigation))]
+    public virtual ICollection<Adresse> AdressesNavigation { get; set; } = new List<Adresse>();
 
-    [InverseProperty("IdpaysNavigation")]
-    public virtual ICollection<Produit> Produits { get; set; } = new List<Produit>();
+    [InverseProperty(nameof(Produit.PayNavigation))]
+    public virtual ICollection<Produit> ProduitsNavigation { get; set; } = new List<Produit>();
 }

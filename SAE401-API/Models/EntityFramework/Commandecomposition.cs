@@ -22,10 +22,10 @@ public partial class Commandecomposition
     public int Quantitecompositioncommande { get; set; }
 
     [ForeignKey(nameof(Idcommande))]
-    [InverseProperty("Commandecompositions")]
-    public virtual Commande IdcommandeNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Commande.DetailsCompositionNavigation))]
+    public virtual Commande CommandeNavigation { get; set; } = null!;
 
     [ForeignKey(nameof(Idcomposition))]
-    [InverseProperty("Commandecompositions")]
-    public virtual Compositionproduit IdcompositionNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Compositionproduit.CommandesNavigation))]
+    public virtual Compositionproduit CompositionNavigation { get; set; } = null!;
 }

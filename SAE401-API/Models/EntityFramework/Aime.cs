@@ -19,10 +19,10 @@ public partial class Aime
     public int Idproduit { get; set; }
 
     [ForeignKey(nameof(Idclient))]
-    [InverseProperty("Aimes")]
-    public virtual Client IdclientNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Client.AimesNavigation))]
+    public virtual Client ClientNavigation { get; set; } = null!;
 
     [ForeignKey(nameof(Idproduit))]
-    [InverseProperty("Aimes")]
-    public virtual Produit IdproduitNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Produit.AimesNavigation))]
+    public virtual Produit ProduitNavigation { get; set; } = null!;
 }

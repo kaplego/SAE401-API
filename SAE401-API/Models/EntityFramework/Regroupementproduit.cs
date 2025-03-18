@@ -19,6 +19,6 @@ public partial class Regroupementproduit
     [StringLength(64)]
     public string Nomregroupement { get; set; } = null!;
 
-    [InverseProperty("IdregroupementNavigation")]
-    public virtual ICollection<Detailregroupement> Detailregroupements { get; set; } = new List<Detailregroupement>();
+    [InverseProperty(nameof(Detailregroupement.RegroupementNavigation))]
+    public virtual ICollection<Detailregroupement> DetailsNavigation { get; set; } = new List<Detailregroupement>();
 }

@@ -41,9 +41,9 @@ public partial class Cartebancaire
     public DateTime Dateexpirationcarte { get; set; }
 
     [ForeignKey(nameof(Idclient))]
-    [InverseProperty("Cartebancaires")]
-    public virtual Client IdclientNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Client.CartesNavigation))]
+    public virtual Client ClientNavigation { get; set; } = null!;
 
-    [InverseProperty("IdcartebancaireNavigation")]
-    public virtual ICollection<Paiement> Paiements { get; set; } = new List<Paiement>();
+    [InverseProperty(nameof(Paiement.CarteNavigation))]
+    public virtual ICollection<Paiement> PaiementsNavigation { get; set; } = new List<Paiement>();
 }

@@ -31,12 +31,12 @@ public partial class Compositionproduit
     [StringLength(2048)]
     public string? Descriptioncomposition { get; set; }
 
-    [InverseProperty("IdcompositionNavigation")]
-    public virtual ICollection<Commandecomposition> Commandecompositions { get; set; } = new List<Commandecomposition>();
+    [InverseProperty(nameof(Commandecomposition.CompositionNavigation))]
+    public virtual ICollection<Commandecomposition> CommandesNavigation { get; set; } = new List<Commandecomposition>();
 
-    [InverseProperty("IdcompositionNavigation")]
-    public virtual ICollection<Detailcomposition> Detailcompositions { get; set; } = new List<Detailcomposition>();
+    [InverseProperty(nameof(Detailcomposition.CompositionNavigation))]
+    public virtual ICollection<Detailcomposition> DetailsNavigation { get; set; } = new List<Detailcomposition>();
 
-    [InverseProperty("Composition")]
-    public virtual ICollection<Detailpaniercomposition> Detailpaniercompositions { get; set; } = new List<Detailpaniercomposition>();
+    [InverseProperty(nameof(Detailpaniercomposition.CompositionNavigation))]
+    public virtual ICollection<Detailpaniercomposition> PaniersNavigation { get; set; } = new List<Detailpaniercomposition>();
 }

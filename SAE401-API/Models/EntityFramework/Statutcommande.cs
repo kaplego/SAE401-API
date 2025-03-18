@@ -19,6 +19,6 @@ public partial class Statutcommande
     [StringLength(64)]
     public string Nomstatut { get; set; } = null!;
 
-    [InverseProperty("IdstatutNavigation")]
-    public virtual ICollection<Commande> Commandes { get; set; } = new List<Commande>();
+    [InverseProperty(nameof(Commande.StatutNavigation))]
+    public virtual ICollection<Commande> CommandesNavigation { get; set; } = new List<Commande>();
 }

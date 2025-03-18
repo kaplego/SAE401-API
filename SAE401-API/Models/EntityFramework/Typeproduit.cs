@@ -22,13 +22,13 @@ public partial class Typeproduit
     [StringLength(64)]
     public string Nomtypeproduit { get; set; } = null!;
 
-    [InverseProperty("IdtypeproduitNavigation")]
-    public virtual ICollection<Attributproduit> Attributproduits { get; set; } = new List<Attributproduit>();
+    [InverseProperty(nameof(Attributproduit.TypeproduitNavigation))]
+    public virtual ICollection<Attributproduit> AttributsNavigation { get; set; } = new List<Attributproduit>();
 
     [ForeignKey(nameof(Idcategorie))]
-    [InverseProperty("Typeproduits")]
-    public virtual Categorieproduit IdcategorieNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Categorieproduit.TypesNavigation))]
+    public virtual Categorieproduit CategorieNavigation { get; set; } = null!;
 
-    [InverseProperty("IdtypeproduitNavigation")]
-    public virtual ICollection<Produit> Produits { get; set; } = new List<Produit>();
+    [InverseProperty(nameof(Produit.TypeNavigation))]
+    public virtual ICollection<Produit> ProduitsNavigation { get; set; } = new List<Produit>();
 }

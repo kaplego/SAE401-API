@@ -18,6 +18,6 @@ public partial class Activitepro
     [StringLength(64)]
     public string Nomactivitepro { get; set; } = null!;
 
-    [InverseProperty("IdactiviteproNavigation")]
-    public virtual ICollection<Professionel> Professionels { get; set; } = new List<Professionel>();
+    [InverseProperty(nameof(Professionel.ActiviteproNavigation))]
+    public virtual ICollection<Professionel> ProfessionelsNavigation { get; set; } = new List<Professionel>();
 }

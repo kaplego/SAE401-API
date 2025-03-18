@@ -19,6 +19,6 @@ public partial class Typepaiement
     [StringLength(64)]
     public string Nomtypepaiement { get; set; } = null!;
 
-    [InverseProperty("IdtypepaiementNavigation")]
-    public virtual ICollection<Paiement> Paiements { get; set; } = new List<Paiement>();
+    [InverseProperty(nameof(Paiement.TypeNavigation))]
+    public virtual ICollection<Paiement> PaiementsNavigation { get; set; } = new List<Paiement>();
 }

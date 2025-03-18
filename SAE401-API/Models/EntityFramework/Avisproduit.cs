@@ -40,17 +40,17 @@ public partial class Avisproduit
     public string? Reponsemiliboo { get; set; }
 
     [ForeignKey(nameof(Idclient))]
-    [InverseProperty("Avisproduits")]
-    public virtual Client IdclientNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Client.AvisNavigation))]
+    public virtual Client ClientNavigation { get; set; } = null!;
 
     [ForeignKey(nameof(Idproduit))]
-    [InverseProperty("Avisproduits")]
-    public virtual Produit IdproduitNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Produit.AvisNavigation))]
+    public virtual Produit ProduitNavigation { get; set; } = null!;
 
-    [InverseProperty("IdavisNavigation")]
-    public virtual ICollection<Signalementavi> Signalementavis { get; set; } = new List<Signalementavi>();
+    [InverseProperty(nameof(Signalementavi.AviNavigation))]
+    public virtual ICollection<Signalementavi> SignalementsNavigation { get; set; } = new List<Signalementavi>();
 
-    [InverseProperty("IdavisNavigation")]
-    public virtual ICollection<Photoavi> Photoavis { get; set; } = new List<Photoavi>();
+    [InverseProperty(nameof(Photoavi.AviNavigation))]
+    public virtual ICollection<Photoavi> PhotoavisNavigation { get; set; } = new List<Photoavi>();
 
 }

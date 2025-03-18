@@ -37,26 +37,26 @@ public partial class Coloration
     [Column("col_estvisible")]
     public bool Estvisible { get; set; }
 
-    [InverseProperty("Coloration")]
-    public virtual ICollection<Detailcommande> Detailcommandes { get; set; } = new List<Detailcommande>();
+    [InverseProperty(nameof(Detailcommande.CommandeNavigation))]
+    public virtual ICollection<Detailcommande> DetailsCommandeNavigation { get; set; } = new List<Detailcommande>();
 
-    [InverseProperty("Coloration")]
-    public virtual ICollection<Detailcomposition> Detailcompositions { get; set; } = new List<Detailcomposition>();
+    [InverseProperty(nameof(Detailcomposition.CompositionNavigation))]
+    public virtual ICollection<Detailcomposition> DetailsCompositionNavigation { get; set; } = new List<Detailcomposition>();
 
-    [InverseProperty("Coloration")]
-    public virtual ICollection<Detailpanier> Detailpaniers { get; set; } = new List<Detailpanier>();
+    [InverseProperty(nameof(Detailpanier.ColorationNavigation))]
+    public virtual ICollection<Detailpanier> DetailsPanierNavigation { get; set; } = new List<Detailpanier>();
 
     [ForeignKey(nameof(Idcouleur))]
-    [InverseProperty("Colorations")]
-    public virtual Couleur IdcouleurNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Couleur.ColorationsNavigation))]
+    public virtual Couleur CouleurNavigation { get; set; } = null!;
 
     [ForeignKey(nameof(Idproduit))]
-    [InverseProperty("Colorations")]
-    public virtual Produit IdproduitNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Produit.ColorationsNavigation))]
+    public virtual Produit ProduitNavigation { get; set; } = null!;
 
-    [InverseProperty("Colorations")]
-    public virtual ICollection<Photocoloration> Photocolorations { get; set; } = new List<Photocoloration>();
+    [InverseProperty(nameof(Photocoloration.ColorationNavigation))]
+    public virtual ICollection<Photocoloration> PhotocolsNavigation { get; set; } = new List<Photocoloration>();
 
-    [InverseProperty("Colorations")]
-    public virtual ICollection<Detailregroupement> Detailregroupements { get; set; } = new List<Detailregroupement>();
+    [InverseProperty(nameof(Detailregroupement.ColorationsNavigation))]
+    public virtual ICollection<Detailregroupement> DetailRegroupementNavigation { get; set; } = new List<Detailregroupement>();
 }

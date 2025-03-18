@@ -24,6 +24,6 @@ public partial class Couleur
     [RegularExpression(@"^[0-9A-Fa-f]+$", ErrorMessage = "La chaîne doit contenir uniquement des caractères hexadécimaux (0-9, A-F).")]
     public string Rgbcouleur { get; set; } = null!;
 
-    [InverseProperty("IdcouleurNavigation")]
-    public virtual ICollection<Coloration> Colorations { get; set; } = new List<Coloration>();
+    [InverseProperty(nameof(Coloration.CouleurNavigation))]
+    public virtual ICollection<Coloration> ColorationsNavigation { get; set; } = new List<Coloration>();
 }

@@ -19,10 +19,10 @@ public partial class Photoavi
     public int Idphoto { get; set; }
 
     [ForeignKey(nameof(Idavis))]
-    [InverseProperty("Photoavis")]
-    public virtual Avisproduit IdavisNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Avisproduit.PhotoavisNavigation))]
+    public virtual Avisproduit AviNavigation { get; set; } = null!;
 
     [ForeignKey(nameof(Idphoto))]
-    [InverseProperty("Photoavis")]
-    public virtual Photo IdphotoNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Photo.PhotocolsNavigation))]
+    public virtual Photo PhotoNavigation { get; set; } = null!;
 }

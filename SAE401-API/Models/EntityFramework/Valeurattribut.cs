@@ -23,10 +23,10 @@ public partial class Valeurattribut
     public string Valeur { get; set; } = null!;
 
     [ForeignKey(nameof(Idattribut))]
-    [InverseProperty("Valeurattributs")]
-    public virtual Attributproduit IdattributNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Attributproduit.ValeursNavigation))]
+    public virtual Attributproduit AttributNavigation { get; set; } = null!;
 
     [ForeignKey(nameof(Idproduit))]
-    [InverseProperty("Valeurattributs")]
-    public virtual Produit IdproduitNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Produit.ValeursNavigation))]
+    public virtual Produit ProduitNavigation { get; set; } = null!;
 }

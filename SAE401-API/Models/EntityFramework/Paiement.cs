@@ -37,14 +37,14 @@ public partial class Paiement
     public string? Indicepaiement { get; set; }
 
     [ForeignKey(nameof(Idcartebancaire))]
-    [InverseProperty("Paiements")]
-    public virtual Cartebancaire? IdcartebancaireNavigation { get; set; }
+    [InverseProperty(nameof(Cartebancaire.PaiementsNavigation))]
+    public virtual Cartebancaire? CarteNavigation { get; set; }
 
     [ForeignKey(nameof(Idcommande))]
-    [InverseProperty("Paiements")]
-    public virtual Commande IdcommandeNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Commande.PaiementsNavigation))]
+    public virtual Commande CommandeNavigation { get; set; } = null!;
 
     [ForeignKey(nameof(Idtypepaiement))]
-    [InverseProperty("Paiements")]
-    public virtual Typepaiement IdtypepaiementNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Typepaiement.PaiementsNavigation))]
+    public virtual Typepaiement TypeNavigation { get; set; } = null!;
 }

@@ -18,13 +18,13 @@ public partial class Commande
     public int Idclient { get; set; }
 
     [Column("cmd_idadresse")]
-    public int Idadresse { get; set; }
+    public int IdadresseLivr { get; set; }
 
     [Column("cmd_idcodepromo")]
     public int? Idcodepromo { get; set; }
 
     [Column("cmd_adr_idadresse")]
-    public int AdrIdadresse { get; set; }
+    public int IdadresseFact { get; set; }
 
     [Column("cmd_idstatut")]
     public int Idstatut { get; set; }
@@ -47,36 +47,36 @@ public partial class Commande
     [StringLength(512)]
     public string? Instructionlivraison { get; set; }
 
-    [ForeignKey(nameof(AdrIdadresse))]
-    [InverseProperty("CommandeAdrIdadresseNavigations")]
-    public virtual Adresse AdrIdadresseNavigation { get; set; } = null!;
+    [ForeignKey(nameof(IdadresseFact))]
+    [InverseProperty(nameof(Adresse.CommandeFactNavigation))]
+    public virtual Adresse AdresseFactNavigation { get; set; } = null!;
 
-    [InverseProperty("IdcommandeNavigation")]
-    public virtual ICollection<Commandecomposition> Commandecompositions { get; set; } = new List<Commandecomposition>();
+    [InverseProperty(nameof(Commandecomposition.CommandeNavigation))]
+    public virtual ICollection<Commandecomposition> DetailsCompositionNavigation { get; set; } = new List<Commandecomposition>();
 
-    [InverseProperty("IdcommandeNavigation")]
-    public virtual ICollection<Detailcommande> Detailcommandes { get; set; } = new List<Detailcommande>();
+    [InverseProperty(nameof(Detailcommande.CommandeNavigation))]
+    public virtual ICollection<Detailcommande> DetailsProduitNavigation { get; set; } = new List<Detailcommande>();
 
-    [ForeignKey(nameof(Idadresse))]
-    [InverseProperty("CommandeIdadresseNavigations")]
-    public virtual Adresse IdadresseNavigation { get; set; } = null!;
+    [ForeignKey(nameof(IdadresseLivr))]
+    [InverseProperty(nameof(Adresse.CommandeLivrNavigation))]
+    public virtual Adresse AdresseLivrNavigation { get; set; } = null!;
 
     [ForeignKey(nameof(Idclient))]
-    [InverseProperty("Commandes")]
-    public virtual Client IdclientNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Client.CommandesNavigation))]
+    public virtual Client ClientNavigation { get; set; } = null!;
 
     [ForeignKey(nameof(Idcodepromo))]
-    [InverseProperty("Commandes")]
-    public virtual Codepromo? IdcodepromoNavigation { get; set; }
+    [InverseProperty(nameof(Codepromo.CommandesNavigation))]
+    public virtual Codepromo? CodeNavigation { get; set; }
 
     [ForeignKey(nameof(Idstatut))]
-    [InverseProperty("Commandes")]
-    public virtual Statutcommande IdstatutNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Statutcommande.CommandesNavigation))]
+    public virtual Statutcommande StatutNavigation { get; set; } = null!;
 
     [ForeignKey(nameof(Idtransporteur))]
-    [InverseProperty("Commandes")]
-    public virtual Transporteur IdtransporteurNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Transporteur.CommandesNavigation))]
+    public virtual Transporteur TransporteurNavigation { get; set; } = null!;
 
-    [InverseProperty("IdcommandeNavigation")]
-    public virtual ICollection<Paiement> Paiements { get; set; } = new List<Paiement>();
+    [InverseProperty(nameof(Paiement.CommandeNavigation))]
+    public virtual ICollection<Paiement> PaiementsNavigation { get; set; } = new List<Paiement>();
 }

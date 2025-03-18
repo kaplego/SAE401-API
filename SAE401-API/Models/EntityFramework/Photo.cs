@@ -21,12 +21,12 @@ public partial class Photo
     [StringLength(256)]
     public string? Descriptionphoto { get; set; }
 
-    [InverseProperty("IdphotoNavigation")]
-    public virtual ICollection<Categorieproduit> Categorieproduits { get; set; } = new List<Categorieproduit>();
+    [InverseProperty(nameof(Categorieproduit.PhotoNavigation))]
+    public virtual ICollection<Categorieproduit> CategoriesNavigation { get; set; } = new List<Categorieproduit>();
 
-    [InverseProperty("IdphotoNavigation")]
-    public virtual ICollection<Photoavi> Photoavis { get; set; } = null!;
+    [InverseProperty(nameof(Photoavi.PhotoNavigation))]
+    public virtual ICollection<Photoavi> PhotoavisNavigation { get; set; } = null!;
 
-    [InverseProperty("IdphotoNavigation")]
-    public virtual ICollection<Photocoloration> Photocolorations { get; set; } = null!;
+    [InverseProperty(nameof(Photocoloration.PhotoNavigation))]
+    public virtual ICollection<Photocoloration> PhotocolsNavigation { get; set; } = null!;
 }

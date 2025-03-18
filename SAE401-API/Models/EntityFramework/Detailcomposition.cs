@@ -27,10 +27,10 @@ public partial class Detailcomposition
     public int Quantitecomposition { get; set; }
 
     [ForeignKey("Idproduit, Idcouleur")]
-    [InverseProperty("Detailcompositions")]
-    public virtual Coloration Coloration { get; set; } = null!;
+    [InverseProperty(nameof(ColorationNavigation.DetailsCompositionNavigation))]
+    public virtual Coloration ColorationNavigation { get; set; } = null!;
 
     [ForeignKey(nameof(Idcomposition))]
-    [InverseProperty("Detailcompositions")]
-    public virtual Compositionproduit IdcompositionNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Compositionproduit.DetailsNavigation))]
+    public virtual Compositionproduit CompositionNavigation { get; set; } = null!;
 }

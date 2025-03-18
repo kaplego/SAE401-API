@@ -44,32 +44,32 @@ public partial class Produit
     [Range(1, int.MaxValue, ErrorMessage = "La valeur doit être supérieure ou égale à 1.")]
     public int Nbpaiementmax { get; set; }
 
-    [InverseProperty("IdproduitNavigation")]
-    public virtual ICollection<Avisproduit> Avisproduits { get; set; } = new List<Avisproduit>();
+    [InverseProperty(nameof(Avisproduit.ProduitNavigation))]
+    public virtual ICollection<Avisproduit> AvisNavigation { get; set; } = new List<Avisproduit>();
 
-    [InverseProperty("IdproduitNavigation")]
-    public virtual ICollection<Coloration> Colorations { get; set; } = new List<Coloration>();
+    [InverseProperty(nameof(Coloration.ProduitNavigation))]
+    public virtual ICollection<Coloration> ColorationsNavigation { get; set; } = new List<Coloration>();
 
-    [InverseProperty("IdproduitNavigation")]
-    public virtual ICollection<Historiqueconsultation> Historiqueconsultations { get; set; } = new List<Historiqueconsultation>();
+    [InverseProperty(nameof(Historiqueconsultation.ProduitNavigation))]
+    public virtual ICollection<Historiqueconsultation> HistoriquesNavigation { get; set; } = new List<Historiqueconsultation>();
 
     [ForeignKey(nameof(Idpays))]
-    [InverseProperty("Produits")]
-    public virtual Pay IdpaysNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Pay.ProduitsNavigation))]
+    public virtual Pay PayNavigation { get; set; } = null!;
 
     [ForeignKey(nameof(Idtypeproduit))]
-    [InverseProperty("Produits")]
-    public virtual Typeproduit IdtypeproduitNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Typeproduit.ProduitsNavigation))]
+    public virtual Typeproduit TypeNavigation { get; set; } = null!;
 
-    [InverseProperty("IdproduitNavigation")]
-    public virtual ICollection<Valeurattribut> Valeurattributs { get; set; } = new List<Valeurattribut>();
+    [InverseProperty(nameof(Valeurattribut.ProduitNavigation))]
+    public virtual ICollection<Valeurattribut> ValeursNavigation { get; set; } = new List<Valeurattribut>();
 
-    [InverseProperty("IdproduitNavigation")]
-    public virtual ICollection<Produitsimilaire> Idproduitsimilaire { get; set; } = new List<Produitsimilaire>();
+    [InverseProperty(nameof(Produitsimilaire.ProduitRefNavigation))]
+    public virtual ICollection<Produitsimilaire> SimilaireRefNavigation { get; set; } = new List<Produitsimilaire>();
 
-    [InverseProperty("IdproduitNavigation2")]
-    public virtual ICollection<Produitsimilaire> Idproduitsimilaire2 { get; set; } = new List<Produitsimilaire>();
+    [InverseProperty(nameof(Produitsimilaire.ProduitSimNavigation))]
+    public virtual ICollection<Produitsimilaire> SimilaireSimNavigation { get; set; } = new List<Produitsimilaire>();
 
-    [InverseProperty("IdproduitNavigation")]
-    public virtual ICollection<Aime> Aimes { get; set; } = new List<Aime>();
+    [InverseProperty(nameof(Aime.ProduitNavigation))]
+    public virtual ICollection<Aime> AimesNavigation { get; set; } = new List<Aime>();
 }

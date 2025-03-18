@@ -19,6 +19,6 @@ public partial class Typesignalement
     [StringLength(64)]
     public string Nomtypesignalement { get; set; } = null!;
 
-    [InverseProperty("IdtypesignalementNavigation")]
-    public virtual ICollection<Signalementavi> Signalementavis { get; set; } = new List<Signalementavi>();
+    [InverseProperty(nameof(Signalementavi.TypeNavigation))]
+    public virtual ICollection<Signalementavi> SignalementsNavigation { get; set; } = new List<Signalementavi>();
 }

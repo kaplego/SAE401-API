@@ -23,10 +23,10 @@ public partial class Detailpaniercomposition
     public int Quantitepaniercomposition { get; set; }
 
     [ForeignKey(nameof(Idcomposition))]
-    [InverseProperty("Detailpaniercompositions")]
-    public virtual Compositionproduit Composition { get; set; } = null!;
+    [InverseProperty(nameof(Compositionproduit.PaniersNavigation))]
+    public virtual Compositionproduit CompositionNavigation { get; set; } = null!;
 
     [ForeignKey(nameof(Idclient))]
-    [InverseProperty("Detailpaniercompositions")]
-    public virtual Client IdclientNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Client.PaniersCompositionNavigation))]
+    public virtual Client ClientNavigation { get; set; } = null!;
 }

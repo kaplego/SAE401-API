@@ -18,6 +18,6 @@ public partial class Ville
     [StringLength(50)]
     public string? Nomville { get; set; }
 
-    [InverseProperty("CodeinseeNavigation")]
-    public virtual ICollection<Adresse> Adresses { get; set; } = new List<Adresse>();
+    [InverseProperty(nameof(Adresse.VilleNavigation))]
+    public virtual ICollection<Adresse> AdressesNavigation { get; set; } = new List<Adresse>();
 }

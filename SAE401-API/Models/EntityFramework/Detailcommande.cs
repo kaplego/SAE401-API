@@ -27,10 +27,10 @@ public partial class Detailcommande
     public int Quantitecommande { get; set; }
 
     [ForeignKey("Idproduit, Idcouleur")]
-    [InverseProperty("Detailcommandes")]
-    public virtual Coloration Coloration { get; set; } = null!;
+    [InverseProperty(nameof(ColorationNavigation.DetailsCommandeNavigation))]
+    public virtual Coloration ColorationNavigation { get; set; } = null!;
 
     [ForeignKey(nameof(Idcommande))]
-    [InverseProperty("Detailcommandes")]
-    public virtual Commande IdcommandeNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Commande.DetailsProduitNavigation))]
+    public virtual Commande CommandeNavigation { get; set; } = null!;
 }

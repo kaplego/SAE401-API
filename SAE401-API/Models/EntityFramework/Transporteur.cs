@@ -19,6 +19,6 @@ public partial class Transporteur
     [StringLength(64)]
     public string Nomtransporteur { get; set; } = null!;
 
-    [InverseProperty("IdtransporteurNavigation")]
-    public virtual ICollection<Commande> Commandes { get; set; } = new List<Commande>();
+    [InverseProperty(nameof(Commande.TransporteurNavigation))]
+    public virtual ICollection<Commande> CommandesNavigation { get; set; } = new List<Commande>();
 }

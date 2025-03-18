@@ -17,6 +17,6 @@ public partial class Departement
     [StringLength(50)]
     public string? Nomdepartement { get; set; }
 
-    [InverseProperty("IddepartementNavigation")]
-    public virtual ICollection<Adresse> Adresses { get; set; } = new List<Adresse>();
+    [InverseProperty(nameof(Adresse.DepartementNavigation))]
+    public virtual ICollection<Adresse> AdressesNavigation { get; set; } = new List<Adresse>();
 }

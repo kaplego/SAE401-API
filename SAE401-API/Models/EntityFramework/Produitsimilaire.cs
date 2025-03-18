@@ -6,23 +6,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
-[PrimaryKey(nameof(Idproduit), nameof(Idproduit2))]
+[PrimaryKey(nameof(IdproduitSim), nameof(IdproduitRef))]
 [Table("t_j_produitsimilaire_pds")]
 public partial class Produitsimilaire
 {
     [Key]
     [Column("pds_idproduit")]
-    public int Idproduit { get; set; }
+    public int IdproduitRef { get; set; }
 
     [Key]
     [Column("pds_idproduit2")]
-    public int Idproduit2 { get; set; }
+    public int IdproduitSim { get; set; }
 
-    [ForeignKey(nameof(Idproduit2))]
-    [InverseProperty("Idproduitsimilaire")]
-    public virtual Produit IdproduitNavigation { get; set; } = null!;
+    [ForeignKey(nameof(IdproduitRef))]
+    [InverseProperty(nameof(Produit.SimilaireRefNavigation))]
+    public virtual Produit ProduitRefNavigation { get; set; } = null!;
 
-    [ForeignKey(nameof(Idproduit))]
-    [InverseProperty("Idproduitsimilaire2")]
-    public virtual Produit IdproduitNavigation2 { get; set; } = null!;
+    [ForeignKey(nameof(IdproduitSim))]
+    [InverseProperty(nameof(Produit.SimilaireSimNavigation))]
+    public virtual Produit ProduitSimNavigation { get; set; } = null!;
 }

@@ -26,10 +26,10 @@ public partial class Professionel
     public string Numtva { get; set; } = null!;
 
     [ForeignKey(nameof(Idactivitepro))]
-    [InverseProperty("Professionels")]
-    public virtual Activitepro IdactiviteproNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Activitepro.ProfessionelsNavigation))]
+    public virtual Activitepro ActiviteproNavigation { get; set; } = null!;
 
     [ForeignKey(nameof(Idclient))]
-    [InverseProperty("Professionel")]
-    public virtual Client IdclientNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Client.ProfessionelNavigation))]
+    public virtual Client ClientNavigation { get; set; } = null!;
 }

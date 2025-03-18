@@ -25,6 +25,6 @@ public partial class Messagechatbot
     public string Reponsemessage { get; set; } = null!;
 
     [ForeignKey(nameof(Idclient))]
-    [InverseProperty("Messagechatbots")]
-    public virtual Client IdclientNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Client.MessagesNavigation))]
+    public virtual Client ClientNavigation { get; set; } = null!;
 }

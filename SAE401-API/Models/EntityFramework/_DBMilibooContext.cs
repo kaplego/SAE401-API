@@ -105,19 +105,19 @@ public partial class _DBMilibooContext : DbContext
             entity.Property(e => e.Codeinsee).IsFixedLength();
             entity.Property(e => e.Codepostaladresse).IsFixedLength();
 
-            entity.HasOne(d => d.CodeinseeNavigation).WithMany(p => p.Adresses)
+            entity.HasOne(d => d.VilleNavigation).WithMany(p => p.AdressesNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_adr_vil");
 
-            entity.HasOne(d => d.IdclientNavigation).WithMany(p => p.Adresses)
+            entity.HasOne(d => d.ClientNavigation).WithMany(p => p.AdressesNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_adr_cli");
 
-            entity.HasOne(d => d.IddepartementNavigation).WithMany(p => p.Adresses)
+            entity.HasOne(d => d.DepartementNavigation).WithMany(p => p.AdressesNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_adr_dep");
 
-            entity.HasOne(d => d.IdpaysNavigation).WithMany(p => p.Adresses)
+            entity.HasOne(d => d.PayNavigation).WithMany(p => p.AdressesNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_adr_pay");
         });
@@ -126,11 +126,11 @@ public partial class _DBMilibooContext : DbContext
         {
             entity.HasKey(e => new { e.Idclient, e.Idproduit }).HasName("pk_aim");
 
-            entity.HasOne(d => d.IdclientNavigation).WithMany(p => p.Aimes)
+            entity.HasOne(d => d.ClientNavigation).WithMany(p => p.AimesNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_aim_cli");
 
-            entity.HasOne(d => d.IdproduitNavigation).WithMany(p => p.Aimes)
+            entity.HasOne(d => d.ProduitNavigation).WithMany(p => p.AimesNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_aim_prd");
         });
@@ -139,7 +139,7 @@ public partial class _DBMilibooContext : DbContext
         {
             entity.HasKey(e => e.Idattribut).HasName("pk_att");
 
-            entity.HasOne(d => d.IdtypeproduitNavigation).WithMany(p => p.Attributproduits)
+            entity.HasOne(d => d.TypeproduitNavigation).WithMany(p => p.AttributsNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_att_tpd");
         });
@@ -151,11 +151,11 @@ public partial class _DBMilibooContext : DbContext
             entity.Property(e => e.Dateavis)
                 .HasDefaultValueSql("now()");
 
-            entity.HasOne(d => d.IdclientNavigation).WithMany(p => p.Avisproduits)
+            entity.HasOne(d => d.ClientNavigation).WithMany(p => p.AvisNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_avi_cli");
 
-            entity.HasOne(d => d.IdproduitNavigation).WithMany(p => p.Avisproduits)
+            entity.HasOne(d => d.ProduitNavigation).WithMany(p => p.AvisNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_avi_prd");
         });
@@ -169,7 +169,7 @@ public partial class _DBMilibooContext : DbContext
 
             entity.Property(e => e.Numcartebancaire).IsFixedLength();
 
-            entity.HasOne(d => d.IdclientNavigation).WithMany(p => p.Cartebancaires)
+            entity.HasOne(d => d.ClientNavigation).WithMany(p => p.CartesNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_car_cli");
         });
@@ -178,11 +178,11 @@ public partial class _DBMilibooContext : DbContext
         {
             entity.HasKey(e => e.Idcategorie).HasName("pk_cat");
 
-            entity.HasOne(d => d.CatIdcategorieNavigation).WithMany(p => p.InverseCatIdcategorieNavigation)
+            entity.HasOne(d => d.CategorieParenteNavigation).WithMany(p => p.CategorieEnfanteNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_cat_cat");
 
-            entity.HasOne(d => d.IdphotoNavigation).WithMany(p => p.Categorieproduits)
+            entity.HasOne(d => d.PhotoNavigation).WithMany(p => p.CategoriesNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_cat_pho");
         });
@@ -213,7 +213,7 @@ public partial class _DBMilibooContext : DbContext
             entity.Property(e => e.Estvalide)
                 .HasDefaultValue(true);
 
-            entity.HasOne(d => d.IdclientNavigation).WithMany(p => p.Codepromos)
+            entity.HasOne(d => d.ClientNavigation).WithMany(p => p.CodesNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_cod_cli");
         });
@@ -225,11 +225,11 @@ public partial class _DBMilibooContext : DbContext
             entity.Property(e => e.Estvisible)
                 .HasDefaultValue(false);
 
-            entity.HasOne(d => d.IdcouleurNavigation).WithMany(p => p.Colorations)
+            entity.HasOne(d => d.CouleurNavigation).WithMany(p => p.ColorationsNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_col_cou");
 
-            entity.HasOne(d => d.IdproduitNavigation).WithMany(p => p.Colorations)
+            entity.HasOne(d => d.ProduitNavigation).WithMany(p => p.ColorationsNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_col_prd");
         });
@@ -245,27 +245,27 @@ public partial class _DBMilibooContext : DbContext
             entity.Property(e => e.Aveclivraisonexpress)
                 .HasDefaultValue(false);
 
-            entity.HasOne(d => d.AdrIdadresseNavigation).WithMany(p => p.CommandeAdrIdadresseNavigations)
+            entity.HasOne(d => d.AdresseFactNavigation).WithMany(p => p.CommandeFactNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_cmd_adr");
 
-            entity.HasOne(d => d.IdadresseNavigation).WithMany(p => p.CommandeIdadresseNavigations)
+            entity.HasOne(d => d.AdresseLivrNavigation).WithMany(p => p.CommandeLivrNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_cmd_adr2");
 
-            entity.HasOne(d => d.IdclientNavigation).WithMany(p => p.Commandes)
+            entity.HasOne(d => d.ClientNavigation).WithMany(p => p.CommandesNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_cmd_cli");
 
-            entity.HasOne(d => d.IdcodepromoNavigation).WithMany(p => p.Commandes)
+            entity.HasOne(d => d.CodeNavigation).WithMany(p => p.CommandesNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_cmd_cod");
 
-            entity.HasOne(d => d.IdstatutNavigation).WithMany(p => p.Commandes)
+            entity.HasOne(d => d.StatutNavigation).WithMany(p => p.CommandesNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_cmd_scd");
 
-            entity.HasOne(d => d.IdtransporteurNavigation).WithMany(p => p.Commandes)
+            entity.HasOne(d => d.TransporteurNavigation).WithMany(p => p.CommandesNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_cmd_tpt");
         });
@@ -274,11 +274,11 @@ public partial class _DBMilibooContext : DbContext
         {
             entity.HasKey(e => new { e.Idcomposition, e.Idcommande }).HasName("pk_cmc");
 
-            entity.HasOne(d => d.IdcommandeNavigation).WithMany(p => p.Commandecompositions)
+            entity.HasOne(d => d.CommandeNavigation).WithMany(p => p.DetailsCompositionNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_cmc_cmd");
 
-            entity.HasOne(d => d.IdcompositionNavigation).WithMany(p => p.Commandecompositions)
+            entity.HasOne(d => d.CompositionNavigation).WithMany(p => p.CommandesNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_cmd_cmp");
         });
@@ -304,11 +304,11 @@ public partial class _DBMilibooContext : DbContext
         {
             entity.HasKey(e => new { e.Idproduit, e.Idcouleur, e.Idcommande }).HasName("pk_dcm");
 
-            entity.HasOne(d => d.IdcommandeNavigation).WithMany(p => p.Detailcommandes)
+            entity.HasOne(d => d.CommandeNavigation).WithMany(p => p.DetailsProduitNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_dcm_cmd");
 
-            entity.HasOne(d => d.Coloration).WithMany(p => p.Detailcommandes)
+            entity.HasOne(d => d.ColorationNavigation).WithMany(p => p.DetailsCommandeNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_dcm_col");
         });
@@ -317,11 +317,11 @@ public partial class _DBMilibooContext : DbContext
         {
             entity.HasKey(e => new { e.Idproduit, e.Idcouleur, e.Idcomposition }).HasName("pk_dcp");
 
-            entity.HasOne(d => d.IdcompositionNavigation).WithMany(p => p.Detailcompositions)
+            entity.HasOne(d => d.CompositionNavigation).WithMany(p => p.DetailsNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_dcp_cmp");
 
-            entity.HasOne(d => d.Coloration).WithMany(p => p.Detailcompositions)
+            entity.HasOne(d => d.ColorationNavigation).WithMany(p => p.DetailsCompositionNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_dcp_col");
         });
@@ -330,11 +330,11 @@ public partial class _DBMilibooContext : DbContext
         {
             entity.HasKey(e => new { e.Idproduit, e.Idcouleur, e.Idclient }).HasName("pk_dpn");
 
-            entity.HasOne(d => d.IdclientNavigation).WithMany(p => p.Detailpaniers)
+            entity.HasOne(d => d.ClientNavigation).WithMany(p => p.PaniersProduitNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_dpn_cli");
 
-            entity.HasOne(d => d.Coloration).WithMany(p => p.Detailpaniers)
+            entity.HasOne(d => d.ColorationNavigation).WithMany(p => p.DetailsPanierNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_dpn_col");
         });
@@ -343,24 +343,24 @@ public partial class _DBMilibooContext : DbContext
         {
             entity.HasKey(e => new { e.Idproduit, e.Idcouleur, e.Idregroupement }).HasName("pk_drg");
 
-            entity.HasOne(d => d.Colorations).WithMany(p => p.Detailregroupements)
+            entity.HasOne(d => d.ColorationsNavigation).WithMany(p => p.DetailRegroupementNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_drg_col");
 
-            entity.HasOne(d => d.IdregroupementNavigation).WithMany(p => p.Detailregroupements)
+            entity.HasOne(d => d.RegroupementNavigation).WithMany(p => p.DetailsNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_drg_rgp");
         });
 
         modelBuilder.Entity<Produitsimilaire>(entity =>
         {
-            entity.HasKey(e => new { e.Idproduit, e.Idproduit2 }).HasName("pk_pds");
+            entity.HasKey(e => new { e.IdproduitSim, e.IdproduitRef }).HasName("pk_pds");
 
-            entity.HasOne(d => d.IdproduitNavigation).WithMany(p => p.Idproduitsimilaire)
+            entity.HasOne(d => d.ProduitRefNavigation).WithMany(p => p.SimilaireRefNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_dps_prd");
 
-            entity.HasOne(d => d.IdproduitNavigation2).WithMany(p => p.Idproduitsimilaire2)
+            entity.HasOne(d => d.ProduitSimNavigation).WithMany(p => p.SimilaireSimNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_dps_prd2");
         });
@@ -369,11 +369,11 @@ public partial class _DBMilibooContext : DbContext
         {
             entity.HasKey(e => new { e.Idcomposition, e.Idclient }).HasName("pk_dpc");
 
-            entity.HasOne(d => d.IdclientNavigation).WithMany(p => p.Detailpaniercompositions)
+            entity.HasOne(d => d.ClientNavigation).WithMany(p => p.PaniersCompositionNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_dpc_cli");
 
-            entity.HasOne(d => d.Composition).WithMany(p => p.Detailpaniercompositions)
+            entity.HasOne(d => d.CompositionNavigation).WithMany(p => p.PaniersNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_dpc_col");
         });
@@ -385,11 +385,11 @@ public partial class _DBMilibooContext : DbContext
             entity.Property(e => e.Dateconsultation)
                 .HasDefaultValueSql("now()");
 
-            entity.HasOne(d => d.IdclientNavigation).WithMany(p => p.Historiqueconsultations)
+            entity.HasOne(d => d.ClientNavigation).WithMany(p => p.HistoriquesNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_hst_cli");
 
-            entity.HasOne(d => d.IdproduitNavigation).WithMany(p => p.Historiqueconsultations)
+            entity.HasOne(d => d.ProduitNavigation).WithMany(p => p.HistoriquesNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_hst_prd");
         });
@@ -398,7 +398,7 @@ public partial class _DBMilibooContext : DbContext
         {
             entity.HasKey(e => e.Idmessage).HasName("pk_msg");
 
-            entity.HasOne(d => d.IdclientNavigation).WithMany(p => p.Messagechatbots)
+            entity.HasOne(d => d.ClientNavigation).WithMany(p => p.MessagesNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_msg_cli");
         });
@@ -410,15 +410,15 @@ public partial class _DBMilibooContext : DbContext
             entity.Property(e => e.Datepaiement)
                 .HasDefaultValueSql("now()");
 
-            entity.HasOne(d => d.IdcartebancaireNavigation).WithMany(p => p.Paiements)
+            entity.HasOne(d => d.CarteNavigation).WithMany(p => p.PaiementsNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_pmt_car");
 
-            entity.HasOne(d => d.IdcommandeNavigation).WithMany(p => p.Paiements)
+            entity.HasOne(d => d.CommandeNavigation).WithMany(p => p.PaiementsNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_pmt_cmd");
 
-            entity.HasOne(d => d.IdtypepaiementNavigation).WithMany(p => p.Paiements)
+            entity.HasOne(d => d.TypeNavigation).WithMany(p => p.PaiementsNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_pmt_tpm");
         });
@@ -437,11 +437,11 @@ public partial class _DBMilibooContext : DbContext
         {
             entity.HasKey(e => new { e.Idavis, e.Idphoto }).HasName("pk_pav");
 
-            entity.HasOne(d => d.IdavisNavigation).WithMany(p => p.Photoavis)
+            entity.HasOne(d => d.AviNavigation).WithMany(p => p.PhotoavisNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_pav_avi");
 
-            entity.HasOne(d => d.IdphotoNavigation).WithMany(p => p.Photoavis)
+            entity.HasOne(d => d.PhotoNavigation).WithMany(p => p.PhotoavisNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_pav_pho");
         });
@@ -450,11 +450,11 @@ public partial class _DBMilibooContext : DbContext
         {
             entity.HasKey(e => new { e.Idproduit, e.Idcouleur, e.Idphoto }).HasName("pk_pco");
 
-            entity.HasOne(d => d.Colorations).WithMany(p => p.Photocolorations)
+            entity.HasOne(d => d.ColorationNavigation).WithMany(p => p.PhotocolsNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_pco_col");
 
-            entity.HasOne(d => d.IdphotoNavigation).WithMany(p => p.Photocolorations)
+            entity.HasOne(d => d.PhotoNavigation).WithMany(p => p.PhotocolsNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_pco_pho");
         });
@@ -468,11 +468,11 @@ public partial class _DBMilibooContext : DbContext
             entity.Property(e => e.Nbpaiementmax)
                 .HasDefaultValue(1);
 
-            entity.HasOne(d => d.IdpaysNavigation).WithMany(p => p.Produits)
+            entity.HasOne(d => d.PayNavigation).WithMany(p => p.ProduitsNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_prd_pay");
 
-            entity.HasOne(d => d.IdtypeproduitNavigation).WithMany(p => p.Produits)
+            entity.HasOne(d => d.TypeNavigation).WithMany(p => p.ProduitsNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_prd_tpd");
         });
@@ -485,11 +485,11 @@ public partial class _DBMilibooContext : DbContext
             entity.Property(e => e.Nomsociete).ValueGeneratedOnAdd();
             entity.Property(e => e.Numtva).IsFixedLength();
 
-            entity.HasOne(d => d.IdactiviteproNavigation).WithMany(p => p.Professionels)
+            entity.HasOne(d => d.ActiviteproNavigation).WithMany(p => p.ProfessionelsNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_pro_act");
 
-            entity.HasOne(d => d.IdclientNavigation).WithOne(p => p.Professionel)
+            entity.HasOne(d => d.ClientNavigation).WithOne(p => p.ProfessionelNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_pro_cli");
         });
@@ -506,11 +506,11 @@ public partial class _DBMilibooContext : DbContext
             entity.Property(e => e.Datesignalement)
                 .HasDefaultValueSql("now()");
 
-            entity.HasOne(d => d.IdavisNavigation).WithMany(p => p.Signalementavis)
+            entity.HasOne(d => d.AviNavigation).WithMany(p => p.SignalementsNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_sga_avi");
 
-            entity.HasOne(d => d.IdtypesignalementNavigation).WithMany(p => p.Signalementavis)
+            entity.HasOne(d => d.TypeNavigation).WithMany(p => p.SignalementsNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_sga_tsg");
         });
@@ -534,7 +534,7 @@ public partial class _DBMilibooContext : DbContext
         {
             entity.HasKey(e => e.Idtypeproduit).HasName("pk_tpd");
 
-            entity.HasOne(d => d.IdcategorieNavigation).WithMany(p => p.Typeproduits)
+            entity.HasOne(d => d.CategorieNavigation).WithMany(p => p.TypesNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_tpd_cat");
         });
@@ -548,11 +548,11 @@ public partial class _DBMilibooContext : DbContext
         {
             entity.HasKey(e => new { e.Idattribut, e.Idproduit }).HasName("pk_val");
 
-            entity.HasOne(d => d.IdattributNavigation).WithMany(p => p.Valeurattributs)
+            entity.HasOne(d => d.AttributNavigation).WithMany(p => p.ValeursNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_val_att");
 
-            entity.HasOne(d => d.IdproduitNavigation).WithMany(p => p.Valeurattributs)
+            entity.HasOne(d => d.ProduitNavigation).WithMany(p => p.ValeursNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_val_prd");
         });

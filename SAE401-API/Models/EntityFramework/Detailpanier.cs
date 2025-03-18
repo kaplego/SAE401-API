@@ -27,10 +27,10 @@ public partial class Detailpanier
     public int Quantitepanier { get; set; }
 
     [ForeignKey("Idproduit, Idcouleur")]
-    [InverseProperty("Detailpaniers")]
-    public virtual Coloration Coloration { get; set; } = null!;
+    [InverseProperty(nameof(Coloration.DetailsPanierNavigation))]
+    public virtual Coloration ColorationNavigation { get; set; } = null!;
 
     [ForeignKey(nameof(Idclient))]
-    [InverseProperty("Detailpaniers")]
-    public virtual Client IdclientNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Client.PaniersProduitNavigation))]
+    public virtual Client ClientNavigation { get; set; } = null!;
 }

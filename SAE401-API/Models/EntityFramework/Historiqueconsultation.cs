@@ -25,10 +25,10 @@ public partial class Historiqueconsultation
     public DateTime Dateconsultation { get; set; }= DateTime.Now;
 
     [ForeignKey(nameof(Idclient))]
-    [InverseProperty("Historiqueconsultations")]
-    public virtual Client IdclientNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Client.HistoriquesNavigation))]
+    public virtual Client ClientNavigation { get; set; } = null!;
 
     [ForeignKey(nameof(Idproduit))]
-    [InverseProperty("Historiqueconsultations")]
-    public virtual Produit IdproduitNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Produit.HistoriquesNavigation))]
+    public virtual Produit ProduitNavigation { get; set; } = null!;
 }

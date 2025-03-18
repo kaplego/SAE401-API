@@ -45,24 +45,24 @@ public partial class Adresse
     public string Codepostaladresse { get; set; } = null!;
 
     [ForeignKey(nameof(Codeinsee))]
-    [InverseProperty("Adresses")]
-    public virtual Ville CodeinseeNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Ville.AdressesNavigation))]
+    public virtual Ville VilleNavigation { get; set; } = null!;
 
-    [InverseProperty("AdrIdadresseNavigation")]
-    public virtual ICollection<Commande> CommandeAdrIdadresseNavigations { get; set; } = new List<Commande>();
+    [InverseProperty(nameof(Commande.AdresseLivrNavigation))]
+    public virtual ICollection<Commande> CommandeLivrNavigation { get; set; } = new List<Commande>();
 
-    [InverseProperty("IdadresseNavigation")]
-    public virtual ICollection<Commande> CommandeIdadresseNavigations { get; set; } = new List<Commande>();
+    [InverseProperty(nameof(Commande.AdresseFactNavigation))]
+    public virtual ICollection<Commande> CommandeFactNavigation { get; set; } = new List<Commande>();
 
     [ForeignKey(nameof(Idclient))]
-    [InverseProperty("Adresses")]
-    public virtual Client IdclientNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Client.AdressesNavigation))]
+    public virtual Client ClientNavigation { get; set; } = null!;
 
     [ForeignKey(nameof(Iddepartement))]
-    [InverseProperty("Adresses")]
-    public virtual Departement IddepartementNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Departement.AdressesNavigation))]
+    public virtual Departement DepartementNavigation { get; set; } = null!;
 
     [ForeignKey(nameof(Idpays))]
-    [InverseProperty("Adresses")]
-    public virtual Pay IdpaysNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Pay.AdressesNavigation))]
+    public virtual Pay PayNavigation { get; set; } = null!;
 }

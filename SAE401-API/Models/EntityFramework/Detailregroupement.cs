@@ -23,10 +23,10 @@ public partial class Detailregroupement
     public int Idregroupement { get; set; }
 
     [ForeignKey("Idproduit, Idcouleur")]
-    [InverseProperty("Detailregroupements")]
-    public virtual Coloration Colorations { get; set; } = null!;
+    [InverseProperty(nameof(Coloration.DetailRegroupementNavigation))]
+    public virtual Coloration ColorationsNavigation { get; set; } = null!;
 
     [ForeignKey(nameof(Idregroupement))]
-    [InverseProperty("Detailregroupements")]
-    public virtual Regroupementproduit IdregroupementNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Regroupementproduit.DetailsNavigation))]
+    public virtual Regroupementproduit RegroupementNavigation { get; set; } = null!;
 }

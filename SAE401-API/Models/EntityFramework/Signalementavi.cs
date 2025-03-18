@@ -37,10 +37,10 @@ public partial class Signalementavi
     public string Contenusignalement { get; set; } = null!;
 
     [ForeignKey(nameof(Idavis))]
-    [InverseProperty("Signalementavis")]
-    public virtual Avisproduit IdavisNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Avisproduit.SignalementsNavigation))]
+    public virtual Avisproduit AviNavigation { get; set; } = null!;
 
     [ForeignKey(nameof(Idtypesignalement))]
-    [InverseProperty("Signalementavis")]
-    public virtual Typesignalement IdtypesignalementNavigation { get; set; } = null!;
+    [InverseProperty(nameof(Typesignalement.SignalementsNavigation))]
+    public virtual Typesignalement TypeNavigation { get; set; } = null!;
 }
