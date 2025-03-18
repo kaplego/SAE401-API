@@ -24,13 +24,27 @@ namespace SAE401_API.Controllers
 
         // GET: api/Produits        
         [HttpGet]
+        [Route("[action]")]
+        [ActionName("GetAllProduit")]
         public async Task<ActionResult<IEnumerable<Produit>>> GetProduits()
         {
             return await dataRepository.GetAllProduitAsync();
         }
 
+        [HttpGet]
+        [Route("[action]/{recherche}")]
+        [ActionName("GetProduitByRecherche")]
+        public async Task<ActionResult<IEnumerable<Produit>>> GetUtilisateurByRecherche(string recherche)
+        {
+            return await dataRepository.GetAllProduitByRechercheAsync(recherche,2);
+
+        }
+
         // GET: api/Produits/5
-        [HttpGet("{id}")]
+        [HttpGet]
+        [Route("[action]/{id}")]
+        [ActionName("GetProduitById")]
+
         public async Task<ActionResult<Produit>> GetProduit(int id)
         {
             var produit =await dataRepository.GetProduitByIdAsync(id);
@@ -42,6 +56,8 @@ namespace SAE401_API.Controllers
 
             return produit;
         }
+
+       
 
         // PUT: api/Produits/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

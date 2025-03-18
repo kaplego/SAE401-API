@@ -2,6 +2,7 @@
 using SAE401_API.Models.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SAE401_API.Models.DataMethods;
 
 
 
@@ -25,11 +26,52 @@ namespace SAE401_API.Models.DataManager
             return await milibooContext.Produits.ToListAsync();
         }
 
+        public async Task<ActionResult<IEnumerable<Produit>>> GetAllProduitByRechercheAsync(string recherche, int seuil)
+        {
+            var produits = await milibooContext.Produits.ToListAsync();
+
+
+            return produits
+               .Where(u => ContainsApproximateMatch(u.Nomproduit, recherche, seuil))  // Filtrer les produits
+               .OrderBy(u => GetMinLevenshteinDistance(u.Nomproduit, recherche))       // Trier par la plus petite distance de Levenshtein
+               .ToList();  // Effectuer la conversion finale en liste
+
+        }
+
+
+        private bool ContainsApproximateMatch(string nomProduit, string recherche, int seuil)
+        {
+            // Vérifier chaque sous-chaîne du nom du produit
+            for (int i = 0; i <= nomProduit.Length - recherche.Length; i++)
+            {
+                string substring = nomProduit.Substring(i, recherche.Length);
+                if (MethodProduitManager.LevenshteinDistance(substring.ToUpper(), recherche.ToUpper()) <= seuil)
+                {
+                    return true;  // Trouvé une correspondance approximative
+                }
+            }
+            return false;  // Aucune sous-chaîne ne correspond
+        }
+
+        private int GetMinLevenshteinDistance(string nomProduit, string recherche)
+        {
+            int minDistance = int.MaxValue;
+
+            // Vérifier chaque sous-chaîne du nom du produit
+            for (int i = 0; i <= nomProduit.Length - recherche.Length; i++)
+            {
+                string substring = nomProduit.Substring(i, recherche.Length);
+                int distance = MethodProduitManager.LevenshteinDistance(substring.ToUpper(), recherche.ToUpper());
+                minDistance = Math.Min(minDistance, distance);  // Trouver la plus petite distance
+            }
+
+            return minDistance;
+        }
+
         public async Task<ActionResult<Produit>> GetProduitByIdAsync(int id)
         {
             return await milibooContext.Produits.FirstOrDefaultAsync(p => p.Idproduit == id);
         }
-
         public async Task AddProduitAsync(Produit entity)
         {
             await milibooContext.Produits.AddAsync(entity);
