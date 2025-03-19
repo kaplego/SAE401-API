@@ -6,6 +6,8 @@ namespace SAE401_API.Models.Repository
     {
         Task<ActionResult<IEnumerable<TEntity>>> GetAllProduitAsync();
         Task<ActionResult<IEnumerable<TEntity>>> GetAllProduitByRechercheAsync(string str, int seuil);
+        Task<ActionResult<IEnumerable<TEntity>>> GetAllProduitByCategorieAsync(int id);
+        Task<ActionResult<IEnumerable<TEntity>>> GetAllProduitByTypeAsync(int id);
         Task<ActionResult<TEntity>> GetProduitByIdAsync(int id);
         
 

@@ -23,6 +23,16 @@ namespace SAE401_API.Models.DataManager
 
         public async Task<ActionResult<IEnumerable<Produit>>>GetAllProduitAsync()
         {
+            return await milibooContext.Produits.Include(p => p.ColorationsNavigation).ToListAsync();
+        }
+
+        public async Task<ActionResult<IEnumerable<Produit>>> GetAllProduitByCategorieAsync(int id)
+        {
+            return await milibooContext.Produits.ToListAsync();
+        }
+
+        public async Task<ActionResult<IEnumerable<Produit>>> GetAllProduitByTypeAsync(int id)
+        {
             return await milibooContext.Produits.ToListAsync();
         }
 
@@ -72,6 +82,7 @@ namespace SAE401_API.Models.DataManager
         {
             return await milibooContext.Produits.FirstOrDefaultAsync(p => p.Idproduit == id);
         }
+
         public async Task AddProduitAsync(Produit entity)
         {
             await milibooContext.Produits.AddAsync(entity);
