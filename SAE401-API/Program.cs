@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using SAE401_API.Models;
+using Microsoft.AspNetCore.Http.Json;
+using Microsoft.AspNetCore.Mvc;
+using System.Text.Json.Serialization;
 
 Env.Load();
 
@@ -17,7 +20,11 @@ builder.Services.AddScoped<IProduitRepository<Produit>, ProduitManager>();
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -25,9 +32,6 @@ builder.Services.AddSwaggerGen();
 // Pour ajouter la chaine de connexion, ajoutez un fichier .env avec comme contenu : CONNECTION_STRING="..."
 builder.Services.AddDbContext<_DBMilibooContext>(options =>
   options.UseNpgsql(Environment.GetEnvironmentVariable("CONNECTION_STRING")));
-
-
-
 
 
 var app = builder.Build();

@@ -22,30 +22,51 @@ namespace SAE401_API.Controllers
             dataRepository = datarepo;
         }
 
-        // GET: api/Produits        
+        // GET: api/Produits/GetAllProduit
         [HttpGet]
         [Route("[action]")]
         [ActionName("GetAllProduit")]
-        public async Task<ActionResult<IEnumerable<Produit>>> GetProduits()
+        public async Task<ActionResult<IEnumerable<Produit>>> GetAllProduit()
         {
             return await dataRepository.GetAllProduitAsync();
         }
 
+        //GET: api/Produits/GetAllProduitByRecherche/{id}
         [HttpGet]
         [Route("[action]/{recherche}")]
-        [ActionName("GetProduitByRecherche")]
-        public async Task<ActionResult<IEnumerable<Produit>>> GetUtilisateurByRecherche(string recherche)
+        [ActionName("GetAllProduitByRecherche")]
+        public async Task<ActionResult<IEnumerable<Produit>>> GetAllProduitByRecherche(string recherche)
         {
             return await dataRepository.GetAllProduitByRechercheAsync(recherche,2);
 
         }
 
-        // GET: api/Produits/5
+        //GET: api/Produits/GetAllProduitByCategorie/{id}
+        [HttpGet]
+        [Route("[action]/{id}")]
+        [ActionName("GetAllProduitByCategorie")]
+        public async Task<ActionResult<IEnumerable<Produit>>> GetAllProduitByCategorie(int id)
+        {
+            return await dataRepository.GetAllProduitByCategorieAsync(id);
+
+        }
+
+        //GET: api/Produits/GetAllProduitByType/{id}
+        [HttpGet]
+        [Route("[action]/{id}")]
+        [ActionName("GetAllProduitByType")]
+        public async Task<ActionResult<IEnumerable<Produit>>> GetAllProduitByType(int id)
+        {
+            return await dataRepository.GetAllProduitByTypeAsync(id);
+
+        }
+
+        // GET: api/Produits/GetProduitById/{id}
         [HttpGet]
         [Route("[action]/{id}")]
         [ActionName("GetProduitById")]
 
-        public async Task<ActionResult<Produit>> GetProduit(int id)
+        public async Task<ActionResult<Produit>> GetAllProduitById(int id)
         {
             var produit =await dataRepository.GetProduitByIdAsync(id);
 
