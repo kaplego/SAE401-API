@@ -18,10 +18,13 @@ namespace SAE401_API.Models.DataManager
 
         public async Task<ActionResult<IEnumerable<Categorieproduit>>> GetAllCategorieAsync()
         {
-            return await milibooContext.Categorieproduits.ToListAsync();
+            return await milibooContext.Categorieproduits
+                                       .Include(c => c.TypesNavigation)  // Chargement des types de produits associés
+                                       .ToListAsync();
         }
-
-
-
     }
+
+
+
+
 }
