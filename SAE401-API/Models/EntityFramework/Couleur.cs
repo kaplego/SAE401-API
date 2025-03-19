@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
@@ -24,6 +25,7 @@ public partial class Couleur
     [RegularExpression(@"^[0-9A-Fa-f]+$", ErrorMessage = "La chaîne doit contenir uniquement des caractères hexadécimaux (0-9, A-F).")]
     public string Rgbcouleur { get; set; } = null!;
 
+    [JsonIgnore]
     [InverseProperty(nameof(Coloration.CouleurNavigation))]
     public virtual ICollection<Coloration> ColorationsNavigation { get; set; } = new List<Coloration>();
 }

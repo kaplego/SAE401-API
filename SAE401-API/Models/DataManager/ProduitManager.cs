@@ -5,9 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using SAE401_API.Models.DataMethods;
 
 
-
-
-
 namespace SAE401_API.Models.DataManager
 {
     public class ProduitManager : IProduitRepository<Produit>
@@ -23,17 +20,32 @@ namespace SAE401_API.Models.DataManager
 
         public async Task<ActionResult<IEnumerable<Produit>>>GetAllProduitAsync()
         {
-            return await milibooContext.Produits.Include(p => p.ColorationsNavigation).ToListAsync();
+            return await milibooContext.Produits.Include(p => p.ColorationsNavigation).ThenInclude(c => c.CouleurNavigation).ToListAsync();
         }
 
         public async Task<ActionResult<IEnumerable<Produit>>> GetAllProduitByCategorieAsync(int id)
         {
-            return await milibooContext.Produits.ToListAsync();
+
+            Categorieproduit categorie = await milibooContext.Categorieproduits
+                .Include(c => c.CategorieEnfanteNavigation)
+                .FirstAsync(c => c.Idcategorie == id);
+            List<Produit> produits = await milibooContext.Produits
+                .Include(p => p.TypeNavigation).Include(p => p.ColorationsNavigation).ThenInclude(c => c.CouleurNavigation)
+                .Where(p => p.TypeNavigation.Idcategorie == id).ToListAsync();
+            foreach (Categorieproduit cat in categorie.CategorieEnfanteNavigation)
+            {
+                produits.AddRange(GetAllProduitByCategorieAsync(cat.Idcategorie).Result.Value);
+            }
+            foreach (Produit p in produits) { p.TypeNavigation = null; }
+            return produits;
         }
 
         public async Task<ActionResult<IEnumerable<Produit>>> GetAllProduitByTypeAsync(int id)
         {
-            return await milibooContext.Produits.ToListAsync();
+            Typeproduit type = await milibooContext.Typeproduits
+                .Include(t => t.ProduitsNavigation).ThenInclude(p => p.ColorationsNavigation).ThenInclude(c => c.CouleurNavigation)
+                .FirstAsync(t => t.Idtypeproduit == id);
+            return type.ProduitsNavigation.ToList();
         }
 
         public async Task<ActionResult<IEnumerable<Produit>>> GetAllProduitByRechercheAsync(string recherche, int seuil)
