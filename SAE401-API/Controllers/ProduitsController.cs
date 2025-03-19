@@ -41,6 +41,16 @@ namespace SAE401_API.Controllers
 
         }
 
+        //GET: api/Produits/GetAllProduitByRegroupement/{id}
+        [HttpGet]
+        [Route("[action]/{id}")]
+        [ActionName("GetAllProduitByRegroupement")]
+        public async Task<ActionResult<IEnumerable<Produit>>> GetAllProduitByRegroupement(int id)
+        {
+            return await dataRepository.GetAllProduitByRegroupementAsync(id);
+
+        }
+
         //GET: api/Produits/GetAllProduitByCategorie/{id}
         [HttpGet]
         [Route("[action]/{id}")]
