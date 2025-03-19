@@ -19,6 +19,9 @@ builder.Services.AddScoped<IProduitRepository<Produit>, ProduitManager>();
 builder.Services.AddScoped<ICategorieRepository<Categorieproduit>, CategorieManager>();
 builder.Services.AddScoped<IRegroupementRepository<Regroupementproduit>, RegroupementManager>();
 builder.Services.AddScoped<IAttributRepository<Attributproduit>, AttributManager>();
+builder.Services.AddScoped<ITransporteurRepository<Transporteur>, TransporteurManager>();
+builder.Services.AddScoped<ITypePaiementRepository<Typepaiement>, TypePaiementManager>();
+builder.Services.AddScoped<ICodePromoRepository<Codepromo>, CodePromoManager>();
 
 // Add services to the container.
 builder.Services.AddControllers()
