@@ -37,7 +37,6 @@ namespace SAE401_API.Controllers
         public async Task<ActionResult<IEnumerable<Produit>>> GetUtilisateurByRecherche(string recherche)
         {
             return await dataRepository.GetAllProduitByRechercheAsync(recherche,2);
-
         }
 
         // GET: api/Produits/5
