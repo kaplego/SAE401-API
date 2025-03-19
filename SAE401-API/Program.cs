@@ -18,6 +18,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IProduitRepository<Produit>, ProduitManager>();
 builder.Services.AddScoped<ICategorieRepository<Categorieproduit>, CategorieManager>();
 builder.Services.AddScoped<IRegroupementRepository<Regroupementproduit>, RegroupementManager>();
+builder.Services.AddScoped<IAttributRepository<Attributproduit>, AttributManager>();
 
 // Add services to the container.
 builder.Services.AddControllers()

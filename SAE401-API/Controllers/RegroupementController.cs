@@ -4,6 +4,8 @@ using SAE401_API.Models.Repository;
 
 namespace SAE401_API.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class RegroupementController : ControllerBase
     {
 
@@ -21,6 +23,9 @@ namespace SAE401_API.Controllers
         {
             return await dataRepository.GetAllRegroupementAsync();
         }
-    
+
+
+       
+
     }
 }
