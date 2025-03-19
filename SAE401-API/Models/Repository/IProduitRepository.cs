@@ -2,7 +2,7 @@
 
 namespace SAE401_API.Models.Repository
 {
-    public interface IDataRepository<TEntity>
+    public interface IProduitRepository<TEntity>
     {
         Task<ActionResult<IEnumerable<TEntity>>> GetAllProduitAsync();
         Task<ActionResult<IEnumerable<TEntity>>> GetAllProduitByRechercheAsync(string str, int seuil);

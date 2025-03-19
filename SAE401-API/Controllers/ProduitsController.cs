@@ -15,9 +15,9 @@ namespace SAE401_API.Controllers
     [ApiController]
     public class ProduitsController : ControllerBase
     {
-        private readonly  IDataRepository<Produit> dataRepository;
+        private readonly  IProduitRepository<Produit> dataRepository;
 
-        public ProduitsController( IDataRepository<Produit> datarepo)
+        public ProduitsController( IProduitRepository<Produit> datarepo)
         {
             dataRepository = datarepo;
         }

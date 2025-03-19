@@ -10,7 +10,7 @@ using SAE401_API.Models.DataMethods;
 
 namespace SAE401_API.Models.DataManager
 {
-    public class ProduitManager : IDataRepository<Produit>
+    public class ProduitManager : IProduitRepository<Produit>
     {
         readonly _DBMilibooContext milibooContext;
 
