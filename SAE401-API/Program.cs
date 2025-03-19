@@ -13,6 +13,7 @@ Env.Load();
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IProduitRepository<Produit>, ProduitManager>();
+builder.Services.AddScoped<ICategorieRepository<Categorieproduit>, CategorieManager>();
 
 
 // Add services to the container.

@@ -16,6 +16,8 @@ public partial class Categorieproduit
     [Column("cat_idcategorie")]
     public int Idcategorie { get; set; }
 
+
+    
     [Column("cat_idcategorie2")]
     public int? IdcategorieParent { get; set; }
 
@@ -33,9 +35,13 @@ public partial class Categorieproduit
     [Column("cat_estfiltrable")]
     public bool Estfiltrable { get; set; }
 
+
+
     [ForeignKey(nameof(IdcategorieParent))]
     [InverseProperty(nameof(Categorieproduit.CategorieEnfanteNavigation))]
     public virtual Categorieproduit? CategorieParenteNavigation { get; set; }
+
+
 
     [ForeignKey(nameof(Idphoto))]
     [InverseProperty(nameof(Photo.CategoriesNavigation))]
@@ -43,6 +49,7 @@ public partial class Categorieproduit
 
     [InverseProperty(nameof(Categorieproduit.CategorieParenteNavigation))]
     public virtual ICollection<Categorieproduit> CategorieEnfanteNavigation { get; set; } = new List<Categorieproduit>();
+
 
     [InverseProperty(nameof(Typeproduit.CategorieNavigation))]
     public virtual ICollection<Typeproduit> TypesNavigation { get; set; } = new List<Typeproduit>();
