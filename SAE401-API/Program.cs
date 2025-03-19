@@ -28,11 +28,7 @@ builder.Services.AddDbContext<_DBMilibooContext>(options =>
 
 
 
-builder.Services.AddAuthorization(config =>
-{
-    config.AddPolicy(Policies.Admin, Policies.AdminPolicy());
-    config.AddPolicy(Policies.User, Policies.UserPolicy());
-});
+
 
 var app = builder.Build();
 
