@@ -23,6 +23,16 @@ namespace SAE401_API.Models.DataManager
             return await milibooContext.Produits.Include(p => p.ColorationsNavigation).ThenInclude(c => c.CouleurNavigation).ToListAsync();
         }
 
+        public async Task<ActionResult<IEnumerable<Produit>>> GetAllProduitByRegroupementAsync(int id)
+        {
+            List<int> idproduits = await milibooContext.Detailregroupements
+                .Where(dr => dr.Idregroupement == id).Select(dr => dr.Idproduit).Distinct().ToListAsync();
+
+            return await milibooContext.Produits
+                .Include(p => p.ColorationsNavigation).ThenInclude(c => c.CouleurNavigation)
+                .Where(p => idproduits.Contains(p.Idproduit)).ToListAsync();
+        }
+
         public async Task<ActionResult<IEnumerable<Produit>>> GetAllProduitByCategorieAsync(int id)
         {
 
@@ -50,7 +60,7 @@ namespace SAE401_API.Models.DataManager
 
         public async Task<ActionResult<IEnumerable<Produit>>> GetAllProduitByRechercheAsync(string recherche, int seuil)
         {
-            var produits = await milibooContext.Produits.ToListAsync();
+            var produits = await milibooContext.Produits.Include(p => p.ColorationsNavigation).ThenInclude(c => c.CouleurNavigation).ToListAsync();
 
 
             return produits
