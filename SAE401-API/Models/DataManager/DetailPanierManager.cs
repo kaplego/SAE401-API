@@ -6,7 +6,7 @@ using SAE401_API.Models.Repository;
 
 namespace SAE401_API.Models.DataManager
 {
-    public class DetailPanierManager : IDetailPanierRepository<Detailpanier>
+    public class DetailPanierManager : IDetailPanierRepository<object>
     {
         public readonly _DBMilibooContext milibooContext;
 
@@ -17,67 +17,97 @@ namespace SAE401_API.Models.DataManager
             milibooContext = context;
         }
 
-        public async Task<ActionResult<Detailpanier?>> GetDetailPanierByIdAsync(int idproduit, int idcouleur, int idclient)
+        public async Task<ActionResult<object?>> GetDetailPanierByIdAsync(int idproduit, int idcouleur, int idclient)
         {
-            return await milibooContext.Detailpaniers
+            var detailPanier = await milibooContext.Detailpaniers
                 .Include(d => d.ClientNavigation)
                 .FirstOrDefaultAsync(d => d.Idproduit == idproduit
                                        && d.Idcouleur == idcouleur
                                        && d.Idclient == idclient);
+
+            return detailPanier != null ?
+                   new ActionResult<object?>(detailPanier) :
+                   new NotFoundResult();
         }
 
 
 
-
-
-        public async Task AddDetailPanierAsync(DetailpanierDTO entity)
+        // Méthode qui accepte un Detailpanier
+        public async Task AddDetailPanierAsync(Detailpanier entity)
         {
-            // Récupérer la Coloration en fonction des IDs produits et couleur
-            var coloration = await milibooContext.Colorations
-                .FirstOrDefaultAsync(c => c.Idproduit == entity.Idproduit && c.Idcouleur == entity.Idcouleur);
-
-            if (coloration == null)
-            {
-                throw new Exception("La coloration spécifiée n'existe pas.");
-            }
-
-            // Récupérer le Client en fonction de l'ID client
-            var client = await milibooContext.Clients
-                .FirstOrDefaultAsync(c => c.Idclient == entity.Idclient);
-
-            if (client == null)
-            {
-                throw new Exception("Le client spécifié n'existe pas.");
-            }
-
-            // Assigner les entités récupérées aux propriétés de navigation
-            Detailpanier detailpanier = new Detailpanier()
-            {
-                Idclient = entity.Idclient,
-                Idcouleur = entity.Idcouleur,
-                Idproduit = entity.Idproduit,
-                Quantitepanier = entity.Quantitepanier,
-                ClientNavigation = client,
-                ColorationNavigation = coloration
-            };
-
-            // Ajouter l'objet Detailpanier à la base de données
-            await milibooContext.Detailpaniers.AddAsync(detailpanier);
-
-            // Sauvegarder les changements dans la base de données
+            // Logique pour ajouter un Detailpanier
+            await milibooContext.Detailpaniers.AddAsync(entity);
             await milibooContext.SaveChangesAsync();
         }
 
 
-        public async Task UpdateDetailPanierAsync(Detailpanier detailpanier, Detailpanier entity)
+        public async Task AddDetailPanierAsync(object entity)
         {
+            if (entity is DetailpanierDTO dto)
+            {
+                // Logique pour ajouter un DetailpanierDTO
+                var coloration = await milibooContext.Colorations
+                    .FirstOrDefaultAsync(c => c.Idproduit == dto.Idproduit && c.Idcouleur == dto.Idcouleur);
+
+                if (coloration == null)
+                {
+                    throw new Exception("La coloration spécifiée n'existe pas.");
+                }
+
+                var client = await milibooContext.Clients
+                    .FirstOrDefaultAsync(c => c.Idclient == dto.Idclient);
+
+                if (client == null)
+                {
+                    throw new Exception("Le client spécifié n'existe pas.");
+                }
+
+                Detailpanier detailpanier = new Detailpanier
+                {
+                    Idclient = dto.Idclient,
+                    Idcouleur = dto.Idcouleur,
+                    Idproduit = dto.Idproduit,
+                    Quantitepanier = dto.Quantitepanier,
+                    ClientNavigation = client,
+                    ColorationNavigation = coloration
+                };
+
+                await milibooContext.Detailpaniers.AddAsync(detailpanier);
+                await milibooContext.SaveChangesAsync();
+            }
+            else if (entity is Detailpanier dp)
+            {
+                // Logique pour ajouter un Detailpanier
+                await milibooContext.Detailpaniers.AddAsync(dp);
+                await milibooContext.SaveChangesAsync();
+            }
+            else
+            {
+                throw new InvalidOperationException("Type d'entité non supporté");
+            }
+        }
+
+
+
+        public async Task UpdateDetailPanierAsync(Detailpanier detailpanier, object entity)
+        {
+            if (entity is DetailpanierDTO dto)
+            {
+                // Si l'entité est un DTO, on mappe et met à jour
+                detailpanier.Idproduit = dto.Idproduit;
+                detailpanier.Idcouleur = dto.Idcouleur;
+                detailpanier.Idclient = dto.Idclient;
+                detailpanier.Quantitepanier = dto.Quantitepanier;
+
+                // Mettez à jour les propriétés de navigation ici si nécessaire
+            }
+            else if (entity is Detailpanier dp)
+            {
+                // Si c'est déjà un Detailpanier, on l'utilise directement
+                detailpanier = dp;
+            }
+
             milibooContext.Entry(detailpanier).State = EntityState.Modified;
-            detailpanier.Idproduit = entity.Idproduit;
-            detailpanier.Idcouleur = entity.Idcouleur;
-            detailpanier.Idclient = entity.Idclient;
-            detailpanier.Quantitepanier = entity.Quantitepanier;
-            detailpanier.ColorationNavigation = entity.ColorationNavigation;
-            detailpanier.ClientNavigation = entity.ClientNavigation;
             await milibooContext.SaveChangesAsync();
         }
 

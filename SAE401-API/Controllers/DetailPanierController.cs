@@ -67,10 +67,19 @@ namespace SAE401_API.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (dataRepository is DetailPanierManager manager)
+            // Convertir le DetailpanierDTO en Detailpanier
+            var detailpanierfinal = new Detailpanier
             {
-                await new DetailPanierManager(manager.milibooContext).AddDetailPanierAsync(detailpanier);
-            }
+                Idproduit = detailpanier.Idproduit,
+                Idcouleur = detailpanier.Idcouleur,
+                Idclient = detailpanier.Idclient,
+                Quantitepanier = detailpanier.Quantitepanier
+                // Vous pouvez ajouter ici d'autres propriétés de l'entité si nécessaire
+            };
+
+            // Utiliser le dataRepository pour ajouter le Detailpanier
+            await dataRepository.AddDetailPanierAsync(detailpanierfinal);
+
 
             return NoContent();//on ne renvoie rien si il y a bien une création
         }
