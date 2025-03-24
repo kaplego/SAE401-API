@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SAE401_API.Models.DataManager;
 using SAE401_API.Models.DTO;
 using SAE401_API.Models.EntityFramework;
@@ -11,18 +12,17 @@ namespace SAE401_API.Controllers
     public class DetailPanierController : ControllerBase
     {
         private readonly IDetailPanierRepository<Detailpanier> dataRepository;
-        private readonly DetailPanierManager manager;
 
+        // Le constructeur doit uniquement accepter l'interface IDetailPanierRepository<Detailpanier>
         public DetailPanierController(IDetailPanierRepository<Detailpanier> datarepo)
         {
             dataRepository = datarepo;
         }
 
-
         [HttpGet("api/Produits/{idproduit}/{idcouleur}/{idclient}")]
         public async Task<ActionResult<Detailpanier>> GetDetailPanierByIdAsync(int idproduit, int idcouleur, int idclient)
         {
-            var detailpanier = await dataRepository.GetDetailPanierByIdAsync(idproduit,idcouleur,idclient);
+            var detailpanier = await dataRepository.GetDetailPanierByIdAsync(idproduit, idcouleur, idclient);
 
             if (detailpanier.Value == null)
             {
@@ -32,17 +32,16 @@ namespace SAE401_API.Controllers
             return detailpanier;
         }
 
-
-        // PUT: api/Produits/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{idproduit}/{idcouleur}/{idclient}")]
-        public async Task<IActionResult> PutDetailProduit(int idproduit,int idcouleur,int idclient, Detailpanier detailpanier)
+        public async Task<IActionResult> PutDetailProduit(int idproduit, int idcouleur, int idclient, DetailpanierDTO detailpanierDTO)
         {
-            if (idproduit != detailpanier.Idproduit && idcouleur != detailpanier.Idcouleur && idclient != detailpanier.Idclient)
+            // Vérification de l'intégrité des paramètres
+            if (idproduit != detailpanierDTO.Idproduit || idcouleur != detailpanierDTO.Idcouleur || idclient != detailpanierDTO.Idclient)
             {
-                return BadRequest();
+                return BadRequest("Les paramètres ne correspondent pas.");
             }
 
+            // Récupérer l'entité existante
             var produitToUpdate = await dataRepository.GetDetailPanierByIdAsync(idproduit, idcouleur, idclient);
 
             if (produitToUpdate.Value == null)
@@ -50,41 +49,45 @@ namespace SAE401_API.Controllers
                 return NotFound();
             }
 
-            else
+            // Convertir le DTO en une instance de Detailpanier
+            var updatedDetailpanier = new Detailpanier
             {
-                await dataRepository.UpdateDetailPanierAsync(produitToUpdate.Value, detailpanier);
-                return NoContent();
-            }
+                Idproduit = detailpanierDTO.Idproduit,
+                Idcouleur = detailpanierDTO.Idcouleur,
+                Idclient = detailpanierDTO.Idclient,
+                Quantitepanier = detailpanierDTO.Quantitepanier
+                // Ajoutez ici d'autres propriétés du DTO si nécessaire
+            };
+
+            // Appeler la méthode de mise à jour dans le repository
+            await dataRepository.UpdateDetailPanierAsync(produitToUpdate.Value, updatedDetailpanier);
+
+            return NoContent();
         }
 
-        // POST: api/Produits
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
+
         [HttpPost]
-        public async Task<ActionResult<Detailpanier>> PostDetailPanier(DetailpanierDTO detailpanier )
+        public async Task<ActionResult<Detailpanier>> PostDetailPanier(DetailpanierDTO detailpanier)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            // Convertir le DetailpanierDTO en Detailpanier
             var detailpanierfinal = new Detailpanier
             {
                 Idproduit = detailpanier.Idproduit,
                 Idcouleur = detailpanier.Idcouleur,
                 Idclient = detailpanier.Idclient,
                 Quantitepanier = detailpanier.Quantitepanier
-                // Vous pouvez ajouter ici d'autres propriétés de l'entité si nécessaire
             };
 
-            // Utiliser le dataRepository pour ajouter le Detailpanier
             await dataRepository.AddDetailPanierAsync(detailpanierfinal);
 
-
-            return NoContent();//on ne renvoie rien si il y a bien une création
+            return NoContent();
         }
 
-        // DELETE: api/Produits/5
         [HttpDelete("{idproduit}/{idcouleur}/{idclient}")]
         public async Task<IActionResult> DeleteDetailPanier(int idproduit, int idcouleur, int idclient)
         {
@@ -97,9 +100,5 @@ namespace SAE401_API.Controllers
             await dataRepository.DeleteDetailPanierAsync(detailpanier.Value);
             return NoContent();
         }
-
-
-
-
     }
 }

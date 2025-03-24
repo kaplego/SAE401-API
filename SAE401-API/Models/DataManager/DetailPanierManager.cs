@@ -1,121 +1,60 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SAE401_API.Models.DTO;
+﻿using SAE401_API.Models.Repository;
 using SAE401_API.Models.EntityFramework;
-using SAE401_API.Models.Repository;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.DataManager
 {
-    public class DetailPanierManager : IDetailPanierRepository<object>
+    public class DetailPanierManager<TEntity> : IDetailPanierRepository<TEntity> where TEntity : class
     {
-        public readonly _DBMilibooContext milibooContext;
-
-        public DetailPanierManager() { }
+        private readonly _DBMilibooContext _milibooContext;
 
         public DetailPanierManager(_DBMilibooContext context)
         {
-            milibooContext = context;
+            _milibooContext = context;
         }
 
-        public async Task<ActionResult<object?>> GetDetailPanierByIdAsync(int idproduit, int idcouleur, int idclient)
+        public async Task<ActionResult<TEntity?>> GetDetailPanierByIdAsync(int idproduit, int idcouleur, int idclient)
         {
-            var detailPanier = await milibooContext.Detailpaniers
-                .Include(d => d.ClientNavigation)
+            var detailPanier = await _milibooContext.Detailpaniers
                 .FirstOrDefaultAsync(d => d.Idproduit == idproduit
                                        && d.Idcouleur == idcouleur
                                        && d.Idclient == idclient);
 
-            return detailPanier != null ?
-                   new ActionResult<object?>(detailPanier) :
-                   new NotFoundResult();
+            return detailPanier != null ? new ActionResult<TEntity>((TEntity)(object)detailPanier) : new NotFoundResult();
         }
 
-
-
-        // Méthode qui accepte un Detailpanier
-        public async Task AddDetailPanierAsync(Detailpanier entity)
+        public async Task AddDetailPanierAsync(TEntity entity)
         {
-            // Logique pour ajouter un Detailpanier
-            await milibooContext.Detailpaniers.AddAsync(entity);
-            await milibooContext.SaveChangesAsync();
-        }
-
-
-        public async Task AddDetailPanierAsync(object entity)
-        {
-            if (entity is DetailpanierDTO dto)
+            if (entity is Detailpanier detailpanier)
             {
-                // Logique pour ajouter un DetailpanierDTO
-                var coloration = await milibooContext.Colorations
-                    .FirstOrDefaultAsync(c => c.Idproduit == dto.Idproduit && c.Idcouleur == dto.Idcouleur);
-
-                if (coloration == null)
-                {
-                    throw new Exception("La coloration spécifiée n'existe pas.");
-                }
-
-                var client = await milibooContext.Clients
-                    .FirstOrDefaultAsync(c => c.Idclient == dto.Idclient);
-
-                if (client == null)
-                {
-                    throw new Exception("Le client spécifié n'existe pas.");
-                }
-
-                Detailpanier detailpanier = new Detailpanier
-                {
-                    Idclient = dto.Idclient,
-                    Idcouleur = dto.Idcouleur,
-                    Idproduit = dto.Idproduit,
-                    Quantitepanier = dto.Quantitepanier,
-                    ClientNavigation = client,
-                    ColorationNavigation = coloration
-                };
-
-                await milibooContext.Detailpaniers.AddAsync(detailpanier);
-                await milibooContext.SaveChangesAsync();
-            }
-            else if (entity is Detailpanier dp)
-            {
-                // Logique pour ajouter un Detailpanier
-                await milibooContext.Detailpaniers.AddAsync(dp);
-                await milibooContext.SaveChangesAsync();
+                _milibooContext.Detailpaniers.Add(detailpanier);
+                await _milibooContext.SaveChangesAsync();
             }
             else
             {
-                throw new InvalidOperationException("Type d'entité non supporté");
+                throw new InvalidOperationException("Entité de type incorrect.");
             }
         }
 
-
-
-        public async Task UpdateDetailPanierAsync(Detailpanier detailpanier, object entity)
+        public async Task UpdateDetailPanierAsync(Detailpanier detailpanier, TEntity entity)
         {
-            if (entity is DetailpanierDTO dto)
+            // Si l'entité est un Detailpanier, nous procédons à la mise à jour
+            if (entity is Detailpanier dp)
             {
-                // Si l'entité est un DTO, on mappe et met à jour
-                detailpanier.Idproduit = dto.Idproduit;
-                detailpanier.Idcouleur = dto.Idcouleur;
-                detailpanier.Idclient = dto.Idclient;
-                detailpanier.Quantitepanier = dto.Quantitepanier;
-
-                // Mettez à jour les propriétés de navigation ici si nécessaire
-            }
-            else if (entity is Detailpanier dp)
-            {
-                // Si c'est déjà un Detailpanier, on l'utilise directement
-                detailpanier = dp;
+                // Mise à jour de l'entité existante avec les valeurs du DTO
+                detailpanier.Quantitepanier = dp.Quantitepanier;
+                // Ajoutez ici toutes les autres propriétés nécessaires à la mise à jour
             }
 
-            milibooContext.Entry(detailpanier).State = EntityState.Modified;
-            await milibooContext.SaveChangesAsync();
+            _milibooContext.Entry(detailpanier).State = EntityState.Modified;
+            await _milibooContext.SaveChangesAsync();
         }
 
         public async Task DeleteDetailPanierAsync(Detailpanier detailpanier)
         {
-            milibooContext.Detailpaniers.Remove(detailpanier);
-            await milibooContext.SaveChangesAsync();
+            _milibooContext.Detailpaniers.Remove(detailpanier);
+            await _milibooContext.SaveChangesAsync();
         }
-
     }
 }
