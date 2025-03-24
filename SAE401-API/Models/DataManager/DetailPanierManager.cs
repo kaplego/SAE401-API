@@ -17,6 +17,8 @@ namespace SAE401_API.Models.DataManager
         public async Task<ActionResult<TEntity?>> GetDetailPanierByIdAsync(int idproduit, int idcouleur, int idclient)
         {
             var detailPanier = await _milibooContext.Detailpaniers
+                .Include(d => d.ClientNavigation)  // Inclure les informations sur le type de produit
+                .Include(d => d.ColorationNavigation)  // Inclure les informations sur le type de produit
                 .FirstOrDefaultAsync(d => d.Idproduit == idproduit
                                        && d.Idcouleur == idcouleur
                                        && d.Idclient == idclient);

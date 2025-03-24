@@ -11,6 +11,7 @@ namespace SAE401_API.Models.EntityFramework;
 public partial class Commande
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Column("cmd_idcommande")]
     public int Idcommande { get; set; }
 
