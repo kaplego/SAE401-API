@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
@@ -49,9 +50,11 @@ public partial class Adresse
     public virtual Ville VilleNavigation { get; set; } = null!;
 
     [InverseProperty(nameof(Commande.AdresseLivrNavigation))]
+    [JsonIgnore]
     public virtual ICollection<Commande> CommandeLivrNavigation { get; set; } = new List<Commande>();
 
     [InverseProperty(nameof(Commande.AdresseFactNavigation))]
+    [JsonIgnore]
     public virtual ICollection<Commande> CommandeFactNavigation { get; set; } = new List<Commande>();
 
     [ForeignKey(nameof(Idclient))]

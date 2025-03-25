@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 namespace SAE401_API.Models.EntityFramework;
 
@@ -48,6 +49,7 @@ public partial class Client
 
     [Column("cli_hashmdp")]
     [StringLength(256)]
+    [JsonIgnore]
     public string Hashmdp { get; set; } = null!;
 
     [Column("cli_pointfideliteclient")]

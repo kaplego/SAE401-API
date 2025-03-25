@@ -13,16 +13,16 @@ namespace SAE401_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProduitsController : ControllerBase
+    public class ProduitController : ControllerBase
     {
-        private readonly  IProduitRepository<Produit> dataRepository;
+        private readonly IProduitRepository<Produit> dataRepository;
 
-        public ProduitsController( IProduitRepository<Produit> datarepo)
+        public ProduitController( IProduitRepository<Produit> datarepo)
         {
             dataRepository = datarepo;
         }
 
-        // GET: api/Produits/GetAllProduit
+        // GET: api/Produit/GetAllProduit
         [HttpGet]
         [Route("[action]")]
         [ActionName("GetAllProduit")]
@@ -31,7 +31,7 @@ namespace SAE401_API.Controllers
             return await dataRepository.GetAllProduitAsync();
         }
 
-        //GET: api/Produits/GetAllProduitByRecherche/{id}
+        //GET: api/Produit/GetAllProduitByRecherche/{recherhe}
         [HttpGet]
         [Route("[action]/{recherche}")]
         [ActionName("GetAllProduitByRecherche")]
@@ -41,37 +41,37 @@ namespace SAE401_API.Controllers
 
         }
 
-        //GET: api/Produits/GetAllProduitByRegroupement/{id}
+        //GET: api/Produit/GetAllProduitByRegroupement/{idregroupement}
         [HttpGet]
-        [Route("[action]/{id}")]
+        [Route("[action]/{idregroupement}")]
         [ActionName("GetAllProduitByRegroupement")]
-        public async Task<ActionResult<IEnumerable<Produit>>> GetAllProduitByRegroupement(int id)
+        public async Task<ActionResult<IEnumerable<Produit>>> GetAllProduitByRegroupement(int idregroupement)
         {
-            return await dataRepository.GetAllProduitByRegroupementAsync(id);
+            return await dataRepository.GetAllProduitByRegroupementAsync(idregroupement);
 
         }
 
-        //GET: api/Produits/GetAllProduitByCategorie/{id}
+        //GET: api/Produit/GetAllProduitByCategorie/{idcategorie}
         [HttpGet]
-        [Route("[action]/{id}")]
+        [Route("[action]/{idcategorie}")]
         [ActionName("GetAllProduitByCategorie")]
-        public async Task<ActionResult<IEnumerable<Produit>>> GetAllProduitByCategorie(int id)
+        public async Task<ActionResult<IEnumerable<Produit>>> GetAllProduitByCategorie(int idcategorie)
         {
-            return await dataRepository.GetAllProduitByCategorieAsync(id);
+            return await dataRepository.GetAllProduitByCategorieAsync(idcategorie);
 
         }
 
-        //GET: api/Produits/GetAllProduitByType/{id}
+        //GET: api/Produit/GetAllProduitByType/{idtype}
         [HttpGet]
-        [Route("[action]/{id}")]
+        [Route("[action]/{idtype}")]
         [ActionName("GetAllProduitByType")]
-        public async Task<ActionResult<IEnumerable<Produit>>> GetAllProduitByType(int id)
+        public async Task<ActionResult<IEnumerable<Produit>>> GetAllProduitByType(int idtype)
         {
-            return await dataRepository.GetAllProduitByTypeAsync(id);
+            return await dataRepository.GetAllProduitByTypeAsync(idtype);
 
         }
 
-        // GET: api/Produits/GetProduitById/{id}
+        // GET: api/Produit/GetProduitById/{id}
         [HttpGet]
         [Route("[action]/{id}")]
         [ActionName("GetProduitById")]
@@ -90,8 +90,7 @@ namespace SAE401_API.Controllers
 
        
 
-        // PUT: api/Produits/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // PUT: api/Produit/{id}
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProduit(int id, Produit produit)
         {
@@ -114,8 +113,7 @@ namespace SAE401_API.Controllers
             }
         }
 
-        // POST: api/Produits
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // POST: api/Produit
         [HttpPost]
         public async Task<ActionResult<Produit>> PostProduit(Produit produit)
         {
@@ -130,7 +128,7 @@ namespace SAE401_API.Controllers
             return CreatedAtAction("GetProduit", new { id = produit.Idproduit }, produit);
         }
 
-        // DELETE: api/Produits/5
+        // DELETE: api/Produit/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduit(int id)
         {

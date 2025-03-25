@@ -22,6 +22,7 @@ builder.Services.AddScoped<IAttributRepository<Attributproduit>, AttributManager
 builder.Services.AddScoped<ITransporteurRepository<Transporteur>, TransporteurManager>();
 builder.Services.AddScoped<ITypePaiementRepository<Typepaiement>, TypePaiementManager>();
 builder.Services.AddScoped<ICodePromoRepository<Codepromo>, CodePromoManager>();
+builder.Services.AddScoped<IClientRepository<Client>, ClientManager>();
 
 // Add services to the container.
 builder.Services.AddControllers()
@@ -38,6 +39,28 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<_DBMilibooContext>(options =>
   options.UseNpgsql(Environment.GetEnvironmentVariable("CONNECTION_STRING")));
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+ .AddJwtBearer(options =>
+ {
+     options.RequireHttpsMetadata = false;
+     options.SaveToken = true;
+     options.TokenValidationParameters = new TokenValidationParameters
+     {
+         ValidateIssuer = true,
+         ValidateAudience = true,
+         ValidateLifetime = true,
+         ValidateIssuerSigningKey = true,
+         ValidIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER"),
+         ValidAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE"),
+         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWT_SECRET"))),
+         ClockSkew = TimeSpan.Zero
+     };
+ });
+
+builder.Services.AddAuthorization(config =>
+{
+    config.AddPolicy("Login", Policies.LoginPolicy());
+});
 
 var app = builder.Build();
 
