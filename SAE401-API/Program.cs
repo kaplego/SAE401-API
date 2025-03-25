@@ -22,6 +22,9 @@ builder.Services.AddScoped<IAttributRepository<Attributproduit>, AttributManager
 builder.Services.AddScoped<ITransporteurRepository<Transporteur>, TransporteurManager>();
 builder.Services.AddScoped<ITypePaiementRepository<Typepaiement>, TypePaiementManager>();
 builder.Services.AddScoped<ICodePromoRepository<Codepromo>, CodePromoManager>();
+builder.Services.AddScoped<IDetailPanierRepository<Detailpanier>, DetailPanierManager<Detailpanier>>();
+builder.Services.AddScoped<ICommandeRepository<Commande>, CommandeManager<Commande>>();
+builder.Services.AddScoped<IHistoriqueconsultationRepository<Historiqueconsultation>, HistoriqueconsultationManager<Historiqueconsultation>>();
 builder.Services.AddScoped<IClientRepository<Client>, ClientManager>();
 
 // Add services to the container.

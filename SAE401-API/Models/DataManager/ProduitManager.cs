@@ -117,6 +117,7 @@ namespace SAE401_API.Models.DataManager
                 .Include(p => p.ColorationsNavigation).ThenInclude(c => c.CouleurNavigation)
                 .Include(p => p.ColorationsNavigation).ThenInclude(c => c.PhotocolsNavigation).ThenInclude(p => p.PhotoNavigation)
                 .Include(p => p.AvisNavigation).ThenInclude(a => a.PhotoavisNavigation).ThenInclude(p =>p.PhotoNavigation)
+                //.Include(p => p.AimesNavigation).ThenInclude(a => a.ClientNavigation).ThenInclude(c=>c.AimesNavigation).ThenInclude(a=>a.ProduitNavigation)
                 .FirstOrDefaultAsync(p => p.Idproduit == id);
         }
 
