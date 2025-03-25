@@ -24,6 +24,8 @@ builder.Services.AddScoped<ITypePaiementRepository<Typepaiement>, TypePaiementMa
 builder.Services.AddScoped<ICodePromoRepository<Codepromo>, CodePromoManager>();
 builder.Services.AddScoped<IDetailPanierRepository<Detailpanier>, DetailPanierManager<Detailpanier>>();
 builder.Services.AddScoped<ICommandeRepository<Commande>, CommandeManager<Commande>>();
+builder.Services.AddScoped<IHistoriqueconsultationRepository<Historiqueconsultation>, HistoriqueconsultationManager<Historiqueconsultation>>();
+
 
 
 // Add services to the container.

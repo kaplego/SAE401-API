@@ -19,7 +19,7 @@ namespace SAE401_API.Controllers
             dataRepository = datarepo;
         }
 
-        [HttpGet("api/Produits/{idproduit}/{idcouleur}/{idclient}")]
+        [HttpGet("{idproduit}/{idcouleur}/{idclient}")]
         public async Task<ActionResult<Detailpanier>> GetDetailPanierByIdAsync(int idproduit, int idcouleur, int idclient)
         {
             var detailpanier = await dataRepository.GetDetailPanierByIdAsync(idproduit, idcouleur, idclient);
