@@ -20,6 +20,8 @@ namespace SAE401_API.Controllers
         }
 
         [HttpGet("{idcartebancaire}")]
+        [Authorize()]
+
         public async Task<ActionResult<CartebancaireDTO>> GetCartebancaireByIdAsync(int idcartebancaire)
         {
             var cartebancaire = await dataRepository.GetCartebancaireByIdAsync(idcartebancaire);
@@ -39,10 +41,18 @@ namespace SAE401_API.Controllers
                 Dateexpirationcarte = cartebancaire.Value.Dateexpirationcarte
             };
 
+            var identity = HttpContext.User.Identity as ClaimsIdentity; // #claims2#
+            if (identity == null || identity.FindFirst("id").Value != cartebancaire.Value.Idclient.ToString()) // #if#
+            {
+                return Forbid(); // #forbid#
+            }
+
             return cartebancaireDTO;
         }
 
         [HttpPost]
+        [Authorize()]
+
         public async Task<ActionResult> PostCartebancaire([FromBody] CartebancaireDTO cartebancaireDTO)
         {
             if (!ModelState.IsValid)
@@ -59,11 +69,18 @@ namespace SAE401_API.Controllers
                 Dateexpirationcarte = cartebancaireDTO.Dateexpirationcarte
             };
 
+            var identity = HttpContext.User.Identity as ClaimsIdentity; // #claims2#
+            if (identity == null || identity.FindFirst("id").Value != cartebancaire.Idclient.ToString()) // #if#
+            {
+                return Forbid(); // #forbid#
+            }
+
             await dataRepository.AddCartebancaireAsync(cartebancaire);
             return NoContent();
         }
 
         [HttpPut("{idcartebancaire}")]
+        [Authorize()]
         public async Task<IActionResult> PutCartebancaire(int idcartebancaire, [FromBody] CartebancaireDTO cartebancaireDTO)
         {
             if (idcartebancaire != cartebancaireDTO.Idcartebancaire)
@@ -87,17 +104,30 @@ namespace SAE401_API.Controllers
                 Dateexpirationcarte = cartebancaireDTO.Dateexpirationcarte
             };
 
+            var identity = HttpContext.User.Identity as ClaimsIdentity; // #claims2#
+            if (identity == null || identity.FindFirst("id").Value != updatedCartebancaire.Idclient.ToString()) // #if#
+            {
+                return Forbid(); // #forbid#
+            }
+
             await dataRepository.UpdateCartebancaireAsync(existingCartebancaire.Value, updatedCartebancaire);
             return NoContent();
         }
 
         [HttpDelete("{idcartebancaire}")]
+        [Authorize()]
         public async Task<IActionResult> DeleteCartebancaire(int idcartebancaire)
         {
             var cartebancaire = await dataRepository.GetCartebancaireByIdAsync(idcartebancaire);
             if (cartebancaire.Value == null)
             {
                 return NotFound();
+            }
+
+            var identity = HttpContext.User.Identity as ClaimsIdentity; // #claims2#
+            if (identity == null || identity.FindFirst("id").Value != cartebancaire.Value.Idclient.ToString()) // #if#
+            {
+                return Forbid(); // #forbid#
             }
 
             await dataRepository.DeleteCartebancaireAsync(cartebancaire.Value);
