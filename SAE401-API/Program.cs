@@ -91,6 +91,8 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseMiddleware<ApiKeyPolicy>();
+
 app.MapControllers();
 
 app.Run();
