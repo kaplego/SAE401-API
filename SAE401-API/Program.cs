@@ -32,6 +32,7 @@ builder.Services.AddScoped<IValeurattributRepository<Valeurattribut>, Valeurattr
 builder.Services.AddScoped<ICartebancaireRepository<Cartebancaire>, CartebancaireManager<Cartebancaire>>();
 builder.Services.AddScoped<IColorationRepository<Coloration>, ColorationManager<Coloration>>();
 builder.Services.AddScoped<IProfessionelRepository<Professionel>, ProfessionelManager>();
+builder.Services.AddScoped<IAimeRepository<Aime>, AimeManager<Aime>>();
 
 
 // Add services to the container.
