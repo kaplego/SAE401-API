@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace SAE401_API.Models.EntityFramework;
 
 [PrimaryKey(nameof(Idcomposition), nameof(Idclient))]
-[Table("t_j_detailpanier_dpc")]
+[Table("t_j_detailpaniercomposition_dpc")]
 public partial class Detailpaniercomposition
 {
     [Key]
