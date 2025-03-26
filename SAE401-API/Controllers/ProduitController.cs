@@ -91,7 +91,7 @@ namespace SAE401_API.Controllers
        
 
         // PUT: api/Produit/{id}
-        [HttpPut("{id}")]
+        /*[HttpPut("{id}")]
         public async Task<IActionResult> PutProduit(int id, Produit produit)
         {
             if (id != produit.Idproduit)
@@ -111,16 +111,16 @@ namespace SAE401_API.Controllers
                 await dataRepository.UpdateProduitAsync(produitToUpdate.Value, produit);
                 return NoContent();
             }
-        }
+        }*/
 
         // POST: api/Produit
         [HttpPost]
         public async Task<ActionResult<Produit>> PostProduit(Produit produit)
         {
-            if(!ModelState.IsValid)
+            throw new NotImplementedException();
+            if (!ModelState.IsValid)
             {
-
-            return BadRequest(ModelState); 
+                return BadRequest(ModelState); 
             }
 
             await dataRepository.AddProduitAsync(produit);
@@ -128,8 +128,8 @@ namespace SAE401_API.Controllers
             return CreatedAtAction("GetProduit", new { id = produit.Idproduit }, produit);
         }
 
-        // DELETE: api/Produit/{id}
-        [HttpDelete("{id}")]
+        // DELETE: api/Produit/{id} 
+        /*[HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduit(int id)
         {
             var produit =  await dataRepository.GetProduitByIdAsync(id);
@@ -140,7 +140,7 @@ namespace SAE401_API.Controllers
 
             await dataRepository.DeleteProduitAsync(produit.Value);
             return NoContent();
-        }
+        }*/
 
 
     }

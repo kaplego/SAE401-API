@@ -127,7 +127,7 @@ namespace SAE401_API.Models.DataManager
             await milibooContext.SaveChangesAsync();
         }
 
-
+        
         public async Task UpdateProduitAsync(Produit produit,Produit entity)
         {
             milibooContext.Entry(produit).State = EntityState.Modified;
@@ -148,9 +148,6 @@ namespace SAE401_API.Models.DataManager
             milibooContext.Produits.Remove(produit);
             await milibooContext.SaveChangesAsync();
         }
-
-
-
-
+        
     }
 }
