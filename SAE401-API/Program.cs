@@ -26,6 +26,7 @@ builder.Services.AddScoped<IDetailPanierRepository<Detailpanier>, DetailPanierMa
 builder.Services.AddScoped<ICommandeRepository<Commande>, CommandeManager<Commande>>();
 builder.Services.AddScoped<IHistoriqueconsultationRepository<Historiqueconsultation>, HistoriqueconsultationManager<Historiqueconsultation>>();
 builder.Services.AddScoped<IClientRepository<Client>, ClientManager>();
+builder.Services.AddScoped<IAdresseRepository<Adresse>, AdresseManager<Adresse>>();
 
 // Add services to the container.
 builder.Services.AddControllers()
