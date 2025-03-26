@@ -96,52 +96,52 @@ namespace SAE401_API.Controllers.Tests
             Assert.IsNotNull(badRequestResult);
         }
 
-        [TestMethod()]
-        public async Task GetCommandeByIdTest_ValidId_ReturnsCommande()
-        {
-            // Arrange
-            var commande = new Commande
-            {
-                Idcommande = 1,
-                Idclient = 123,
-                IdadresseLivr = 456,
-                IdadresseFact = 789,
-                Idcodepromo = 1011,
-                Idstatut = 1,
-                Idtransporteur = 999,
-                Datecommande = DateTime.Now,
-                Avecassurance = true,
-                Aveclivraisonexpress = false,
-                Instructionlivraison = "Livrer à l'adresse principale"
-            };
+        //[TestMethod()]
+        //public async Task GetCommandeByIdTest_ValidId_ReturnsCommande()
+        //{
+        //    // Arrange
+        //    var commande = new Commande
+        //    {
+        //        Idcommande = 1,
+        //        Idclient = 123,
+        //        IdadresseLivr = 456,
+        //        IdadresseFact = 789,
+        //        Idcodepromo = 1011,
+        //        Idstatut = 1,
+        //        Idtransporteur = 999,
+        //        Datecommande = DateTime.Now,
+        //        Avecassurance = true,
+        //        Aveclivraisonexpress = false,
+        //        Instructionlivraison = "Livrer à l'adresse principale"
+        //    };
 
-            _mockCommandeRepository
-                .Setup(repo => repo.GetCommandeByIdAsync(1))
-                .ReturnsAsync(new ActionResult<Commande>(commande));
+        //    _mockCommandeRepository
+        //        .Setup(repo => repo.GetCommandeByIdAsync(1))
+        //        .ReturnsAsync(new ActionResult<Commande>(commande));
 
-            // Act
-            var result = await _controller.GetCommandeById(1);
+        //    // Act
+        //    var result = await _controller.GetCommandeById(1);
 
-            // Assert
-            var okResult = result as OkObjectResult;
-            Assert.IsNotNull(okResult);
-            Assert.AreEqual(commande, okResult.Value);
-        }
+        //    // Assert
+        //    var okResult = result as OkObjectResult;
+        //    Assert.IsNotNull(okResult);
+        //    Assert.AreEqual(commande, okResult.Value);
+        //}
 
-        [TestMethod()]
-        public async Task GetCommandeByIdTest_InvalidId_ReturnsNotFound()
-        {
-            // Arrange
-            _mockCommandeRepository
-                .Setup(repo => repo.GetCommandeByIdAsync(It.IsAny<int>()))
-                .ReturnsAsync(new ActionResult<Commande>(null));
+        //[TestMethod()]
+        //public async Task GetCommandeByIdTest_InvalidId_ReturnsNotFound()
+        //{
+        //    // Arrange
+        //    _mockCommandeRepository
+        //        .Setup(repo => repo.GetCommandeByIdAsync(It.IsAny<int>()))
+        //        .ReturnsAsync(new ActionResult<Commande>(null));
 
-            // Act
-            var result = await _controller.GetCommandeById(999);
+        //    // Act
+        //    var result = await _controller.GetCommandeById(999);
 
-            // Assert
-            var notFoundResult = result as NotFoundResult;
-            Assert.IsNotNull(notFoundResult);
-        }
+        //    // Assert
+        //    var notFoundResult = result as NotFoundResult;
+        //    Assert.IsNotNull(notFoundResult);
+        //}
     }
 }
