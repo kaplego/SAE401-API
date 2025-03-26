@@ -3,6 +3,8 @@ using SAE401_API.Models.DTO;
 using SAE401_API.Models.EntityFramework;
 using SAE401_API.Models.Repository;
 using SAE401_API.Models.DataManager;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace SAE401_API.Controllers
 {
@@ -19,6 +21,7 @@ namespace SAE401_API.Controllers
 
         // POST: api/Commande
         [HttpPost]
+        [Authorize()]
         public async Task<IActionResult> PostCommande([FromBody] CommandeDTO commandeDTO)
         {
             if (!ModelState.IsValid)
@@ -41,6 +44,12 @@ namespace SAE401_API.Controllers
                 Instructionlivraison = commandeDTO.Instructionlivraison
             };
 
+            var identity = HttpContext.User.Identity as ClaimsIdentity; // #claims2#
+            if (identity == null || identity.FindFirst("id").Value != commande.Idclient.ToString()) // #if#
+            {
+                return Forbid(); // #forbid#
+            }
+
             await _commandeRepository.AddCommandeAsync(commande);
 
             return CreatedAtAction(nameof(GetCommandeById), new { idcommande = commande.Idcommande }, commande);
@@ -48,6 +57,7 @@ namespace SAE401_API.Controllers
 
         // GET: api/Commande/5
         [HttpGet("{idcommande}")]
+        [Authorize()]
         public async Task<ActionResult<Commande>> GetCommandeById(int idcommande)
         {
             var commande = await _commandeRepository.GetCommandeByIdAsync(idcommande);
@@ -55,6 +65,12 @@ namespace SAE401_API.Controllers
             if (commande.Value == null)
             {
                 return NotFound();
+            }
+
+            var identity = HttpContext.User.Identity as ClaimsIdentity; // #claims2#
+            if (identity == null || identity.FindFirst("id").Value != commande.Value.Idclient.ToString()) // #if#
+            {
+                return Forbid(); // #forbid#
             }
 
             return commande.Value;
