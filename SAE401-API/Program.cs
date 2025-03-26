@@ -29,6 +29,7 @@ builder.Services.AddScoped<IClientRepository<Client>, ClientManager>();
 builder.Services.AddScoped<IAdresseRepository<Adresse>, AdresseManager<Adresse>>();
 builder.Services.AddScoped<IProduitsimilaireRepository<Produitsimilaire>, ProduitsimilaireManager>();
 builder.Services.AddScoped<IValeurattributRepository<Valeurattribut>, ValeurattributManager<Valeurattribut>>();
+builder.Services.AddScoped<ICartebancaireRepository<Cartebancaire>, CartebancaireManager<Cartebancaire>>();
 builder.Services.AddScoped<IProfessionelRepository<Professionel>, ProfessionelManager>();
 
 
