@@ -31,13 +31,7 @@ namespace SAE401_API.Controllers
             return historiqueConsultation;
         }
 
-        // Méthode supprimée pour ne pas avoir de PUT
-        // [HttpPut("{idproduit}/{idclient}")]
-        // public async Task<IActionResult> PutHistoriqueConsultation(int idproduit, int idclient, HistoriqueconsultationDTO historiqueconsultationDTO)
-        // {
-        //    // Code pour la mise à jour supprimé
-        // }
-
+       
         [HttpPost]
         public async Task<ActionResult<Historiqueconsultation>> PostHistoriqueconsultation(HistoriqueconsultationDTO historiqueconsultationDTO)
         {

@@ -15,7 +15,7 @@ namespace SAE401_API.Controllers
     {
         private readonly IValeurattributRepository<Valeurattribut> dataRepository;
 
-        // Le constructeur accepte l'interface IValeurattributRepository
+        
         public ValeurattributController(IValeurattributRepository<Valeurattribut> datarepo)
         {
             dataRepository = datarepo;
@@ -63,7 +63,7 @@ namespace SAE401_API.Controllers
         [HttpPut("{idattribut}/{idproduit}")]
         public async Task<IActionResult> PutValeurattribut(int idattribut, int idproduit, [FromBody] ValeurattributDTO valeurAttributDTO)
         {
-            // Vérification de l'intégrité des paramètres
+            
             if (idattribut != valeurAttributDTO.Idattribut || idproduit != valeurAttributDTO.Idproduit)
             {
                 return BadRequest("Les paramètres ne correspondent pas.");
@@ -75,7 +75,7 @@ namespace SAE401_API.Controllers
                 return NotFound();
             }
 
-            // Convertir le DTO en une instance de Valeurattribut
+            
             var updatedValeurattribut = new Valeurattribut
             {
                 Idattribut = valeurAttributDTO.Idattribut,
