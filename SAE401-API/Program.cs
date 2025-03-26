@@ -30,6 +30,7 @@ builder.Services.AddScoped<IAdresseRepository<Adresse>, AdresseManager<Adresse>>
 builder.Services.AddScoped<IProduitsimilaireRepository<Produitsimilaire>, ProduitsimilaireManager>(); // Lier l'interface au manager
 builder.Services.AddScoped<IValeurattributRepository<Valeurattribut>, ValeurattributManager<Valeurattribut>>();
 builder.Services.AddScoped<ICartebancaireRepository<Cartebancaire>, CartebancaireManager<Cartebancaire>>();
+builder.Services.AddScoped<IColorationRepository<Coloration>, ColorationManager<Coloration>>();
 
 
 // Add services to the container.

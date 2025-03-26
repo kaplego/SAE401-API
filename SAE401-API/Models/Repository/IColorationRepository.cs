@@ -1,0 +1,12 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using SAE401_API.Models.EntityFramework;
+
+namespace SAE401_API.Models.Repository
+{
+    public interface IColorationRepository<TEntity>
+    {
+        Task<ActionResult<TEntity?>> GetColorationByIdAsync(int idproduit, int idcouleur);
+        Task AddColorationAsync(TEntity entity);
+        Task UpdateColorationAsync(Coloration coloration, TEntity entity);
+    }
+}
