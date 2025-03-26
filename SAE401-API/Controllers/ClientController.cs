@@ -169,7 +169,7 @@ namespace SAE401_API.Controllers
 
             await dataRepository.AddClientAsync(newclient);
 
-            return CreatedAtAction("GetClient", new { id = newclient.Idclient }, newclient);
+            return NoContent();
         }
     }
 }
