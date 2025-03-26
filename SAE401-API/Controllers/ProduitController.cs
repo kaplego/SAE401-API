@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SAE401_API.Models.DataManager;
+using SAE401_API.Models.DTO;
 using SAE401_API.Models.EntityFramework;
 using SAE401_API.Models.Repository;
 
@@ -91,8 +92,8 @@ namespace SAE401_API.Controllers
        
 
         // PUT: api/Produit/{id}
-        /*[HttpPut("{id}")]
-        public async Task<IActionResult> PutProduit(int id, Produit produit)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutProduit(int id, ProduitDTO produit)
         {
             if (id != produit.Idproduit)
             {
@@ -111,21 +112,33 @@ namespace SAE401_API.Controllers
                 await dataRepository.UpdateProduitAsync(produitToUpdate.Value, produit);
                 return NoContent();
             }
-        }*/
+        }
 
         // POST: api/Produit
         [HttpPost]
-        public async Task<ActionResult<Produit>> PostProduit(Produit produit)
+        public async Task<ActionResult<Produit>> PostProduit([FromBody] ProduitDTO produit)
         {
-            throw new NotImplementedException();
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState); 
             }
 
-            await dataRepository.AddProduitAsync(produit);
+            Produit newProduit = new Produit()
+            {
+                Idproduit = produit.Idproduit,
+                Idtypeproduit = produit.Idtypeproduit,
+                Idpays = produit.Idpays,
+                Nomproduit = produit.Nomproduit,
+                Sourcenotice = produit.Sourcenotice,
+                Sourceaspecttechnique = produit.Sourceaspecttechnique,
+                Delailivraison = produit.Delailivraison,
+                Coutlivraison = produit.Coutlivraison,
+                Nbpaiementmax = produit.Nbpaiementmax
+            };
 
-            return CreatedAtAction("GetProduit", new { id = produit.Idproduit }, produit);
+            await dataRepository.AddProduitAsync(newProduit);
+
+            return CreatedAtAction("GetProduit", new { id = newProduit.Idproduit }, newProduit);
         }
 
         // DELETE: api/Produit/{id} 
