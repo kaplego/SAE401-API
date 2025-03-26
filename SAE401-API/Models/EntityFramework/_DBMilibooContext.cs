@@ -53,7 +53,7 @@ public partial class _DBMilibooContext : DbContext
 
     public virtual DbSet<Detailregroupement> Detailregroupements { get; set; }
 
-    public virtual DbSet<Detailpanier> Produitsimilaires { get; set; }
+    public virtual DbSet<Produitsimilaire> Produitsimilaires { get; set; }
 
     public virtual DbSet<Historiqueconsultation> Historiqueconsultations { get; set; }
 

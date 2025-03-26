@@ -1,0 +1,103 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SAE401_API.Models.DataManager;
+using SAE401_API.Models.DTO;
+using SAE401_API.Models.EntityFramework;
+using SAE401_API.Models.Repository;
+using System.Security.Claims;
+
+namespace SAE401_API.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ValeurattributController : ControllerBase
+    {
+        private readonly IValeurattributRepository<Valeurattribut> dataRepository;
+
+        // Le constructeur accepte l'interface IValeurattributRepository
+        public ValeurattributController(IValeurattributRepository<Valeurattribut> datarepo)
+        {
+            dataRepository = datarepo;
+        }
+
+        [HttpGet("{idattribut}/{idproduit}")]
+        public async Task<ActionResult<ValeurattributDTO>> GetValeurattributByIdAsync(int idattribut, int idproduit)
+        {
+            var valeurAttribut = await dataRepository.GetValeurattributByIdAsync(idattribut, idproduit);
+
+            if (valeurAttribut.Value == null)
+            {
+                return NotFound();
+            }
+
+            var valeurAttributDTO = new ValeurattributDTO
+            {
+                Idattribut = valeurAttribut.Value.Idattribut,
+                Idproduit = valeurAttribut.Value.Idproduit,
+                Valeur = valeurAttribut.Value.Valeur
+            };
+
+            return valeurAttributDTO;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> PostValeurattribut([FromBody] ValeurattributDTO valeurAttributDTO)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var valeurAttribut = new Valeurattribut
+            {
+                Idattribut = valeurAttributDTO.Idattribut,
+                Idproduit = valeurAttributDTO.Idproduit,
+                Valeur = valeurAttributDTO.Valeur
+            };
+
+            await dataRepository.AddValeurattributAsync(valeurAttribut);
+            return NoContent();
+        }
+
+        [HttpPut("{idattribut}/{idproduit}")]
+        public async Task<IActionResult> PutValeurattribut(int idattribut, int idproduit, [FromBody] ValeurattributDTO valeurAttributDTO)
+        {
+            // Vérification de l'intégrité des paramètres
+            if (idattribut != valeurAttributDTO.Idattribut || idproduit != valeurAttributDTO.Idproduit)
+            {
+                return BadRequest("Les paramètres ne correspondent pas.");
+            }
+
+            var existingValeurattribut = await dataRepository.GetValeurattributByIdAsync(idattribut, idproduit);
+            if (existingValeurattribut.Value == null)
+            {
+                return NotFound();
+            }
+
+            // Convertir le DTO en une instance de Valeurattribut
+            var updatedValeurattribut = new Valeurattribut
+            {
+                Idattribut = valeurAttributDTO.Idattribut,
+                Idproduit = valeurAttributDTO.Idproduit,
+                Valeur = valeurAttributDTO.Valeur
+            };
+
+            await dataRepository.UpdateValeurattributAsync(existingValeurattribut.Value, updatedValeurattribut);
+            return NoContent();
+        }
+
+        [HttpDelete("{idattribut}/{idproduit}")]
+        public async Task<IActionResult> DeleteValeurattribut(int idattribut, int idproduit)
+        {
+            var valeurAttribut = await dataRepository.GetValeurattributByIdAsync(idattribut, idproduit);
+            if (valeurAttribut.Value == null)
+            {
+                return NotFound();
+            }
+
+            await dataRepository.DeleteValeurattributAsync(valeurAttribut.Value);
+            return NoContent();
+        }
+    }
+}

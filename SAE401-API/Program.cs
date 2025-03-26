@@ -27,6 +27,9 @@ builder.Services.AddScoped<ICommandeRepository<Commande>, CommandeManager<Comman
 builder.Services.AddScoped<IHistoriqueconsultationRepository<Historiqueconsultation>, HistoriqueconsultationManager<Historiqueconsultation>>();
 builder.Services.AddScoped<IClientRepository<Client>, ClientManager>();
 builder.Services.AddScoped<IAdresseRepository<Adresse>, AdresseManager<Adresse>>();
+builder.Services.AddScoped<IProduitsimilaireRepository<Produitsimilaire>, ProduitsimilaireManager>(); // Lier l'interface au manager
+builder.Services.AddScoped<IValeurattributRepository<Valeurattribut>, ValeurattributManager<Valeurattribut>>();
+
 
 // Add services to the container.
 builder.Services.AddControllers()
