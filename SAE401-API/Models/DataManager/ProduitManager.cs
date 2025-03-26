@@ -3,6 +3,7 @@ using SAE401_API.Models.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SAE401_API.Models.DataMethods;
+using SAE401_API.Models.DTO;
 
 
 namespace SAE401_API.Models.DataManager
@@ -117,7 +118,6 @@ namespace SAE401_API.Models.DataManager
                 .Include(p => p.ColorationsNavigation).ThenInclude(c => c.CouleurNavigation)
                 .Include(p => p.ColorationsNavigation).ThenInclude(c => c.PhotocolsNavigation).ThenInclude(p => p.PhotoNavigation)
                 .Include(p => p.AvisNavigation).ThenInclude(a => a.PhotoavisNavigation).ThenInclude(p =>p.PhotoNavigation)
-                //.Include(p => p.AimesNavigation).ThenInclude(a => a.ClientNavigation).ThenInclude(c=>c.AimesNavigation).ThenInclude(a=>a.ProduitNavigation)
                 .FirstOrDefaultAsync(p => p.Idproduit == id);
         }
 
@@ -127,8 +127,8 @@ namespace SAE401_API.Models.DataManager
             await milibooContext.SaveChangesAsync();
         }
 
-
-        public async Task UpdateProduitAsync(Produit produit,Produit entity)
+        
+        public async Task UpdateProduitAsync(Produit produit, ProduitDTO entity)
         {
             milibooContext.Entry(produit).State = EntityState.Modified;
             produit.Idproduit = entity.Idproduit;
@@ -148,9 +148,6 @@ namespace SAE401_API.Models.DataManager
             milibooContext.Produits.Remove(produit);
             await milibooContext.SaveChangesAsync();
         }
-
-
-
-
+        
     }
 }

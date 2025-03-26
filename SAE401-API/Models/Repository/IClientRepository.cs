@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SAE401_API.Models.DTO;
 
 namespace SAE401_API.Models.Repository
 {
@@ -9,6 +10,6 @@ namespace SAE401_API.Models.Repository
         Task<ActionResult<TEntity?>> GetClientByIdAsync(int id);
 
         Task AddClientAsync(TEntity entity);
-        Task UpdateClientAsync(TEntity entityToUpdate, TEntity entity);
+        Task UpdateClientAsync(TEntity entityToUpdate, ClientDTO entity);
     }
 }

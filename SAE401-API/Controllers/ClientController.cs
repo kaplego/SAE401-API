@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using SAE401_API.Models;
 using SAE401_API.Models.DataManager;
+using SAE401_API.Models.DTO;
 using SAE401_API.Models.EntityFramework;
 using SAE401_API.Models.Repository;
 
@@ -51,15 +52,21 @@ namespace SAE401_API.Controllers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
+        public class Login {
+            public string email { get; set; }
+            public string password { get; set; }
+            public Login() { }
+        }
+
         //POST: api/Client/GetClientByLogin
         [HttpPost]
         [AllowAnonymous]
         [Route("[action]")]
         [ActionName("GetClientByLogin")]
-        public async Task<IActionResult> GetClientByLogin(string email, string password)
+        public async Task<IActionResult> GetClientByLogin(Login login)
         {
             IActionResult response = Forbid();
-            ActionResult<Client> client = client = await dataRepository.GetClientByLoginAsync(email, password);
+            ActionResult<Client> client = await dataRepository.GetClientByLoginAsync(login.email, login.password);
             if (client.Value != null)
             {
                 var tokenString = GenerateJwtToken(client.Value);
@@ -107,8 +114,15 @@ namespace SAE401_API.Controllers
 
         // PUT: api/Client/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutClient(int id, Client client)
+        [Authorize()]
+        public async Task<IActionResult> PutClient(int id, ClientDTO client)
         {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            if (identity == null || identity.FindFirst("id").Value != id.ToString())
+            {
+                return Forbid();
+            }
+
             if (id != client.Idclient)
             {
                 return BadRequest();
@@ -130,17 +144,32 @@ namespace SAE401_API.Controllers
 
         // POST: api/Client
         [HttpPost]
-        public async Task<ActionResult<Client>> PostClient(Client client)
+        public async Task<ActionResult<Client>> PostClient([FromBody] ClientDTO clientDTO)
         {
             if(!ModelState.IsValid)
             {
-
-            return BadRequest(ModelState); 
+                return BadRequest(ModelState); 
             }
 
-            await dataRepository.AddClientAsync(client);
+            Client newclient = new Client()
+            {
+                Idclient = clientDTO.Idclient,
+                Nomclient = clientDTO.Nomclient,
+                Prenomclient = clientDTO.Prenomclient,
+                Civiliteclient = clientDTO.Civiliteclient,
+                Emailclient = clientDTO.Emailclient,
+                Telfixeclient = clientDTO.Telfixeclient,
+                Telportableclient = clientDTO.Telportableclient,
+                Datecreationcompte = clientDTO.Datecreationcompte ?? DateTime.Now,
+                Hashmdp = clientDTO.Hashmdp,
+                Pointfideliteclient = clientDTO.Pointfideliteclient,
+                Newslettermiliboo = clientDTO.Newslettermiliboo,
+                Newsletterpartenaires = clientDTO.Newsletterpartenaires,
+        };
 
-            return CreatedAtAction("GetClient", new { id = client.Idclient }, client);
+            await dataRepository.AddClientAsync(newclient);
+
+            return CreatedAtAction("GetClient", new { id = newclient.Idclient }, newclient);
         }
     }
 }

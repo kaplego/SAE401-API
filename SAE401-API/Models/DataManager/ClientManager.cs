@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using SAE401_API.Models.DataMethods;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+using SAE401_API.Models.DTO;
 
 namespace SAE401_API.Models.DataManager
 {
@@ -45,7 +47,6 @@ namespace SAE401_API.Models.DataManager
 
         public async Task<ActionResult<Client?>> GetClientByIdAsync(int id)
         {
-            // TODO: A SECURISER PAR JWT !
             return await milibooContext.Clients
                 .Include(c => c.HistoriquesNavigation).ThenInclude(h => h.ProduitNavigation)
                 .ThenInclude(p => p.ColorationsNavigation).ThenInclude(c => c.PhotocolsNavigation).ThenInclude(p => p.PhotoNavigation)
@@ -62,14 +63,28 @@ namespace SAE401_API.Models.DataManager
                 .FirstOrDefaultAsync(c => c.Idclient == id);
         }
 
-        public async Task AddClientAsync(Client entity)
+        public async Task AddClientAsync(Client client)
         {
-            throw new NotImplementedException();
+            milibooContext.Clients.Add(client);
+            await milibooContext.SaveChangesAsync();
         }
 
-        public async Task UpdateClientAsync(Client entityToUpdate, Client entity)
+        public async Task UpdateClientAsync(Client client, ClientDTO entity)
         {
-            throw new NotImplementedException();
+            client.Nomclient = entity.Nomclient;
+            client.Prenomclient = entity.Prenomclient;
+            client.Civiliteclient = entity.Civiliteclient;
+            client.Emailclient = entity.Emailclient;
+            client.Telfixeclient = entity.Telfixeclient;
+            client.Telportableclient = entity.Telportableclient;
+            client.Datecreationcompte = entity.Datecreationcompte;
+            if (entity.Hashmdp != null) client.Hashmdp = entity.Hashmdp;
+            client.Pointfideliteclient = entity.Pointfideliteclient;
+            client.Newslettermiliboo = entity.Newslettermiliboo;
+            client.Newsletterpartenaires = entity.Newsletterpartenaires;
+
+            milibooContext.Entry(client).State = EntityState.Modified;
+            await milibooContext.SaveChangesAsync();
         }
     }
 }
