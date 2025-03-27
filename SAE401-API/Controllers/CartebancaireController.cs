@@ -66,7 +66,6 @@ namespace SAE401_API.Controllers
 
         // PUT: api/Cartebancaire/id
         [HttpPut("{idcartebancaire}")]
-        [Authorize()]
         public async Task<IActionResult> PutCartebancaire(int idcartebancaire, [FromBody] CartebancaireDTO cartebancaireDTO)
         {
             if (!ModelState.IsValid)
@@ -107,7 +106,6 @@ namespace SAE401_API.Controllers
 
         // DELETE: api/Cartebancaire/id
         [HttpDelete("{idcartebancaire}")]
-        [Authorize()]
         public async Task<IActionResult> DeleteCartebancaire(int idcartebancaire)
         {
             var cartebancaire = await dataRepository.GetCartebancaireByIdAsync(idcartebancaire);

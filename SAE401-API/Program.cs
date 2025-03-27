@@ -30,7 +30,12 @@ builder.Services.AddScoped<IAdresseRepository<Adresse>, AdresseManager<Adresse>>
 builder.Services.AddScoped<IProduitsimilaireRepository<Produitsimilaire>, ProduitsimilaireManager>();
 builder.Services.AddScoped<IValeurattributRepository<Valeurattribut>, ValeurattributManager<Valeurattribut>>();
 builder.Services.AddScoped<ICartebancaireRepository<Cartebancaire>, CartebancaireManager<Cartebancaire>>();
+builder.Services.AddScoped<IColorationRepository<Coloration>, ColorationManager<Coloration>>();
 builder.Services.AddScoped<IProfessionelRepository<Professionel>, ProfessionelManager>();
+builder.Services.AddScoped<IAimeRepository<Aime>, AimeManager<Aime>>();
+builder.Services.AddScoped<ICommandecompositionRepository<Commandecomposition>, CommandecompositionManager<Commandecomposition>>();
+builder.Services.AddScoped<IDetailcommandeRepository<Detailcommande>, DetailcommandeManager<Detailcommande>>();
+builder.Services.AddScoped<IPaiementRepository<Paiement>, PaiementManager<Paiement>>();
 builder.Services.AddScoped<IAvisRepository<Avisproduit>, AvisManager>();
 builder.Services.AddScoped<IPhotoAvisRepository<Photoavi>, PhotoAvisManager<Photoavi>>();
 
