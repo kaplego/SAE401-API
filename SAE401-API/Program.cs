@@ -33,6 +33,8 @@ builder.Services.AddScoped<ICartebancaireRepository<Cartebancaire>, Cartebancair
 builder.Services.AddScoped<IColorationRepository<Coloration>, ColorationManager<Coloration>>();
 builder.Services.AddScoped<IProfessionelRepository<Professionel>, ProfessionelManager>();
 builder.Services.AddScoped<IAimeRepository<Aime>, AimeManager<Aime>>();
+builder.Services.AddScoped<ICommandecompositionRepository<Commandecomposition>, CommandecompositionManager<Commandecomposition>>();
+builder.Services.AddScoped<IDetailcommandeRepository<Detailcommande>, DetailcommandeManager<Detailcommande>>();
 
 
 // Add services to the container.
