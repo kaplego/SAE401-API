@@ -38,6 +38,8 @@ builder.Services.AddScoped<IDetailcommandeRepository<Detailcommande>, Detailcomm
 builder.Services.AddScoped<IPaiementRepository<Paiement>, PaiementManager<Paiement>>();
 builder.Services.AddScoped<ISignalementaviRepository<Signalementavi>, SignalementaviManager<Signalementavi>>();
 
+builder.Services.AddScoped<IAvisRepository<Avisproduit>, AvisManager>();
+builder.Services.AddScoped<IPhotoAvisRepository<Photoavi>, PhotoAvisManager<Photoavi>>();
 
 
 // Add services to the container.

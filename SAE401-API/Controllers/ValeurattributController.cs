@@ -21,6 +21,7 @@ namespace SAE401_API.Controllers
             dataRepository = datarepo;
         }
 
+        /*
         [HttpGet("{idattribut}/{idproduit}")]
         public async Task<ActionResult<ValeurattributDTO>> GetValeurattributByIdAsync(int idattribut, int idproduit)
         {
@@ -40,6 +41,7 @@ namespace SAE401_API.Controllers
 
             return valeurAttributDTO;
         }
+        */
 
         [HttpPost]
         public async Task<ActionResult> PostValeurattribut([FromBody] ValeurattributDTO valeurAttributDTO)
@@ -63,7 +65,11 @@ namespace SAE401_API.Controllers
         [HttpPut("{idattribut}/{idproduit}")]
         public async Task<IActionResult> PutValeurattribut(int idattribut, int idproduit, [FromBody] ValeurattributDTO valeurAttributDTO)
         {
-            
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             if (idattribut != valeurAttributDTO.Idattribut || idproduit != valeurAttributDTO.Idproduit)
             {
                 return BadRequest("Les paramètres ne correspondent pas.");

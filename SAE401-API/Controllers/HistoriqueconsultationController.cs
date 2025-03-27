@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SAE401_API.Models.DataManager;
 using SAE401_API.Models.DTO;
 using SAE401_API.Models.EntityFramework;
 using SAE401_API.Models.Repository;
+using System.Security.Claims;
 
 namespace SAE401_API.Controllers
 {
@@ -18,6 +20,7 @@ namespace SAE401_API.Controllers
             dataRepository = datarepo;
         }
 
+        /*
         [HttpGet("{idproduit}/{idclient}")]
         public async Task<ActionResult<Historiqueconsultation>> GetHistoriqueconsultationByIdAsync(int idproduit, int idclient)
         {
@@ -30,14 +33,22 @@ namespace SAE401_API.Controllers
 
             return historiqueConsultation;
         }
+        */
 
-       
+        // POST: api/Historiqueconsultation
         [HttpPost]
+        [Authorize()]
         public async Task<ActionResult<Historiqueconsultation>> PostHistoriqueconsultation(HistoriqueconsultationDTO historiqueconsultationDTO)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            if (identity == null || identity.FindFirst("id").Value != historiqueconsultationDTO.Idclient.ToString())
+            {
+                return Forbid();
             }
 
             var historiqueConsultation = new Historiqueconsultation
@@ -52,9 +63,17 @@ namespace SAE401_API.Controllers
             return NoContent();
         }
 
+        // DELETE: api/Historiqueconsultation/idproduit/idclient
         [HttpDelete("{idproduit}/{idclient}")]
+        [Authorize()]
         public async Task<IActionResult> DeleteHistoriqueconsultation(int idproduit, int idclient)
         {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            if (identity == null || identity.FindFirst("id").Value != idclient.ToString())
+            {
+                return Forbid();
+            }
+
             var historiqueConsultation = await dataRepository.GetHistoriqueconsultationByIdAsync(idproduit, idclient);
 
             if (historiqueConsultation.Value == null)

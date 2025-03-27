@@ -117,6 +117,11 @@ namespace SAE401_API.Controllers
         [Authorize()]
         public async Task<IActionResult> PutClient(int id, ClientDTO client)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             if (identity == null || identity.FindFirst("id").Value != id.ToString())
             {

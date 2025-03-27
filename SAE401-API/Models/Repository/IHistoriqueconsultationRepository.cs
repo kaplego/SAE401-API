@@ -7,6 +7,6 @@ namespace SAE401_API.Models.Repository
     {
         Task<ActionResult<TEntity?>> GetHistoriqueconsultationByIdAsync(int idproduit, int idclient);
         Task AddHistoriqueconsultationAsync(TEntity entity);
-        Task DeleteHistoriqueconsultationAsync(Historiqueconsultation historiqueconsultation);
+        Task DeleteHistoriqueconsultationAsync(TEntity entity);
     }
 }

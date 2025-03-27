@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SAE401_API.Models.DataManager;
 using SAE401_API.Models.DTO;
 using SAE401_API.Models.EntityFramework;
@@ -19,7 +20,8 @@ namespace SAE401_API.Controllers
             dataRepository = datarepo;
         }
 
-        // Récupérer une adresse par son ID
+        /*
+        // GET: api/Adresse/5
         [HttpGet("{idadresse}")]
         [Authorize()]
         public async Task<ActionResult<AdresseDTO>> GetAdresseByIdAsync(int idadresse)
@@ -31,19 +33,6 @@ namespace SAE401_API.Controllers
                 return NotFound();
             }
 
-            var adresseDTO = new AdresseDTO
-            {
-                Idadresse = adresse.Value.Idadresse,
-                Idpays = adresse.Value.Idpays,
-                Codeinsee = adresse.Value.Codeinsee,
-                Idclient = adresse.Value.Idclient,
-                Iddepartement = adresse.Value.Iddepartement,
-                Nomadresse = adresse.Value.Nomadresse,
-                Numerorue = adresse.Value.Numerorue,
-                Nomrue = adresse.Value.Nomrue,
-                Codepostaladresse = adresse.Value.Codepostaladresse
-            };
-
             var identity = HttpContext.User.Identity as ClaimsIdentity; // #claims2#
             if (identity == null || identity.FindFirst("id").Value != adresse.Value.Idclient.ToString()) // #if#
             {
@@ -52,13 +41,28 @@ namespace SAE401_API.Controllers
 
             return adresseDTO;
         }
+        */
 
         // Ajouter une nouvelle adresse
         [HttpPost]
         [Authorize()]
-        public async Task<ActionResult> PostAdresse([FromBody] AdresseDTO adresseDTO)
+        public async Task<IActionResult> PutAdresse(int idadresse, AdresseDTO adresseDTO)
         {
             if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Vérification de l'intégrité des paramètres
+            if (idadresse != adresseDTO.Idadresse)
+            {
+                return BadRequest("L'Id dans les paramètres ne correspond pas à celui du DTO.");
+            }
+
+            // Récupérer l'entité existante
+            var adresseToUpdate = await dataRepository.GetAdresseByIdAsync(idadresse);
+
+            if (adresseToUpdate.Value == null)
             {
                 return BadRequest(ModelState);
             }
@@ -121,7 +125,8 @@ namespace SAE401_API.Controllers
                 return Forbid(); // #forbid#
             }
 
-            await dataRepository.UpdateAdresseAsync(existingAdresse.Value, updatedAdresse);
+            await dataRepository.AddAdresseAsync(adresse);
+
             return NoContent();
         }
 
