@@ -5,21 +5,20 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace SAE401_API.Models.DataManager
 {
-    public class DetailcommandeManager<TEntity> : IDetailcommandeRepository<TEntity> where TEntity : class
+    public class PaiementManager<TEntity> : IPaiementRepository<TEntity> where TEntity : class
     {
         private readonly _DBMilibooContext _milibooContext;
 
-        public DetailcommandeManager(_DBMilibooContext context)
+        public PaiementManager(_DBMilibooContext context)
         {
             _milibooContext = context;
         }
 
-
-        public async Task AddDetailcommandeAsync(TEntity entity)
+        public async Task AddPaiementAsync(TEntity entity)
         {
-            if (entity is Detailcommande detailcommande)
+            if (entity is Paiement paiement)
             {
-                _milibooContext.Detailcommandes.Add(detailcommande);
+                _milibooContext.Paiements.Add(paiement);
                 await _milibooContext.SaveChangesAsync();
             }
             else
@@ -27,7 +26,5 @@ namespace SAE401_API.Models.DataManager
                 throw new InvalidOperationException("Entité de type incorrect.");
             }
         }
-
-
     }
 }

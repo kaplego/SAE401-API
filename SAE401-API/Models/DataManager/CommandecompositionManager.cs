@@ -14,15 +14,7 @@ namespace SAE401_API.Models.DataManager
             _milibooContext = context;
         }
 
-        public async Task<ActionResult<TEntity?>> GetCommandecompositionByIdsAsync(int idcomposition, int idcommande)
-        {
-            var commandecomposition = await _milibooContext.Commandecompositions
-                .Include(cc => cc.CommandeNavigation)  // Include related entities as needed
-                .Include(cc => cc.CompositionNavigation)
-                .FirstOrDefaultAsync(cc => cc.Idcomposition == idcomposition && cc.Idcommande == idcommande);
 
-            return commandecomposition != null ? new ActionResult<TEntity>((TEntity)(object)commandecomposition) : new NotFoundResult();
-        }
 
         public async Task AddCommandecompositionAsync(TEntity entity)
         {
@@ -37,21 +29,8 @@ namespace SAE401_API.Models.DataManager
             }
         }
 
-        public async Task UpdateCommandecompositionAsync(Commandecomposition commandecomposition, TEntity entity)
-        {
-            if (entity is Commandecomposition updatedCommandecomposition)
-            {
-                commandecomposition.Quantitecompositioncommande = updatedCommandecomposition.Quantitecompositioncommande;
-            }
 
-            _milibooContext.Entry(commandecomposition).State = EntityState.Modified;
-            await _milibooContext.SaveChangesAsync();
-        }
 
-        public async Task DeleteCommandecompositionAsync(Commandecomposition commandecomposition)
-        {
-            _milibooContext.Commandecompositions.Remove(commandecomposition);
-            await _milibooContext.SaveChangesAsync();
-        }
+
     }
 }

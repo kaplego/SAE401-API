@@ -3,9 +3,8 @@ using SAE401_API.Models.EntityFramework;
 
 namespace SAE401_API.Models.Repository
 {
-    public interface IDetailcommandeRepository<TEntity>
+    public interface IPaiementRepository<TEntity>
     {
-        Task AddDetailcommandeAsync(TEntity entity);
-
+        Task AddPaiementAsync(TEntity entity);
     }
 }

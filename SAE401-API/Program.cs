@@ -35,6 +35,8 @@ builder.Services.AddScoped<IProfessionelRepository<Professionel>, ProfessionelMa
 builder.Services.AddScoped<IAimeRepository<Aime>, AimeManager<Aime>>();
 builder.Services.AddScoped<ICommandecompositionRepository<Commandecomposition>, CommandecompositionManager<Commandecomposition>>();
 builder.Services.AddScoped<IDetailcommandeRepository<Detailcommande>, DetailcommandeManager<Detailcommande>>();
+builder.Services.AddScoped<IPaiementRepository<Paiement>, PaiementManager<Paiement>>();
+
 
 
 // Add services to the container.
