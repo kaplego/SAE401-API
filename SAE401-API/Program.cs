@@ -40,6 +40,9 @@ builder.Services.AddScoped<ISignalementaviRepository<Signalementavi>, Signalemen
 builder.Services.AddScoped<IAvisRepository<Avisproduit>, AvisManager>();
 builder.Services.AddScoped<IPhotoAvisRepository<Photoavi>, PhotoAvisManager<Photoavi>>();
 builder.Services.AddScoped<IPhotoRepository<Photo>, PhotoManager>();
+builder.Services.AddScoped<IPaysRepository<Pay>, PaysManager>();
+builder.Services.AddScoped<IDepartementRepository<Departement>, DepartementManager>();
+builder.Services.AddScoped<IVilleRepository<Ville>, VilleManager>();
 
 
 // Add services to the container.
