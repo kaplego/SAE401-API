@@ -37,9 +37,12 @@ builder.Services.AddScoped<ICommandecompositionRepository<Commandecomposition>, 
 builder.Services.AddScoped<IDetailcommandeRepository<Detailcommande>, DetailcommandeManager<Detailcommande>>();
 builder.Services.AddScoped<IPaiementRepository<Paiement>, PaiementManager<Paiement>>();
 builder.Services.AddScoped<ISignalementaviRepository<Signalementavi>, SignalementaviManager<Signalementavi>>();
-
 builder.Services.AddScoped<IAvisRepository<Avisproduit>, AvisManager>();
 builder.Services.AddScoped<IPhotoAvisRepository<Photoavi>, PhotoAvisManager<Photoavi>>();
+builder.Services.AddScoped<IPhotoRepository<Photo>, PhotoManager>();
+builder.Services.AddScoped<IPaysRepository<Pay>, PaysManager>();
+builder.Services.AddScoped<IDepartementRepository<Departement>, DepartementManager>();
+builder.Services.AddScoped<IVilleRepository<Ville>, VilleManager>();
 
 builder.Services.AddScoped<IPhotocolorationRepository<Photocoloration>, PhotocolorationManager<Photocoloration>>();
 
