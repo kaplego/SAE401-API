@@ -41,6 +41,8 @@ builder.Services.AddScoped<ISignalementaviRepository<Signalementavi>, Signalemen
 builder.Services.AddScoped<IAvisRepository<Avisproduit>, AvisManager>();
 builder.Services.AddScoped<IPhotoAvisRepository<Photoavi>, PhotoAvisManager<Photoavi>>();
 
+builder.Services.AddScoped<IPhotocolorationRepository<Photocoloration>, PhotocolorationManager<Photocoloration>>();
+
 
 // Add services to the container.
 builder.Services.AddControllers()

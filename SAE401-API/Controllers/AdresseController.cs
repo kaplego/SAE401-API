@@ -46,7 +46,7 @@ namespace SAE401_API.Controllers
         // Ajouter une nouvelle adresse
         [HttpPost]
         [Authorize()]
-        public async Task<IActionResult> PutAdresse(int idadresse, AdresseDTO adresseDTO)
+        public async Task<IActionResult> PostAdresse(int idadresse, AdresseDTO adresseDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -125,7 +125,7 @@ namespace SAE401_API.Controllers
                 return Forbid(); // #forbid#
             }
 
-            await dataRepository.AddAdresseAsync(adresse);
+            await dataRepository.AddAdresseAsync(updatedAdresse);
 
             return NoContent();
         }
