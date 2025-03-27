@@ -36,6 +36,7 @@ builder.Services.AddScoped<IAimeRepository<Aime>, AimeManager<Aime>>();
 builder.Services.AddScoped<ICommandecompositionRepository<Commandecomposition>, CommandecompositionManager<Commandecomposition>>();
 builder.Services.AddScoped<IDetailcommandeRepository<Detailcommande>, DetailcommandeManager<Detailcommande>>();
 builder.Services.AddScoped<IPaiementRepository<Paiement>, PaiementManager<Paiement>>();
+builder.Services.AddScoped<ISignalementaviRepository<Signalementavi>, SignalementaviManager<Signalementavi>>();
 
 
 
