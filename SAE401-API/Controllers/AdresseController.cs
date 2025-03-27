@@ -21,6 +21,7 @@ namespace SAE401_API.Controllers
             dataRepository = datarepo;
         }
 
+        /*
         // GET: api/Adresse/5
         [HttpGet("{idadresse}")]
         [Authorize()]
@@ -41,12 +42,18 @@ namespace SAE401_API.Controllers
 
             return adresse;
         }
+        */
 
         // PUT: api/Adresse/5
         [HttpPut("{idadresse}")]
         [Authorize()]
         public async Task<IActionResult> PutAdresse(int idadresse, AdresseDTO adresseDTO)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             // Vérification de l'intégrité des paramètres
             if (idadresse != adresseDTO.Idadresse)
             {
@@ -111,7 +118,7 @@ namespace SAE401_API.Controllers
 
             await dataRepository.AddAdresseAsync(adresse);
 
-            return CreatedAtAction(nameof(GetAdresseByIdAsync), new { idadresse = adresse.Idadresse }, adresse);
+            return NoContent();
         }
 
         // DELETE: api/Adresse/5

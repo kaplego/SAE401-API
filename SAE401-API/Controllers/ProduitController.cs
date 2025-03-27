@@ -95,6 +95,11 @@ namespace SAE401_API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProduit(int id, ProduitDTO produit)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             if (id != produit.Idproduit)
             {
                 return BadRequest();

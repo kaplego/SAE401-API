@@ -18,6 +18,7 @@ namespace SAE401_API.Controllers
             _produitsimilaireRepository = produitsimilaireRepository;
         }
 
+        /*
         // GET api/produitsimilaire/{idproduitRef}/{idproduitSim}
         [HttpGet("{idproduitRef}/{idproduitSim}")]
         
@@ -32,6 +33,7 @@ namespace SAE401_API.Controllers
 
             return produitSimilaire;
         }
+        */
 
         // POST api/produitsimilaire
         [HttpPost]

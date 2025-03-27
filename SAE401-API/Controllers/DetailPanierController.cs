@@ -21,6 +21,7 @@ namespace SAE401_API.Controllers
             dataRepository = datarepo;
         }
 
+        /*
         [HttpGet("{idproduit}/{idcouleur}/{idclient}")]
         [Authorize()]
         public async Task<ActionResult<Detailpanier>> GetDetailPanierByIdAsync(int idproduit, int idcouleur, int idclient)
@@ -40,11 +41,17 @@ namespace SAE401_API.Controllers
 
             return detailpanier;
         }
+        */
 
         [HttpPut("{idproduit}/{idcouleur}/{idclient}")]
         [Authorize()]
         public async Task<IActionResult> PutDetailProduit(int idproduit, int idcouleur, int idclient, DetailpanierDTO detailpanierDTO)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             // Vérification de l'intégrité des paramètres
             if (idproduit != detailpanierDTO.Idproduit || idcouleur != detailpanierDTO.Idcouleur || idclient != detailpanierDTO.Idclient)
             {

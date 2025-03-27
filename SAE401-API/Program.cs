@@ -31,6 +31,8 @@ builder.Services.AddScoped<IProduitsimilaireRepository<Produitsimilaire>, Produi
 builder.Services.AddScoped<IValeurattributRepository<Valeurattribut>, ValeurattributManager<Valeurattribut>>();
 builder.Services.AddScoped<ICartebancaireRepository<Cartebancaire>, CartebancaireManager<Cartebancaire>>();
 builder.Services.AddScoped<IProfessionelRepository<Professionel>, ProfessionelManager>();
+builder.Services.AddScoped<IAvisRepository<Avisproduit>, AvisManager>();
+builder.Services.AddScoped<IPhotoAvisRepository<Photoavi>, PhotoAvisManager<Photoavi>>();
 
 
 // Add services to the container.

@@ -17,10 +17,15 @@ namespace SAE401_API.Models.DataManager
         public async Task<ActionResult<TEntity?>> GetCartebancaireByIdAsync(int idcartebancaire)
         {
             var carteBancaire = await _milibooContext.Cartebancaires
-                .Include(c => c.ClientNavigation)  // Inclure les informations sur le client
                 .FirstOrDefaultAsync(c => c.Idcartebancaire == idcartebancaire);
 
             return carteBancaire != null ? new ActionResult<TEntity>((TEntity)(object)carteBancaire) : new NotFoundResult();
+        }
+
+        public async Task<ActionResult<IEnumerable<Cartebancaire>>> GetAllCartebancaireByClientAsync(int idclient)
+        {
+            return await _milibooContext.Cartebancaires
+                .Where(c => c.Idclient == idclient).ToListAsync();
         }
 
         public async Task AddCartebancaireAsync(TEntity entity)

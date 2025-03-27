@@ -37,10 +37,17 @@ namespace SAE401_API.Models.DataManager
             }
         }
 
-        public async Task DeleteHistoriqueconsultationAsync(Historiqueconsultation historiqueconsultation)
+        public async Task DeleteHistoriqueconsultationAsync(TEntity entity)
         {
-            _milibooContext.Historiqueconsultations.Remove(historiqueconsultation);
-            await _milibooContext.SaveChangesAsync();
+            if (entity is Historiqueconsultation historiqueconsultation)
+            {
+                _milibooContext.Historiqueconsultations.Remove(historiqueconsultation);
+                await _milibooContext.SaveChangesAsync();
+            }
+            else
+            {
+                throw new InvalidOperationException("Entité de type incorrect.");
+            }
         }
     }
 }
