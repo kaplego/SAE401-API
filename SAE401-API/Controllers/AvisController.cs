@@ -38,7 +38,6 @@ namespace SAE401_API.Controllers
 
             var avis = new Avisproduit
             {
-                Idavis = avisDTO.Idavis,
                 Idproduit = avisDTO.Idproduit,
                 Idclient = avisDTO.Idclient,
                 Noteavis = avisDTO.Noteavis,

@@ -12,8 +12,8 @@ using SAE401_API.Models.EntityFramework;
 namespace SAE401_API.Migrations
 {
     [DbContext(typeof(_DBMilibooContext))]
-    [Migration("20250318094308_SAE401-API_migration")]
-    partial class SAE401API_migration
+    [Migration("20250328134738_28_03_2025")]
+    partial class _28_03_2025
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,26 @@ namespace SAE401_API.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.HasSequence<int>("seq_adr");
+
+            modelBuilder.HasSequence<int>("seq_avi");
+
+            modelBuilder.HasSequence<int>("seq_car");
+
+            modelBuilder.HasSequence<int>("seq_cli");
+
+            modelBuilder.HasSequence<int>("seq_cmd");
+
+            modelBuilder.HasSequence<int>("seq_msg");
+
+            modelBuilder.HasSequence<int>("seq_pho");
+
+            modelBuilder.HasSequence<int>("seq_pmt");
+
+            modelBuilder.HasSequence<int>("seq_prd");
+
+            modelBuilder.HasSequence<int>("seq_sga");
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Activitepro", b =>
                 {
@@ -54,9 +74,8 @@ namespace SAE401_API.Migrations
                     b.Property<int>("Idadresse")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("adr_idadresse");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Idadresse"));
+                        .HasColumnName("adr_idadresse")
+                        .HasDefaultValueSql("nextval('seq_adr')");
 
                     b.Property<string>("Codeinsee")
                         .IsRequired()
@@ -165,9 +184,8 @@ namespace SAE401_API.Migrations
                     b.Property<int>("Idavis")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("avi_idavis");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Idavis"));
+                        .HasColumnName("avi_idavis")
+                        .HasDefaultValueSql("nextval('seq_avi')");
 
                     b.Property<string>("Commentaireavis")
                         .HasMaxLength(1024)
@@ -213,14 +231,13 @@ namespace SAE401_API.Migrations
                     b.Property<int>("Idcartebancaire")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("car_idcartebancaire");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Idcartebancaire"));
+                        .HasColumnName("car_idcartebancaire")
+                        .HasDefaultValueSql("nextval('seq_car')");
 
                     b.Property<DateTime>("Dateenregistement")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("car_dateenregistement")
+                        .HasColumnName("car_dateenregistrement")
                         .HasDefaultValueSql("now()");
 
                     b.Property<DateTime>("Dateexpirationcarte")
@@ -242,6 +259,11 @@ namespace SAE401_API.Migrations
                         .HasColumnType("character(16)")
                         .HasColumnName("car_numcartebancaire")
                         .IsFixedLength();
+
+                    b.Property<string>("Titulairecartebancaire")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("car_titulairecartebancaire");
 
                     b.HasKey("Idcartebancaire")
                         .HasName("pk_car");
@@ -305,9 +327,8 @@ namespace SAE401_API.Migrations
                     b.Property<int>("Idclient")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("cli_idclient");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Idclient"));
+                        .HasColumnName("cli_idclient")
+                        .HasDefaultValueSql("nextval('seq_cli')");
 
                     b.Property<char?>("Civiliteclient")
                         .HasColumnType("character(1)")
@@ -473,9 +494,8 @@ namespace SAE401_API.Migrations
                     b.Property<int>("Idcommande")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("cmd_idcommande");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Idcommande"));
+                        .HasColumnName("cmd_idcommande")
+                        .HasDefaultValueSql("nextval('seq_cmd')");
 
                     b.Property<bool>("Avecassurance")
                         .ValueGeneratedOnAdd()
@@ -748,7 +768,7 @@ namespace SAE401_API.Migrations
 
                     b.HasIndex("Idclient");
 
-                    b.ToTable("t_j_detailpanier_dpc");
+                    b.ToTable("t_j_detailpaniercomposition_dpc");
                 });
 
             modelBuilder.Entity("SAE401_API.Models.EntityFramework.Detailregroupement", b =>
@@ -802,9 +822,8 @@ namespace SAE401_API.Migrations
                     b.Property<int>("Idmessage")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("msg_idmessage");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Idmessage"));
+                        .HasColumnName("msg_idmessage")
+                        .HasDefaultValueSql("nextval('seq_msg')");
 
                     b.Property<string>("Contenumessage")
                         .IsRequired()
@@ -835,9 +854,8 @@ namespace SAE401_API.Migrations
                     b.Property<int>("Idpaiement")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("pmt_idpaiement");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Idpaiement"));
+                        .HasColumnName("pmt_idpaiement")
+                        .HasDefaultValueSql("nextval('seq_pmt')");
 
                     b.Property<DateTime>("Datepaiement")
                         .ValueGeneratedOnAdd()
@@ -907,9 +925,8 @@ namespace SAE401_API.Migrations
                     b.Property<int>("Idphoto")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("pho_idphoto");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Idphoto"));
+                        .HasColumnName("pho_idphoto")
+                        .HasDefaultValueSql("nextval('seq_pho')");
 
                     b.Property<string>("Descriptionphoto")
                         .HasMaxLength(256)
@@ -973,9 +990,13 @@ namespace SAE401_API.Migrations
                     b.Property<int>("Idproduit")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("prd_idproduit");
+                        .HasColumnName("prd_idproduit")
+                        .HasDefaultValueSql("nextval('seq_prd')");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Idproduit"));
+                    b.Property<string>("Aspecttechnique")
+                        .HasMaxLength(1024)
+                        .HasColumnType("character varying(1024)")
+                        .HasColumnName("prd_aspecttechnique");
 
                     b.Property<decimal>("Coutlivraison")
                         .HasColumnType("numeric(10, 2)")
@@ -1007,15 +1028,10 @@ namespace SAE401_API.Migrations
                         .HasColumnType("character varying(256)")
                         .HasColumnName("prd_nomproduit");
 
-                    b.Property<string>("Sourceaspecttechnique")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
-                        .HasColumnName("prd_sourceaspecttechnique");
-
-                    b.Property<string>("Sourcenotice")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
-                        .HasColumnName("prd_sourcenotice");
+                    b.Property<string>("Notice")
+                        .HasMaxLength(1024)
+                        .HasColumnType("character varying(1024)")
+                        .HasColumnName("prd_notice");
 
                     b.HasKey("Idproduit")
                         .HasName("pk_prd");
@@ -1109,9 +1125,8 @@ namespace SAE401_API.Migrations
                     b.Property<int>("Idsignalement")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("sga_idsignalement");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Idsignalement"));
+                        .HasColumnName("sga_idsignalement")
+                        .HasDefaultValueSql("nextval('seq_sga')");
 
                     b.Property<string>("Contenusignalement")
                         .IsRequired()

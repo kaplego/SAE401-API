@@ -45,6 +45,7 @@ namespace SAE401_API.Models.DataManager
         {
             if (entity is Cartebancaire updatedCartebancaire)
             {
+                cartebancaire.Titulairecartebancaire = updatedCartebancaire.Titulairecartebancaire;
                 cartebancaire.Nomcartebancaire = updatedCartebancaire.Nomcartebancaire;
                 cartebancaire.Numcartebancaire = updatedCartebancaire.Numcartebancaire;
                 cartebancaire.Dateenregistement = updatedCartebancaire.Dateenregistement;

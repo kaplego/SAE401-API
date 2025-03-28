@@ -4,11 +4,12 @@ namespace SAE401_API.Models.DTO
 {
     public class CartebancaireDTO
     {
-        [Required]
-        public int Idcartebancaire { get; set; }
+        public int? Idcartebancaire { get; set; }
 
         [Required]
         public int Idclient { get; set; }
+
+        public string? Titulairecartebancaire { get; set; }
 
         public string? Nomcartebancaire { get; set; }
 

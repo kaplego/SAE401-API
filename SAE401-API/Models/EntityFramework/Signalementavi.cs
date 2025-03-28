@@ -13,6 +13,7 @@ namespace SAE401_API.Models.EntityFramework;
 public partial class Signalementavi
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Column("sga_idsignalement")]
     public int Idsignalement { get; set; }
 

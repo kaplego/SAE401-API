@@ -8,8 +8,7 @@ namespace SAE401_API.Models.DTO
 {
     public partial class CommandeDTO
     {
-        [Required]
-        public int Idcommande {  get; set; }
+        public int? Idcommande {  get; set; }
 
 
         [Required]

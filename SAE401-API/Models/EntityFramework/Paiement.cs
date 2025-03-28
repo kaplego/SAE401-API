@@ -11,6 +11,7 @@ namespace SAE401_API.Models.EntityFramework;
 public partial class Paiement
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Column("pmt_idpaiement")]
     public int Idpaiement { get; set; }
 

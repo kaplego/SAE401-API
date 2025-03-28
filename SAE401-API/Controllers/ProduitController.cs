@@ -130,7 +130,6 @@ namespace SAE401_API.Controllers
 
             Produit newProduit = new Produit()
             {
-                Idproduit = produit.Idproduit,
                 Idtypeproduit = produit.Idtypeproduit,
                 Idpays = produit.Idpays,
                 Nomproduit = produit.Nomproduit,
@@ -143,7 +142,7 @@ namespace SAE401_API.Controllers
 
             await dataRepository.AddProduitAsync(newProduit);
 
-            return CreatedAtAction("GetProduit", new { id = newProduit.Idproduit }, newProduit);
+            return NoContent();
         }
 
         // DELETE: api/Produit/{id} 

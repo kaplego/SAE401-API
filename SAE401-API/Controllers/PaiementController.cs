@@ -41,7 +41,6 @@ namespace SAE401_API.Controllers
 
             var paiement = new Paiement
             {
-                Idpaiement = paiementDTO.Idpaiement,
                 Idcartebancaire = paiementDTO.Idcartebancaire,
                 Idcommande = paiementDTO.Idcommande,
                 Idtypepaiement = paiementDTO.Idtypepaiement,

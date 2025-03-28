@@ -31,7 +31,6 @@ namespace SAE401_API.Controllers
 
             var photo = new Photo
             {
-                Idphoto = photoDTO.Idphoto,
                 Sourcephoto = photoDTO.Sourcephoto,
                 Descriptionphoto = photoDTO.Descriptionphoto
             };

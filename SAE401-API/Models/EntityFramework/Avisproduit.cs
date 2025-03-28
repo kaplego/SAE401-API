@@ -13,6 +13,7 @@ namespace SAE401_API.Models.EntityFramework;
 public partial class Avisproduit
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Column("avi_idavis")]
     public int Idavis { get; set; }
 

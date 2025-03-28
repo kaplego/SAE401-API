@@ -2,7 +2,7 @@
 {
     public class AdresseDTO
     {
-        public int Idadresse { get; set; }
+        public int? Idadresse { get; set; }
         public int Idpays { get; set; }
         public string Codeinsee { get; set; } = null!;
         public int Idclient { get; set; }

@@ -12,6 +12,7 @@ namespace SAE401_API.Models.EntityFramework;
 public partial class Produit
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Column("prd_idproduit")]
     public int Idproduit { get; set; }
 

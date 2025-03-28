@@ -2,7 +2,7 @@
 {
     public class PaiementDTO
     {
-        public int Idpaiement { get; set; }
+        public int? Idpaiement { get; set; }
         public int Idcartebancaire { get; set; }
         public int Idcommande { get; set; }
         public int Idtypepaiement { get; set; }

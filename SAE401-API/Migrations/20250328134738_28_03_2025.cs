@@ -7,11 +7,41 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace SAE401_API.Migrations
 {
     /// <inheritdoc />
-    public partial class SAE401API_migration : Migration
+    public partial class _28_03_2025 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateSequence<int>(
+                name: "seq_adr");
+
+            migrationBuilder.CreateSequence<int>(
+                name: "seq_avi");
+
+            migrationBuilder.CreateSequence<int>(
+                name: "seq_car");
+
+            migrationBuilder.CreateSequence<int>(
+                name: "seq_cli");
+
+            migrationBuilder.CreateSequence<int>(
+                name: "seq_cmd");
+
+            migrationBuilder.CreateSequence<int>(
+                name: "seq_msg");
+
+            migrationBuilder.CreateSequence<int>(
+                name: "seq_pho");
+
+            migrationBuilder.CreateSequence<int>(
+                name: "seq_pmt");
+
+            migrationBuilder.CreateSequence<int>(
+                name: "seq_prd");
+
+            migrationBuilder.CreateSequence<int>(
+                name: "seq_sga");
+
             migrationBuilder.CreateTable(
                 name: "t_e_activitepro_act",
                 columns: table => new
@@ -29,8 +59,7 @@ namespace SAE401_API.Migrations
                 name: "t_e_client_cli",
                 columns: table => new
                 {
-                    cli_idclient = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    cli_idclient = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('seq_cli')"),
                     cli_nomclient = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
                     cli_prenomclient = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
                     cli_civiliteclient = table.Column<char>(type: "character(1)", nullable: true),
@@ -108,8 +137,7 @@ namespace SAE401_API.Migrations
                 name: "t_e_photo_pho",
                 columns: table => new
                 {
-                    pho_idphoto = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    pho_idphoto = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('seq_pho')"),
                     pho_sourcephoto = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     pho_descriptionphoto = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true)
                 },
@@ -199,11 +227,11 @@ namespace SAE401_API.Migrations
                 name: "t_e_cartebancaire_car",
                 columns: table => new
                 {
-                    car_idcartebancaire = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    car_idcartebancaire = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('seq_car')"),
                     car_idclient = table.Column<int>(type: "integer", nullable: false),
+                    car_titulairecartebancaire = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     car_nomcartebancaire = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: true),
-                    car_dateenregistement = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
+                    car_dateenregistrement = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
                     car_numcartebancaire = table.Column<string>(type: "character(16)", fixedLength: true, maxLength: 16, nullable: false),
                     car_dateexpirationcarte = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -245,8 +273,7 @@ namespace SAE401_API.Migrations
                 name: "t_e_messagechatbot_msg",
                 columns: table => new
                 {
-                    msg_idmessage = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    msg_idmessage = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('seq_msg')"),
                     msg_idclient = table.Column<int>(type: "integer", nullable: false),
                     msg_contenumessage = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: false),
                     msg_reponsemessage = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: false)
@@ -289,7 +316,7 @@ namespace SAE401_API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "t_j_detailpanier_dpc",
+                name: "t_j_detailpaniercomposition_dpc",
                 columns: table => new
                 {
                     dpc_idcomposition = table.Column<int>(type: "integer", nullable: false),
@@ -346,8 +373,7 @@ namespace SAE401_API.Migrations
                 name: "t_e_adresse_adr",
                 columns: table => new
                 {
-                    adr_idadresse = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    adr_idadresse = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('seq_adr')"),
                     adr_idpays = table.Column<int>(type: "integer", nullable: false),
                     adr_codeinsee = table.Column<string>(type: "character(5)", fixedLength: true, maxLength: 5, nullable: false),
                     adr_idclient = table.Column<int>(type: "integer", nullable: false),
@@ -410,8 +436,7 @@ namespace SAE401_API.Migrations
                 name: "t_e_commande_cmd",
                 columns: table => new
                 {
-                    cmd_idcommande = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    cmd_idcommande = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('seq_cmd')"),
                     cmd_idclient = table.Column<int>(type: "integer", nullable: false),
                     cmd_idadresse = table.Column<int>(type: "integer", nullable: false),
                     cmd_idcodepromo = table.Column<int>(type: "integer", nullable: true),
@@ -488,13 +513,12 @@ namespace SAE401_API.Migrations
                 name: "t_e_produit_prd",
                 columns: table => new
                 {
-                    prd_idproduit = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    prd_idproduit = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('seq_prd')"),
                     prd_idtypeproduit = table.Column<int>(type: "integer", nullable: false),
                     prd_idpays = table.Column<int>(type: "integer", nullable: false),
                     prd_nomproduit = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
-                    prd_sourcenotice = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
-                    prd_sourceaspecttechnique = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    prd_notice = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
+                    prd_aspecttechnique = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: true),
                     prd_delailivraison = table.Column<int>(type: "integer", nullable: false, defaultValue: 72),
                     prd_coutlivraison = table.Column<decimal>(type: "numeric(10,2)", nullable: false),
                     prd_nbpaiementmax = table.Column<int>(type: "integer", nullable: false, defaultValue: 1)
@@ -520,8 +544,7 @@ namespace SAE401_API.Migrations
                 name: "t_e_paiement_pmt",
                 columns: table => new
                 {
-                    pmt_idpaiement = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    pmt_idpaiement = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('seq_pmt')"),
                     pmt_idcartebancaire = table.Column<int>(type: "integer", nullable: true),
                     pmt_idcommande = table.Column<int>(type: "integer", nullable: false),
                     pmt_idtypepaiement = table.Column<int>(type: "integer", nullable: false),
@@ -581,8 +604,7 @@ namespace SAE401_API.Migrations
                 name: "t_e_avisproduit_avi",
                 columns: table => new
                 {
-                    avi_idavis = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    avi_idavis = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('seq_avi')"),
                     avi_idproduit = table.Column<int>(type: "integer", nullable: false),
                     avi_idclient = table.Column<int>(type: "integer", nullable: false),
                     avi_noteavis = table.Column<int>(type: "integer", nullable: false),
@@ -738,8 +760,7 @@ namespace SAE401_API.Migrations
                 name: "t_e_signalementavis_sga",
                 columns: table => new
                 {
-                    sga_idsignalement = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    sga_idsignalement = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('seq_sga')"),
                     sga_idavis = table.Column<int>(type: "integer", nullable: false),
                     sga_idtypesignalement = table.Column<int>(type: "integer", nullable: false),
                     sga_emailsignalement = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
@@ -1164,14 +1185,14 @@ namespace SAE401_API.Migrations
                 column: "dcp_idcomposition");
 
             migrationBuilder.CreateIndex(
-                name: "IX_t_j_detailpanier_dpc_dpc_idclient",
-                table: "t_j_detailpanier_dpc",
-                column: "dpc_idclient");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_t_j_detailpanier_dpn_dpn_idclient",
                 table: "t_j_detailpanier_dpn",
                 column: "dpn_idclient");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_t_j_detailpaniercomposition_dpc_dpc_idclient",
+                table: "t_j_detailpaniercomposition_dpc",
+                column: "dpc_idclient");
 
             migrationBuilder.CreateIndex(
                 name: "IX_t_j_detailregroupement_drg_drg_idregroupement",
@@ -1232,10 +1253,10 @@ namespace SAE401_API.Migrations
                 name: "t_j_detailcomposition_dcp");
 
             migrationBuilder.DropTable(
-                name: "t_j_detailpanier_dpc");
+                name: "t_j_detailpanier_dpn");
 
             migrationBuilder.DropTable(
-                name: "t_j_detailpanier_dpn");
+                name: "t_j_detailpaniercomposition_dpc");
 
             migrationBuilder.DropTable(
                 name: "t_j_detailregroupement_drg");
@@ -1323,6 +1344,36 @@ namespace SAE401_API.Migrations
 
             migrationBuilder.DropTable(
                 name: "t_e_photo_pho");
+
+            migrationBuilder.DropSequence(
+                name: "seq_adr");
+
+            migrationBuilder.DropSequence(
+                name: "seq_avi");
+
+            migrationBuilder.DropSequence(
+                name: "seq_car");
+
+            migrationBuilder.DropSequence(
+                name: "seq_cli");
+
+            migrationBuilder.DropSequence(
+                name: "seq_cmd");
+
+            migrationBuilder.DropSequence(
+                name: "seq_msg");
+
+            migrationBuilder.DropSequence(
+                name: "seq_pho");
+
+            migrationBuilder.DropSequence(
+                name: "seq_pmt");
+
+            migrationBuilder.DropSequence(
+                name: "seq_prd");
+
+            migrationBuilder.DropSequence(
+                name: "seq_sga");
         }
     }
 }

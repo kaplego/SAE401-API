@@ -9,8 +9,7 @@ namespace SAE401_API.Models.DTO;
 
 public partial class AvisproduitDTO
 {
-    [Required]
-    public int Idavis { get; set; }
+    public int? Idavis { get; set; }
 
     [Required]
     public int Idproduit { get; set; }

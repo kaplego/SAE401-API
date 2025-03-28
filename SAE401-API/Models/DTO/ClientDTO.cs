@@ -9,8 +9,7 @@ namespace SAE401_API.Models.DTO;
 
 public partial class ClientDTO
 {
-    [Required]
-    public int Idclient { get; set; }
+    public int? Idclient { get; set; }
 
     [Required]
     public string Nomclient { get; set; } = null!;

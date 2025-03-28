@@ -11,6 +11,7 @@ namespace SAE401_API.Models.EntityFramework;
 public partial class Adresse
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Column("adr_idadresse")]
     public int Idadresse { get; set; }
 

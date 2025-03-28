@@ -10,6 +10,7 @@ namespace SAE401_API.Models.EntityFramework;
 public partial class Photo
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Column("pho_idphoto")]
     public int Idphoto { get; set; }
 

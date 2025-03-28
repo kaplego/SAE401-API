@@ -13,6 +13,7 @@ namespace SAE401_API.Models.EntityFramework;
 public partial class Client
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Column("cli_idclient")]
     public int Idclient { get; set; }
 

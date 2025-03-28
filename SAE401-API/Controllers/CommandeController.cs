@@ -31,7 +31,6 @@ namespace SAE401_API.Controllers
 
             var commande = new Commande
             {
-                Idcommande = commandeDTO.Idcommande,
                 Idclient = commandeDTO.Idclient,
                 IdadresseLivr = commandeDTO.IdadresseLivr,
                 IdadresseFact = commandeDTO.IdadresseFact,
@@ -52,7 +51,7 @@ namespace SAE401_API.Controllers
 
             await _commandeRepository.AddCommandeAsync(commande);
 
-            return CreatedAtAction(nameof(GetCommandeById), new { idcommande = commande.Idcommande }, commande);
+            return NoContent();
         }
 
         // GET: api/Commande/5

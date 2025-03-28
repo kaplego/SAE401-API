@@ -17,7 +17,7 @@ namespace SAE401_API.Models.DataManager
         public async Task<ActionResult<Commande?>> GetCommandeByIdAsync(int idcommande)
         {
             return await _milibooContext.Commandes
-                .FirstOrDefaultAsync(c => c.idcommande == id);
+                .FirstOrDefaultAsync(c => c.Idcommande == idcommande);
         }
 
         public async Task AddPaiementAsync(TEntity entity)

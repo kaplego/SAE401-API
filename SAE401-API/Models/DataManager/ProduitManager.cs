@@ -131,7 +131,7 @@ namespace SAE401_API.Models.DataManager
         public async Task UpdateProduitAsync(Produit produit, ProduitDTO entity)
         {
             milibooContext.Entry(produit).State = EntityState.Modified;
-            produit.Idproduit = entity.Idproduit;
+            produit.Idproduit = produit.Idproduit;
             produit.Idtypeproduit = entity.Idtypeproduit;
             produit.Idpays = entity.Idpays;
             produit.Nomproduit = entity.Nomproduit;

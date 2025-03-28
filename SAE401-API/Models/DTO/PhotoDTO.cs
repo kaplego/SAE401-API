@@ -8,8 +8,7 @@ namespace SAE401_API.Models.DTO;
 
 public partial class PhotoDTO
 {
-    [Required]
-    public int Idphoto { get; set; }
+    public int? Idphoto { get; set; }
 
     [Required]
     public string Sourcephoto { get; set; } = null!;

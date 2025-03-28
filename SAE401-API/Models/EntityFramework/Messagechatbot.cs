@@ -10,6 +10,7 @@ namespace SAE401_API.Models.EntityFramework;
 public partial class Messagechatbot
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Column("msg_idmessage")]
     public int Idmessage { get; set; }
 

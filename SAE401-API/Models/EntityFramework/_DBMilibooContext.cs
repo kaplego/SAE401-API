@@ -100,7 +100,9 @@ public partial class _DBMilibooContext : DbContext
 
         modelBuilder.Entity<Adresse>(entity =>
         {
+            modelBuilder.HasSequence<int>("seq_adr");
             entity.HasKey(e => e.Idadresse).HasName("pk_adr");
+            entity.Property(e => e.Idadresse).HasDefaultValueSql("nextval('seq_adr')");
 
             entity.Property(e => e.Codeinsee).IsFixedLength();
             entity.Property(e => e.Codepostaladresse).IsFixedLength();
@@ -146,7 +148,9 @@ public partial class _DBMilibooContext : DbContext
 
         modelBuilder.Entity<Avisproduit>(entity =>
         {
+            modelBuilder.HasSequence<int>("seq_avi");
             entity.HasKey(e => e.Idavis).HasName("pk_avi");
+            entity.Property(e => e.Idavis).HasDefaultValueSql("nextval('seq_avi')");
 
             entity.Property(e => e.Dateavis)
                 .HasDefaultValueSql("now()");
@@ -165,7 +169,9 @@ public partial class _DBMilibooContext : DbContext
             entity.Property(e => e.Dateenregistement)
                 .HasDefaultValueSql("now()");
 
+            modelBuilder.HasSequence<int>("seq_car");
             entity.HasKey(e => e.Idcartebancaire).HasName("pk_car");
+            entity.Property(e => e.Idcartebancaire).HasDefaultValueSql("nextval('seq_car')");
 
             entity.Property(e => e.Numcartebancaire).IsFixedLength();
 
@@ -189,7 +195,9 @@ public partial class _DBMilibooContext : DbContext
 
         modelBuilder.Entity<Client>(entity =>
         {
+            modelBuilder.HasSequence<int>("seq_cli");
             entity.HasKey(e => e.Idclient).HasName("pk_cli");
+            entity.Property(e => e.Idclient).HasDefaultValueSql("nextval('seq_cli')");
 
             entity.Property(e => e.Datecreationcompte)
                 .IsFixedLength()
@@ -236,7 +244,9 @@ public partial class _DBMilibooContext : DbContext
 
         modelBuilder.Entity<Commande>(entity =>
         {
+            modelBuilder.HasSequence<int>("seq_cmd");
             entity.HasKey(e => e.Idcommande).HasName("pk_cmd");
+            entity.Property(e => e.Idcommande).HasDefaultValueSql("nextval('seq_cmd')");
 
             entity.Property(e => e.Datecommande)
                 .HasDefaultValueSql("now()");
@@ -396,7 +406,9 @@ public partial class _DBMilibooContext : DbContext
 
         modelBuilder.Entity<Messagechatbot>(entity =>
         {
+            modelBuilder.HasSequence<int>("seq_msg");
             entity.HasKey(e => e.Idmessage).HasName("pk_msg");
+            entity.Property(e => e.Idmessage).HasDefaultValueSql("nextval('seq_msg')");
 
             entity.HasOne(d => d.ClientNavigation).WithMany(p => p.MessagesNavigation)
                 .OnDelete(DeleteBehavior.Restrict)
@@ -405,7 +417,9 @@ public partial class _DBMilibooContext : DbContext
 
         modelBuilder.Entity<Paiement>(entity =>
         {
+            modelBuilder.HasSequence<int>("seq_pmt");
             entity.HasKey(e => e.Idpaiement).HasName("pk_pmt");
+            entity.Property(e => e.Idpaiement).HasDefaultValueSql("nextval('seq_pmt')");
 
             entity.Property(e => e.Datepaiement)
                 .HasDefaultValueSql("now()");
@@ -430,7 +444,9 @@ public partial class _DBMilibooContext : DbContext
 
         modelBuilder.Entity<Photo>(entity =>
         {
+            modelBuilder.HasSequence<int>("seq_pho");
             entity.HasKey(e => e.Idphoto).HasName("pk_pho");
+            entity.Property(e => e.Idphoto).HasDefaultValueSql("nextval('seq_pho')");
         });
 
         modelBuilder.Entity<Photoavi>(entity =>
@@ -461,7 +477,9 @@ public partial class _DBMilibooContext : DbContext
 
         modelBuilder.Entity<Produit>(entity =>
         {
+            modelBuilder.HasSequence<int>("seq_prd");
             entity.HasKey(e => e.Idproduit).HasName("pk_prd");
+            entity.Property(e => e.Idproduit).HasDefaultValueSql("nextval('seq_prd')");
 
             entity.Property(e => e.Delailivraison)
                 .HasDefaultValue(72);
@@ -501,7 +519,9 @@ public partial class _DBMilibooContext : DbContext
 
         modelBuilder.Entity<Signalementavi>(entity =>
         {
+            modelBuilder.HasSequence<int>("seq_sga");
             entity.HasKey(e => e.Idsignalement).HasName("pk_sga");
+            entity.Property(e => e.Idsignalement).HasDefaultValueSql("nextval('seq_sga')");
 
             entity.Property(e => e.Datesignalement)
                 .HasDefaultValueSql("now()");

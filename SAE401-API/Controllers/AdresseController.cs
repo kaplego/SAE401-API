@@ -108,7 +108,6 @@ namespace SAE401_API.Controllers
 
             var updatedAdresse = new Adresse
             {
-                Idadresse = adresseDTO.Idadresse,
                 Idpays = adresseDTO.Idpays,
                 Codeinsee = adresseDTO.Codeinsee,
                 Idclient = adresseDTO.Idclient,

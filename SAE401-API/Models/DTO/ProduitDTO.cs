@@ -8,8 +8,7 @@ namespace SAE401_API.Models.DTO;
 
 public partial class ProduitDTO
 {
-    [Required]
-    public int Idproduit { get; set; }
+    public int? Idproduit { get; set; }
 
     [Required]
     public int Idtypeproduit { get; set; }

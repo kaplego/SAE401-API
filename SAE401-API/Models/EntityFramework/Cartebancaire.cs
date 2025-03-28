@@ -14,11 +14,17 @@ namespace SAE401_API.Models.EntityFramework;
 public partial class Cartebancaire
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Column("car_idcartebancaire")]
     public int Idcartebancaire { get; set; }
 
     [Column("car_idclient")]
     public int Idclient { get; set; }
+
+    [Column("car_titulairecartebancaire")]
+    [StringLength(256)]
+    public string? Titulairecartebancaire { get; set; }
+
 
     [Column("car_nomcartebancaire")]
     [StringLength(32)]

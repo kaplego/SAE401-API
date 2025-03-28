@@ -158,7 +158,6 @@ namespace SAE401_API.Controllers
 
             Client newclient = new Client()
             {
-                Idclient = clientDTO.Idclient,
                 Nomclient = clientDTO.Nomclient,
                 Prenomclient = clientDTO.Prenomclient,
                 Civiliteclient = clientDTO.Civiliteclient,

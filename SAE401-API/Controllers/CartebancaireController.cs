@@ -54,6 +54,7 @@ namespace SAE401_API.Controllers
             var cartebancaire = new Cartebancaire
             {
                 Idclient = cartebancaireDTO.Idclient,
+                Titulairecartebancaire = cartebancaireDTO.Titulairecartebancaire,
                 Nomcartebancaire = cartebancaireDTO.Nomcartebancaire,
                 Dateenregistement = cartebancaireDTO.Dateenregistement,
                 Numcartebancaire = cartebancaireDTO.Numcartebancaire,
@@ -92,7 +93,6 @@ namespace SAE401_API.Controllers
 
             var updatedCartebancaire = new Cartebancaire
             {
-                Idcartebancaire = cartebancaireDTO.Idcartebancaire,
                 Idclient = cartebancaireDTO.Idclient,
                 Nomcartebancaire = cartebancaireDTO.Nomcartebancaire,
                 Dateenregistement = cartebancaireDTO.Dateenregistement,
