@@ -135,8 +135,8 @@ namespace SAE401_API.Models.DataManager
             produit.Idtypeproduit = entity.Idtypeproduit;
             produit.Idpays = entity.Idpays;
             produit.Nomproduit = entity.Nomproduit;
-            produit.Sourcenotice = entity.Sourcenotice;
-            produit.Sourceaspecttechnique = entity.Sourceaspecttechnique;
+            produit.Notice = entity.Sourcenotice;
+            produit.Aspecttechnique = entity.Sourceaspecttechnique;
             produit.Delailivraison = entity.Delailivraison;
             produit.Coutlivraison = entity.Coutlivraison;
             produit.Nbpaiementmax = entity.Nbpaiementmax;

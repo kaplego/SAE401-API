@@ -25,13 +25,13 @@ public partial class Produit
     [StringLength(256)]
     public string Nomproduit { get; set; } = null!;
 
-    [Column("prd_sourcenotice")]
-    [StringLength(256)]
-    public string? Sourcenotice { get; set; }
+    [Column("prd_notice")]
+    [StringLength(1024)]
+    public string? Notice { get; set; }
 
-    [Column("prd_sourceaspecttechnique")]
-    [StringLength(256)]
-    public string? Sourceaspecttechnique { get; set; }
+    [Column("prd_aspecttechnique")]
+    [StringLength(1024)]
+    public string? Aspecttechnique { get; set; }
 
     [Column("prd_delailivraison")]
     public int Delailivraison { get; set; }

@@ -24,7 +24,7 @@ public partial class Cartebancaire
     [StringLength(32)]
     public string? Nomcartebancaire { get; set; }
 
-    [Column("car_dateenregistement")]
+    [Column("car_dateenregistrement")]
     [DateValidator]
     [Required]
     public DateTime Dateenregistement { get; set; }= DateTime.Now;

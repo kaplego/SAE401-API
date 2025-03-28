@@ -134,8 +134,8 @@ namespace SAE401_API.Controllers
                 Idtypeproduit = produit.Idtypeproduit,
                 Idpays = produit.Idpays,
                 Nomproduit = produit.Nomproduit,
-                Sourcenotice = produit.Sourcenotice,
-                Sourceaspecttechnique = produit.Sourceaspecttechnique,
+                Notice = produit.Sourcenotice,
+                Aspecttechnique = produit.Sourceaspecttechnique,
                 Delailivraison = produit.Delailivraison,
                 Coutlivraison = produit.Coutlivraison,
                 Nbpaiementmax = produit.Nbpaiementmax
