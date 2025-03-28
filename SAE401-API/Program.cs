@@ -60,8 +60,8 @@ builder.Services.AddSwaggerGen();
 
 // Pour ajouter la chaine de connexion, ajoutez un fichier .env avec comme contenu : CONNECTION_STRING="..."
 builder.Services.AddDbContext<_DBMilibooContext>(options =>
-  options.UseNpgsql("Server = localhost; Port = 5432; Uid = postgres; Password = postgres; Database = sae401_td2_miliboo; SearchPath = sae401_td2_miliboo"));
-  //options.UseNpgsql(Environment.GetEnvironmentVariable("CONNECTION_STRING")));
+  //options.UseNpgsql("Server = localhost; Port = 5432; Uid = postgres; Password = postgres; Database = sae401_td2_miliboo; SearchPath = sae401_td2_miliboo"));
+  options.UseNpgsql(Environment.GetEnvironmentVariable("CONNECTION_STRING")));
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
  .AddJwtBearer(options =>
