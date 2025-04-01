@@ -62,7 +62,7 @@ namespace SAE401_API.Controllers
             };
 
             await dataRepository.AddCartebancaireAsync(cartebancaire);
-            return NoContent();
+            return CreatedAtAction("GetCartebancaireByIdAsync", new { idcartebancaire = cartebancaire.Idcartebancaire }, cartebancaire);
         }
 
         // PUT: api/Cartebancaire/id
@@ -101,7 +101,7 @@ namespace SAE401_API.Controllers
             };
 
             await dataRepository.UpdateCartebancaireAsync(existingCartebancaire.Value, updatedCartebancaire);
-            return NoContent();
+            return CreatedAtAction("GetCartebancaireByIdAsync", new { idcartebancaire = updatedCartebancaire.Idcartebancaire }, updatedCartebancaire);
         }
 
         // DELETE: api/Cartebancaire/id
