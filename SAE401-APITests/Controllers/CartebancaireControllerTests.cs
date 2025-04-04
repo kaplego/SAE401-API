@@ -30,7 +30,7 @@ namespace SAE401_API.Controllers.Tests
         private Cartebancaire cb1;
 
         [TestInitialize]
-        public void TestInitialize()
+        public async Task TestInitialize()
         {
             Env.Load(Path.Combine(
                 Directory.GetParent(Directory.GetParent(
@@ -44,7 +44,7 @@ namespace SAE401_API.Controllers.Tests
             client1 = new Client()
             {
                 Nomclient = "NOM",
-                Prenomclient = "Prenom",
+                Prenomclient = "Prenom" + DateTime.UtcNow.ToString(),
                 Emailclient = "email@email.email",
                 Telportableclient = "33123456789",
                 Datecreationcompte = DateTime.UtcNow,
@@ -53,8 +53,8 @@ namespace SAE401_API.Controllers.Tests
                 Newslettermiliboo = true,
                 Newsletterpartenaires = true
             };
-            _context.Clients.Add(client1);
-            _context.SaveChanges();
+            await _context.Clients.AddAsync(client1);
+            await _context.SaveChangesAsync();
             cb1 = new Cartebancaire()
             {
                 Idclient = client1.Idclient,
@@ -63,8 +63,9 @@ namespace SAE401_API.Controllers.Tests
                 Numcartebancaire = "1111222233334444",
                 Dateexpirationcarte = DateTime.UtcNow.AddDays(1),
             };
-            _context.Cartebancaires.Add(cb1);
-            _context.SaveChanges();
+            await _context.Cartebancaires.AddAsync(cb1);
+            await _context.SaveChangesAsync();
+            _controller.ControllerContext = JwtManager.CreateControllerContext(client1);
         }
 
         [TestMethod()]
@@ -81,7 +82,6 @@ namespace SAE401_API.Controllers.Tests
         [TestMethod()]
         public async Task GetAllCartebancaireByClientTest_Normal()
         {
-            _controller.ControllerContext = JwtManager.CreateControllerContext(client1);
             var carteBancaires = await _controller.GetAllCartebancaireByClient(client1.Idclient);
             Assert.IsNotNull(carteBancaires, "Retour est null");
             Assert.IsInstanceOfType(carteBancaires, typeof(ActionResult<IEnumerable<Cartebancaire>>), "Pas un ActionResult");
@@ -100,7 +100,6 @@ namespace SAE401_API.Controllers.Tests
                 Numcartebancaire = "4444333322221111",
                 Dateexpirationcarte = DateTime.UtcNow.AddDays(1)
             };
-            _controller.ControllerContext = JwtManager.CreateControllerContext(client1);
             var result = await _controller.PostCartebancaire(cb2);
             Assert.IsNotNull(result, "Retour est null");
             Assert.IsInstanceOfType(result, typeof(ActionResult<Cartebancaire?>), "Pas un ActionResult");
@@ -109,27 +108,57 @@ namespace SAE401_API.Controllers.Tests
             Cartebancaire valeur = (Cartebancaire)((ObjectResult)result.Result).Value;
             Assert.IsNotNull(valeur, "Valeur est null");
             Assert.AreEqual(cb2.Numcartebancaire, valeur.Numcartebancaire, "Cartes bancaires égales");
-            _context.Cartebancaires.Remove(valeur);
+            try { _context.Cartebancaires.Remove(valeur); } catch { }
         }
 
         [TestMethod()]
-        public void PutCartebancaireTest()
+        public async Task PutCartebancaireTest()
         {
-
+            CartebancaireDTO cb3 = new CartebancaireDTO()
+            {
+                Idcartebancaire = cb1.Idcartebancaire,
+                Idclient = cb1.Idclient,
+                Dateenregistement = cb1.Dateenregistement,
+                Titulairecartebancaire = "Test",
+                Numcartebancaire = cb1.Numcartebancaire,
+                Dateexpirationcarte = DateTime.UtcNow.AddDays(10)
+            };
+            var result = await _controller.PutCartebancaire(cb1.Idcartebancaire, cb3);
+            Assert.IsNotNull(result, "Retour est null");
+            Assert.IsInstanceOfType(result, typeof(ActionResult<Cartebancaire?>), "Pas un ActionResult");
+            Assert.IsNotNull(result.Result, "Résultat est null");
+            Assert.IsInstanceOfType(result.Result, typeof(OkObjectResult), "Résultat pas OK");
+            Cartebancaire valeur = (Cartebancaire)((ObjectResult)result.Result).Value;
+            Assert.IsNotNull(valeur, "Valeur est null");
+            Assert.AreEqual(cb3.Titulairecartebancaire, valeur.Titulairecartebancaire, "Cartes bancaires égales (num)");
+            Assert.AreEqual(cb1.Idcartebancaire, valeur.Idcartebancaire, "Cartes bancaires non-modifiées (id)");
+            Assert.AreEqual(cb3.Dateexpirationcarte, valeur.Dateexpirationcarte, "Cartes bancaires égales (dateexp)");
         }
 
         [TestMethod()]
-        public void DeleteCartebancaireTest()
+        public async Task DeleteCartebancaireTest()
         {
-
+            Cartebancaire cb4 = new Cartebancaire()
+            {
+                Idclient = cb1.Idclient,
+                Dateenregistement = DateTime.UtcNow,
+                Titulairecartebancaire = "Obama",
+                Numcartebancaire = "1111000011110000",
+                Dateexpirationcarte = DateTime.UtcNow.AddDays(10)
+            };
+            await _context.Cartebancaires.AddAsync(cb4);
+            await _context.SaveChangesAsync();
+            var result = await _controller.DeleteCartebancaire(cb4.Idcartebancaire);
+            Assert.IsNotNull(result, "Retour est null");
+            Assert.IsInstanceOfType(result, typeof(OkResult), "Pas un OkResult");
         }
 
         [TestCleanup()]
-        public void TestCleanup()
+        public async Task TestCleanup()
         {
             _context.Cartebancaires.Remove(cb1);
             _context.Clients.Remove(client1);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

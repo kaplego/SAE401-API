@@ -100,6 +100,7 @@ namespace SAE401_API.Controllers
             var updatedCartebancaire = new Cartebancaire
             {
                 Idclient = cartebancaireDTO.Idclient,
+                Titulairecartebancaire = cartebancaireDTO.Titulairecartebancaire,
                 Nomcartebancaire = cartebancaireDTO.Nomcartebancaire,
                 Dateenregistement = cartebancaireDTO.Dateenregistement,
                 Numcartebancaire = cartebancaireDTO.Numcartebancaire,
