@@ -25,6 +25,12 @@ namespace SAE401_API.Controllers
         [Authorize()]
         public async Task<ActionResult<IEnumerable<Cartebancaire>>> GetAllCartebancaireByClient(int idclient)
         {
+            var client = await dataRepository.GetClientByIdAsync(idclient);
+            if (client.Value == null)
+            {
+                return NotFound();
+            }
+
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             if (identity == null || identity.FindFirst("id").Value != idclient.ToString())
             {
@@ -38,7 +44,7 @@ namespace SAE401_API.Controllers
         // POST: api/Cartebancaire
         [HttpPost]
         [Authorize()]
-        public async Task<ActionResult> PostCartebancaire([FromBody] CartebancaireDTO cartebancaireDTO)
+        public async Task<ActionResult<Cartebancaire?>> PostCartebancaire([FromBody] CartebancaireDTO cartebancaireDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -61,8 +67,8 @@ namespace SAE401_API.Controllers
                 Dateexpirationcarte = cartebancaireDTO.Dateexpirationcarte
             };
 
-            await dataRepository.AddCartebancaireAsync(cartebancaire);
-            return NoContent();
+            Cartebancaire cb = await dataRepository.AddCartebancaireAsync(cartebancaire);
+            return Ok(cb);
         }
 
         // PUT: api/Cartebancaire/id
@@ -100,8 +106,8 @@ namespace SAE401_API.Controllers
                 Dateexpirationcarte = cartebancaireDTO.Dateexpirationcarte
             };
 
-            await dataRepository.UpdateCartebancaireAsync(existingCartebancaire.Value, updatedCartebancaire);
-            return NoContent();
+            Cartebancaire cb = await dataRepository.UpdateCartebancaireAsync(existingCartebancaire.Value, updatedCartebancaire);
+            return Ok(cb);
         }
 
         // DELETE: api/Cartebancaire/id
@@ -121,7 +127,7 @@ namespace SAE401_API.Controllers
             }
 
             await dataRepository.DeleteCartebancaireAsync(cartebancaire.Value);
-            return NoContent();
+            return Ok();
         }
     }
 }

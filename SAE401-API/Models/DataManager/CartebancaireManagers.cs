@@ -14,6 +14,12 @@ namespace SAE401_API.Models.DataManager
             _milibooContext = context;
         }
 
+        public async Task<ActionResult<Client?>> GetClientByIdAsync(int id)
+        {
+            return await _milibooContext.Clients
+                .FirstOrDefaultAsync(c => c.Idclient == id);
+        }
+
         public async Task<ActionResult<TEntity?>> GetCartebancaireByIdAsync(int idcartebancaire)
         {
             var carteBancaire = await _milibooContext.Cartebancaires
@@ -28,12 +34,13 @@ namespace SAE401_API.Models.DataManager
                 .Where(c => c.Idclient == idclient).ToListAsync();
         }
 
-        public async Task AddCartebancaireAsync(TEntity entity)
+        public async Task<Cartebancaire> AddCartebancaireAsync(TEntity entity)
         {
             if (entity is Cartebancaire cartebancaire)
             {
-                _milibooContext.Cartebancaires.Add(cartebancaire);
+                await _milibooContext.Cartebancaires.AddAsync(cartebancaire);
                 await _milibooContext.SaveChangesAsync();
+                return cartebancaire;
             }
             else
             {
@@ -41,7 +48,7 @@ namespace SAE401_API.Models.DataManager
             }
         }
 
-        public async Task UpdateCartebancaireAsync(Cartebancaire cartebancaire, TEntity entity)
+        public async Task<Cartebancaire> UpdateCartebancaireAsync(Cartebancaire cartebancaire, TEntity entity)
         {
             if (entity is Cartebancaire updatedCartebancaire)
             {
@@ -54,6 +61,7 @@ namespace SAE401_API.Models.DataManager
 
             _milibooContext.Entry(cartebancaire).State = EntityState.Modified;
             await _milibooContext.SaveChangesAsync();
+            return cartebancaire;
         }
 
         public async Task DeleteCartebancaireAsync(Cartebancaire cartebancaire)

@@ -16,6 +16,7 @@ using SAE401_API.Models.DataManager;
 using SAE401_API.Models.DTO;
 using SAE401_API.Models.EntityFramework;
 using SAE401_API.Models.Repository;
+using SAE401_API.Models.DataMethods;
 
 namespace SAE401_API.Controllers
 {
@@ -29,28 +30,7 @@ namespace SAE401_API.Controllers
         {
             dataRepository = datarepo;
         }
-        private static string GenerateJwtToken(Client client)
-        {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWT_SECRET")));
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-            var claims = new[]
-            {
-                 // #claims1#
-                 new Claim(JwtRegisteredClaimNames.Sub, client.Idclient.ToString()),
-                 new Claim("id", client.Idclient.ToString()),
-                 new Claim("email", client.Emailclient.ToString()),
-                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            };
-            var token = new JwtSecurityToken
-            (
-                issuer: Environment.GetEnvironmentVariable("JWT_ISSUER"),
-                audience: Environment.GetEnvironmentVariable("JWT_AUDIENCE"),
-                claims: claims,
-                expires: DateTime.Now.AddDays(30),
-                signingCredentials: credentials
-            );
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
+        
 
         public class Login {
             public string email { get; set; }
@@ -69,7 +49,7 @@ namespace SAE401_API.Controllers
             ActionResult<Client> client = await dataRepository.GetClientByLoginAsync(login.email, login.password);
             if (client.Value != null)
             {
-                var tokenString = GenerateJwtToken(client.Value);
+                var tokenString = JwtManager.GenerateJwtToken(client.Value);
                 response = Ok(new
                 {
                     token = tokenString,

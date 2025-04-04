@@ -46,25 +46,17 @@ namespace SAE401_API.Controllers
         // Ajouter une nouvelle adresse
         [HttpPost]
         [Authorize()]
-        public async Task<IActionResult> PostAdresse(int idadresse, AdresseDTO adresseDTO)
+        public async Task<IActionResult> PostAdresse(AdresseDTO adresseDTO)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            // Vérification de l'intégrité des paramètres
-            if (idadresse != adresseDTO.Idadresse)
+            var identity = HttpContext.User.Identity as ClaimsIdentity; // #claims2#
+            if (identity == null || identity.FindFirst("id").Value != adresseDTO.Idclient.ToString()) // #if#
             {
-                return BadRequest("L'Id dans les paramètres ne correspond pas à celui du DTO.");
-            }
-
-            // Récupérer l'entité existante
-            var adresseToUpdate = await dataRepository.GetAdresseByIdAsync(idadresse);
-
-            if (adresseToUpdate.Value == null)
-            {
-                return BadRequest(ModelState);
+                return Forbid(); // #forbid#
             }
 
             var adresse = new Adresse
@@ -78,12 +70,6 @@ namespace SAE401_API.Controllers
                 Nomrue = adresseDTO.Nomrue,
                 Codepostaladresse = adresseDTO.Codepostaladresse
             };
-
-            var identity = HttpContext.User.Identity as ClaimsIdentity; // #claims2#
-            if (identity == null || identity.FindFirst("id").Value != adresse.Idclient.ToString()) // #if#
-            {
-                return Forbid(); // #forbid#
-            }
 
             await dataRepository.AddAdresseAsync(adresse);
             return NoContent();

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
@@ -18,5 +19,6 @@ public partial class Departement
     public string? Nomdepartement { get; set; }
 
     [InverseProperty(nameof(Adresse.DepartementNavigation))]
+    [JsonIgnore]
     public virtual ICollection<Adresse> AdressesNavigation { get; set; } = new List<Adresse>();
 }

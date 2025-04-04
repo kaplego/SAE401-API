@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
@@ -20,6 +21,7 @@ public partial class Pay
     public string Nompays { get; set; } = null!;
 
     [InverseProperty(nameof(Adresse.PayNavigation))]
+    [JsonIgnore]
     public virtual ICollection<Adresse> AdressesNavigation { get; set; } = new List<Adresse>();
 
     [InverseProperty(nameof(Produit.PayNavigation))]

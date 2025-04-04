@@ -7,6 +7,8 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using SAE401_API.Models.DTO;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace SAE401_API.Models.DataManager
 {
@@ -20,6 +22,8 @@ namespace SAE401_API.Models.DataManager
         {
             milibooContext = context;
         }
+
+
         public async Task<Client?> GetClientByLoginAsync(string email, string password)
         {
             Client? client = await milibooContext.Clients

@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAE401-API", "SAE401-API\SAE401-API.csproj", "{3EAB5A1E-FE78-4AD4-AEC9-378D27AB572D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAE401-APITests", "SAE401-APITests\SAE401-APITests.csproj", "{21C24D9E-6B1C-44DA-8944-9EED2F48AADF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{3EAB5A1E-FE78-4AD4-AEC9-378D27AB572D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3EAB5A1E-FE78-4AD4-AEC9-378D27AB572D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3EAB5A1E-FE78-4AD4-AEC9-378D27AB572D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21C24D9E-6B1C-44DA-8944-9EED2F48AADF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21C24D9E-6B1C-44DA-8944-9EED2F48AADF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21C24D9E-6B1C-44DA-8944-9EED2F48AADF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21C24D9E-6B1C-44DA-8944-9EED2F48AADF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
