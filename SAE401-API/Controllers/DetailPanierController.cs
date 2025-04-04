@@ -45,7 +45,7 @@ namespace SAE401_API.Controllers
 
         [HttpPut("{idproduit}/{idcouleur}/{idclient}")]
         [Authorize()]
-        public async Task<IActionResult> PutDetailProduit(int idproduit, int idcouleur, int idclient, DetailpanierDTO detailpanierDTO)
+        public async Task<IActionResult> PutDetailPanier(int idproduit, int idcouleur, int idclient, DetailpanierDTO detailpanierDTO)
         {
             if (!ModelState.IsValid)
             {

@@ -67,13 +67,13 @@ namespace SAE401_API.Controllers
                 Dateexpirationcarte = cartebancaireDTO.Dateexpirationcarte
             };
 
-            Cartebancaire cb = await dataRepository.AddCartebancaireAsync(cartebancaire);
-            return Ok(cb);
+            await dataRepository.AddCartebancaireAsync(cartebancaire);
+            return NoContent();
         }
 
         // PUT: api/Cartebancaire/id
         [HttpPut("{idcartebancaire}")]
-        public async Task<IActionResult> PutCartebancaire(int idcartebancaire, [FromBody] CartebancaireDTO cartebancaireDTO)
+        public async Task<ActionResult<Cartebancaire?>> PutCartebancaire(int idcartebancaire, [FromBody] CartebancaireDTO cartebancaireDTO)
         {
             if (!ModelState.IsValid)
             {

@@ -51,6 +51,9 @@ public partial class _DBMilibooContext : DbContext
 
     public virtual DbSet<Detailpanier> Detailpaniers { get; set; }
 
+    public virtual DbSet<Detailpaniercomposition> Detailpaniercompositions { get; set; }
+
+
     public virtual DbSet<Detailregroupement> Detailregroupements { get; set; }
 
     public virtual DbSet<Produitsimilaire> Produitsimilaires { get; set; }

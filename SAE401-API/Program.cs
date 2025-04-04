@@ -45,6 +45,7 @@ builder.Services.AddScoped<IDepartementRepository<Departement>, DepartementManag
 builder.Services.AddScoped<IVilleRepository<Ville>, VilleManager>();
 
 builder.Services.AddScoped<IPhotocolorationRepository<Photocoloration>, PhotocolorationManager<Photocoloration>>();
+builder.Services.AddScoped<IDetailPanierCompositionRepository<Detailpaniercomposition>, DetailpaniercompositionManager<Detailpaniercomposition>>();
 
 
 // Add services to the container.
