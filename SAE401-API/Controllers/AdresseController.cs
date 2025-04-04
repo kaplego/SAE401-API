@@ -46,7 +46,7 @@ namespace SAE401_API.Controllers
         // Ajouter une nouvelle adresse
         [HttpPost]
         [Authorize()]
-        public async Task<IActionResult> PostAdresse(AdresseDTO adresseDTO)
+        public async Task<ActionResult<Adresse?>> PostAdresse(AdresseDTO adresseDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -72,14 +72,14 @@ namespace SAE401_API.Controllers
             };
 
             await dataRepository.AddAdresseAsync(adresse);
-            return NoContent();
+            return Ok(adresse);
         }
 
         // Mettre à jour une adresse existante
         [HttpPut("{idadresse}")]
         [Authorize()]
 
-        public async Task<IActionResult> PutAdresse(int idadresse, [FromBody] AdresseDTO adresseDTO)
+        public async Task<ActionResult<Adresse?>> PutAdresse(int idadresse, [FromBody] AdresseDTO adresseDTO)
         {
             if (idadresse != adresseDTO.Idadresse)
             {
@@ -100,7 +100,7 @@ namespace SAE401_API.Controllers
 
             await dataRepository.UpdateAdresseAsync(existingAdresse.Value, adresseDTO);
 
-            return NoContent();
+            return Ok(existingAdresse.Value);
         }
 
         // Supprimer une adresse
@@ -122,7 +122,7 @@ namespace SAE401_API.Controllers
             }
 
             await dataRepository.DeleteAdresseAsync(adresse.Value);
-            return NoContent();
+            return Ok();
         }
     }
 }

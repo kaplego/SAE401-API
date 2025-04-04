@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SAE401_API.Models.DTO;
+using SAE401_API.Models.EntityFramework;
 
 namespace SAE401_API.Models.Repository
 {
@@ -7,7 +8,7 @@ namespace SAE401_API.Models.Repository
     {
         Task<ActionResult<TEntity?>> GetProfessionelByIdAsync(int id);
 
-        Task AddProfessionelAsync(TEntity entity);
-        Task UpdateProfessionelAsync(TEntity entityToUpdate, ProfessionelDTO entity);
+        Task<Professionel> AddProfessionelAsync(TEntity entity);
+        Task<Professionel> UpdateProfessionelAsync(TEntity entityToUpdate, ProfessionelDTO entity);
     }
 }

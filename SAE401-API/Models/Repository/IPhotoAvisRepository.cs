@@ -6,6 +6,6 @@ namespace SAE401_API.Models.Repository
     public interface IPhotoAvisRepository<TEntity>
     {
         Task<ActionResult<Avisproduit?>> GetAvisByIdAsync(int idavis);
-        Task AddPhotoAvisAsync(TEntity entity);
+        Task<Photoavi> AddPhotoAvisAsync(TEntity entity);
     }
 }

@@ -121,14 +121,15 @@ namespace SAE401_API.Models.DataManager
                 .FirstOrDefaultAsync(p => p.Idproduit == id);
         }
 
-        public async Task AddProduitAsync(Produit entity)
+        public async Task<Produit> AddProduitAsync(Produit entity)
         {
             await milibooContext.Produits.AddAsync(entity);
             await milibooContext.SaveChangesAsync();
+            return entity;
         }
 
         
-        public async Task UpdateProduitAsync(Produit produit, ProduitDTO entity)
+        public async Task<Produit> UpdateProduitAsync(Produit produit, ProduitDTO entity)
         {
             milibooContext.Entry(produit).State = EntityState.Modified;
             produit.Idproduit = produit.Idproduit;
@@ -141,6 +142,7 @@ namespace SAE401_API.Models.DataManager
             produit.Coutlivraison = entity.Coutlivraison;
             produit.Nbpaiementmax = entity.Nbpaiementmax;
             await milibooContext.SaveChangesAsync();
+            return produit;
         }
 
         public async Task  DeleteProduitAsync(Produit produit)

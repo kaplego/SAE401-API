@@ -26,13 +26,14 @@ namespace SAE401_API.Models.DataManager
             return await milibooContext.Professionels.FirstOrDefaultAsync(p => p.Idclient == id);
         }
 
-        public async Task AddProfessionelAsync(Professionel pro)
+        public async Task<Professionel> AddProfessionelAsync(Professionel pro)
         {
-            milibooContext.Professionels.Add(pro);
+            await milibooContext.Professionels.AddAsync(pro);
             await milibooContext.SaveChangesAsync();
+            return pro;
         }
 
-        public async Task UpdateProfessionelAsync(Professionel entityToUpdate, ProfessionelDTO entity)
+        public async Task<Professionel> UpdateProfessionelAsync(Professionel entityToUpdate, ProfessionelDTO entity)
         {
             entityToUpdate.Idactivitepro = entity.Idactivitepro;
             entityToUpdate.Nomsociete = entity.Nomsociete;
@@ -40,6 +41,7 @@ namespace SAE401_API.Models.DataManager
 
             milibooContext.Entry(entityToUpdate).State = EntityState.Modified;
             await milibooContext.SaveChangesAsync();
+            return entityToUpdate;
         }
     }
 }

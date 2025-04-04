@@ -24,7 +24,7 @@ namespace SAE401_API.Controllers
 
         [HttpPut("{idcomposition}/{idclient}")]
         [Authorize()]
-        public async Task<IActionResult> PutDetailPanoerComposition(int idcomposition, int idclient, DetailpaniercompositionDTO detailpaniercompositionDTO)
+        public async Task<ActionResult<Detailpaniercomposition?>> PutDetailPanoerComposition(int idcomposition, int idclient, DetailpaniercompositionDTO detailpaniercompositionDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -64,14 +64,14 @@ namespace SAE401_API.Controllers
             // Appeler la méthode de mise à jour dans le repository
             await dataRepository.UpdateDetailPanierCompositionAsync(detailpaniercompositionToUpdate.Value, updatedDetailpaniercomposition);
 
-            return NoContent();
+            return Ok(detailpaniercompositionToUpdate.Value);
         }
 
 
 
         [HttpPost]
         [Authorize()]
-        public async Task<ActionResult<Detailpaniercomposition>> PostDetailPanierComposition(DetailpaniercompositionDTO detailpaniercomposition)
+        public async Task<ActionResult<Detailpaniercomposition?>> PostDetailPanierComposition(DetailpaniercompositionDTO detailpaniercomposition)
         {
             if (!ModelState.IsValid)
             {
@@ -93,7 +93,7 @@ namespace SAE401_API.Controllers
 
             await dataRepository.AddDetailPanierCompositionAsync(detailpaniercompositionfinal);
 
-            return NoContent();
+            return Ok(detailpaniercompositionfinal);
         }
 
         [HttpDelete("{idcomposition}/{idclient}")]
@@ -113,7 +113,7 @@ namespace SAE401_API.Controllers
             }
 
             await dataRepository.DeleteDetailPanierCompositionAsync(detailpaniercomposition.Value);
-            return NoContent();
+            return Ok();
         }
     }
 }

@@ -24,12 +24,13 @@ namespace SAE401_API.Models.DataManager
             return coloration != null ? new ActionResult<TEntity>((TEntity)(object)coloration) : new NotFoundResult();
         }
 
-        public async Task AddColorationAsync(TEntity entity)
+        public async Task<Coloration> AddColorationAsync(TEntity entity)
         {
             if (entity is Coloration coloration)
             {
-                _milibooContext.Colorations.Add(coloration);
+                await _milibooContext.Colorations.AddAsync(coloration);
                 await _milibooContext.SaveChangesAsync();
+                return coloration;
             }
             else
             {
@@ -37,7 +38,7 @@ namespace SAE401_API.Models.DataManager
             }
         }
 
-        public async Task UpdateColorationAsync(Coloration coloration, TEntity entity)
+        public async Task<Coloration> UpdateColorationAsync(Coloration coloration, TEntity entity)
         {
             if (entity is Coloration updatedColoration)
             {
@@ -50,6 +51,7 @@ namespace SAE401_API.Models.DataManager
 
             _milibooContext.Entry(coloration).State = EntityState.Modified;
             await _milibooContext.SaveChangesAsync();
+            return coloration;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace SAE401_API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> PostSignalementavi([FromBody] SignalementaviDTO signalementaviDTO)
+        public async Task<ActionResult<Signalementavi?>> PostSignalementavi([FromBody] SignalementaviDTO signalementaviDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -37,7 +37,7 @@ namespace SAE401_API.Controllers
             };
 
             await dataRepository.AddSignalementaviAsync(signalementavi);
-            return NoContent();
+            return Ok(signalementavi);
         }
     }
 }

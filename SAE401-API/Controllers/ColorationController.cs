@@ -47,7 +47,7 @@ namespace SAE401_API.Controllers
 
         // Ajouter une nouvelle coloration
         [HttpPost]
-        public async Task<ActionResult> PostColoration([FromBody] ColorationDTO colorationDTO)
+        public async Task<ActionResult<Coloration?>> PostColoration([FromBody] ColorationDTO colorationDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -66,12 +66,12 @@ namespace SAE401_API.Controllers
             };
 
             await dataRepository.AddColorationAsync(coloration);
-            return NoContent();
+            return Ok(coloration);
         }
 
         // Mettre à jour une coloration
         [HttpPut("{idproduit}/{idcouleur}")]
-        public async Task<IActionResult> PutColoration(int idproduit, int idcouleur, [FromBody] ColorationDTO colorationDTO)
+        public async Task<ActionResult<Coloration?>> PutColoration(int idproduit, int idcouleur, [FromBody] ColorationDTO colorationDTO)
         {
             if (idproduit != colorationDTO.Idproduit || idcouleur != colorationDTO.Idcouleur)
             {
@@ -96,7 +96,7 @@ namespace SAE401_API.Controllers
             };
 
             await dataRepository.UpdateColorationAsync(existingColoration.Value, updatedColoration);
-            return NoContent();
+            return Ok(existingColoration.Value);
         }
     }
 }

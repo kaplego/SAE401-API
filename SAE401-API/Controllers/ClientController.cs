@@ -95,7 +95,7 @@ namespace SAE401_API.Controllers
         // PUT: api/Client/{id}
         [HttpPut("{id}")]
         [Authorize()]
-        public async Task<IActionResult> PutClient(int id, ClientDTO client)
+        public async Task<ActionResult<Client?>> PutClient(int id, ClientDTO client)
         {
             if (!ModelState.IsValid)
             {
@@ -123,13 +123,13 @@ namespace SAE401_API.Controllers
             else
             {
                 await dataRepository.UpdateClientAsync(clientToUpdate.Value, client);
-                return NoContent();
+                return Ok(clientToUpdate.Value);
             }
         }
 
         // POST: api/Client
         [HttpPost]
-        public async Task<ActionResult<Client>> PostClient([FromBody] ClientDTO clientDTO)
+        public async Task<ActionResult<Client?>> PostClient([FromBody] ClientDTO clientDTO)
         {
             if(!ModelState.IsValid)
             {
@@ -153,7 +153,7 @@ namespace SAE401_API.Controllers
 
             await dataRepository.AddClientAsync(newclient);
 
-            return NoContent();
+            return Ok(newclient);
         }
     }
 }

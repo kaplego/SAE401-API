@@ -23,7 +23,7 @@ namespace SAE401_API.Controllers
         // POST: api/Avis
         [HttpPost]
         [Authorize()]
-        public async Task<ActionResult<Avisproduit>> PostAvis(AvisproduitDTO avisDTO)
+        public async Task<ActionResult<Avisproduit?>> PostAvis(AvisproduitDTO avisDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -49,7 +49,7 @@ namespace SAE401_API.Controllers
 
             await dataRepository.AddAvisAsync(avis);
 
-            return NoContent();
+            return Ok(avis);
         }
 
         // DELETE: api/Avis/5
@@ -74,7 +74,7 @@ namespace SAE401_API.Controllers
 
 
             await dataRepository.DeleteAvisAsync(avis.Value);
-            return NoContent();
+            return Ok();
         }
     }
 }

@@ -8,8 +8,8 @@ namespace SAE401_API.Models.Repository
 
         Task<ActionResult<TEntity?>> GetDetailPanierByIdAsync(int idproduit, int idcouleur, int idclient);
 
-        Task AddDetailPanierAsync(TEntity entity);
-        Task UpdateDetailPanierAsync(Detailpanier detailpanier, TEntity entity);
+        Task<Detailpanier> AddDetailPanierAsync(TEntity entity);
+        Task<Detailpanier> UpdateDetailPanierAsync(Detailpanier detailpanier, TEntity entity);
         Task DeleteDetailPanierAsync(Detailpanier detailpanier);
     }
 }

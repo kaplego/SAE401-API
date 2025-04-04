@@ -5,6 +5,6 @@ namespace SAE401_API.Models.Repository
 {
     public interface ISignalementaviRepository<TEntity>
     {
-        Task AddSignalementaviAsync(TEntity entity);
+        Task<Signalementavi> AddSignalementaviAsync(TEntity entity);
     }
 }

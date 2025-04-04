@@ -27,12 +27,13 @@ namespace SAE401_API.Models.DataManager
             return adresse != null ? new ActionResult<TEntity>((TEntity)(object)adresse) : new NotFoundResult();
         }
 
-        public async Task AddAdresseAsync(TEntity entity)
+        public async Task<Adresse> AddAdresseAsync(TEntity entity)
         {
             if (entity is Adresse adresse)
             {
-                _milibooContext.Adresses.Add(adresse);
+                await _milibooContext.Adresses.AddAsync(adresse);
                 await _milibooContext.SaveChangesAsync();
+                return adresse;
             }
             else
             {
@@ -40,7 +41,7 @@ namespace SAE401_API.Models.DataManager
             }
         }
 
-        public async Task UpdateAdresseAsync(Adresse entity, AdresseDTO adresseDTO)
+        public async Task<Adresse> UpdateAdresseAsync(Adresse entity, AdresseDTO adresseDTO)
         {
             if (entity is Adresse adr)
             {
@@ -55,6 +56,7 @@ namespace SAE401_API.Models.DataManager
 
             _milibooContext.Entry(entity).State = EntityState.Modified;
             await _milibooContext.SaveChangesAsync();
+            return entity;
         }
 
         public async Task DeleteAdresseAsync(Adresse adresse)

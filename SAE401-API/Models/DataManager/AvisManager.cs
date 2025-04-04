@@ -29,10 +29,11 @@ namespace SAE401_API.Models.DataManager
                 .FirstOrDefaultAsync(c => c.Idavis == id);
         }
 
-        public async Task AddAvisAsync(Avisproduit avis)
+        public async Task<Avisproduit> AddAvisAsync(Avisproduit avis)
         {
-            milibooContext.Avisproduits.Add(avis);
+            await milibooContext.Avisproduits.AddAsync(avis);
             await milibooContext.SaveChangesAsync();
+            return avis;
         }
 
         public async Task DeleteAvisAsync(Avisproduit avis)

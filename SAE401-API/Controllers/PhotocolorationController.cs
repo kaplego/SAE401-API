@@ -20,7 +20,7 @@ namespace SAE401_API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> PostPhotocoloration([FromBody] PhotocolorationDTO photocolorationDTO)
+        public async Task<ActionResult<Photocoloration?>> PostPhotocoloration([FromBody] PhotocolorationDTO photocolorationDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -35,7 +35,7 @@ namespace SAE401_API.Controllers
             };
 
             await dataRepository.AddPhotocolorationAsync(photocoloration);
-            return NoContent();
+            return Ok(photocoloration);
         }
     }
 }

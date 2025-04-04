@@ -26,10 +26,11 @@ namespace SAE401_API.Models.DataManager
         }
 
         // Méthode pour ajouter un produit similaire
-        public async Task AddProduitsimilaireAsync(Produitsimilaire produitsimilaire)
+        public async Task<Produitsimilaire> AddProduitsimilaireAsync(Produitsimilaire produitsimilaire)
         {
-            _milibooContext.Produitsimilaires.Add(produitsimilaire);
+            await _milibooContext.Produitsimilaires.AddAsync(produitsimilaire);
             await _milibooContext.SaveChangesAsync();
+            return produitsimilaire;
         }
 
         // Méthode pour supprimer un produit similaire

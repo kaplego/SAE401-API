@@ -67,13 +67,14 @@ namespace SAE401_API.Models.DataManager
                 .FirstOrDefaultAsync(c => c.Idclient == id);
         }
 
-        public async Task AddClientAsync(Client client)
+        public async Task<Client> AddClientAsync(Client client)
         {
-            milibooContext.Clients.Add(client);
+            await milibooContext.Clients.AddAsync(client);
             await milibooContext.SaveChangesAsync();
+            return client;
         }
 
-        public async Task UpdateClientAsync(Client client, ClientDTO entity)
+        public async Task<Client> UpdateClientAsync(Client client, ClientDTO entity)
         {
             client.Nomclient = entity.Nomclient;
             client.Prenomclient = entity.Prenomclient;
@@ -89,6 +90,8 @@ namespace SAE401_API.Models.DataManager
 
             milibooContext.Entry(client).State = EntityState.Modified;
             await milibooContext.SaveChangesAsync();
+            return client;
+
         }
     }
 }

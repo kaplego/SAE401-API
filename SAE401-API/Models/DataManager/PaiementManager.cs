@@ -20,12 +20,13 @@ namespace SAE401_API.Models.DataManager
                 .FirstOrDefaultAsync(c => c.Idcommande == idcommande);
         }
 
-        public async Task AddPaiementAsync(TEntity entity)
+        public async Task<Paiement> AddPaiementAsync(TEntity entity)
         {
             if (entity is Paiement paiement)
             {
-                _milibooContext.Paiements.Add(paiement);
+                await _milibooContext.Paiements.AddAsync(paiement);
                 await _milibooContext.SaveChangesAsync();
+                return paiement;
             }
             else
             {

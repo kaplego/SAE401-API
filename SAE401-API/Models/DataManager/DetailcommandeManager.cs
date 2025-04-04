@@ -15,12 +15,13 @@ namespace SAE401_API.Models.DataManager
         }
 
 
-        public async Task AddDetailcommandeAsync(TEntity entity)
+        public async Task<Detailcommande> AddDetailcommandeAsync(TEntity entity)
         {
             if (entity is Detailcommande detailcommande)
             {
-                _milibooContext.Detailcommandes.Add(detailcommande);
+                await _milibooContext.Detailcommandes.AddAsync(detailcommande);
                 await _milibooContext.SaveChangesAsync();
+                return detailcommande;
             }
             else
             {

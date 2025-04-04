@@ -7,7 +7,7 @@ namespace SAE401_API.Models.Repository
     public interface IPhotoRepository<TEntity>
     {
         Task<ActionResult<TEntity?>> GetPhotoByIdAsync(int id);
-        Task AddPhotoAsync(TEntity entity);
+        Task<Photo> AddPhotoAsync(TEntity entity);
         Task DeletePhotoAsync(Photo photo);
     }
 }

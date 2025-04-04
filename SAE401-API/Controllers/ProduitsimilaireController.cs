@@ -38,7 +38,7 @@ namespace SAE401_API.Controllers
         // POST api/produitsimilaire
         [HttpPost]
         
-        public async Task<ActionResult> PostProduitsimilaire([FromBody] ProduitsimilaireDTO produitsimilaireDTO)
+        public async Task<ActionResult<Produitsimilaire?>> PostProduitsimilaire([FromBody] ProduitsimilaireDTO produitsimilaireDTO)
         {
             var produitSimilaire = new Produitsimilaire
             {
@@ -48,7 +48,7 @@ namespace SAE401_API.Controllers
 
             await _produitsimilaireRepository.AddProduitsimilaireAsync(produitSimilaire);
 
-            return NoContent();
+            return Ok(produitSimilaire);
         }
 
         // DELETE api/produitsimilaire/{idproduitRef}/{idproduitSim}
@@ -64,7 +64,7 @@ namespace SAE401_API.Controllers
             }
 
             await _produitsimilaireRepository.DeleteProduitsimilaireAsync(produitSimilaire.Value);
-            return NoContent();
+            return Ok();
         }
     }
 }

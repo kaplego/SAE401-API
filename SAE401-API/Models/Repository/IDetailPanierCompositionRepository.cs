@@ -7,8 +7,8 @@ namespace SAE401_API.Models.Repository
     {
         Task<ActionResult<TEntity?>> GetDetailPanierCompositionByIdAsync(int idcomposition, int idclient);
 
-        Task AddDetailPanierCompositionAsync(TEntity entity);
-        Task UpdateDetailPanierCompositionAsync(Detailpaniercomposition detailpaniercomposition, TEntity entity);
+        Task<Detailpaniercomposition> AddDetailPanierCompositionAsync(TEntity entity);
+        Task<Detailpaniercomposition> UpdateDetailPanierCompositionAsync(Detailpaniercomposition detailpaniercomposition, TEntity entity);
         Task DeleteDetailPanierCompositionAsync(Detailpaniercomposition detailpaniercomposition);
     }
 }

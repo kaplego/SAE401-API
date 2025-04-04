@@ -24,12 +24,13 @@ namespace SAE401_API.Models.DataManager
             return historiqueConsultation != null ? new ActionResult<TEntity>((TEntity)(object)historiqueConsultation) : new NotFoundResult();
         }
 
-        public async Task AddHistoriqueconsultationAsync(TEntity entity)
+        public async Task<Historiqueconsultation> AddHistoriqueconsultationAsync(TEntity entity)
         {
             if (entity is Historiqueconsultation historiqueconsultation)
             {
-                _milibooContext.Historiqueconsultations.Add(historiqueconsultation);
+                await _milibooContext.Historiqueconsultations.AddAsync(historiqueconsultation);
                 await _milibooContext.SaveChangesAsync();
+                return historiqueconsultation;
             }
             else
             {

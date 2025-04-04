@@ -21,12 +21,13 @@ namespace SAE401_API.Models.DataManager
         }
 
 
-        public async Task AddPhotoAvisAsync(TEntity entity)
+        public async Task<Photoavi> AddPhotoAvisAsync(TEntity entity)
         {
             if (entity is Photoavi photoavis)
             {
-                _milibooContext.Photoavis.Add(photoavis);
+                await _milibooContext.Photoavis.AddAsync(photoavis);
                 await _milibooContext.SaveChangesAsync();
+                return photoavis;
             }
             else
             {

@@ -14,12 +14,13 @@ namespace SAE401_API.Models.DataManager
             _milibooContext = context;
         }
 
-        public async Task AddPhotocolorationAsync(TEntity entity)
+        public async Task<Photocoloration> AddPhotocolorationAsync(TEntity entity)
         {
             if (entity is Photocoloration photocoloration)
             {
-                _milibooContext.Photocolorations.Add(photocoloration);
+                await _milibooContext.Photocolorations.AddAsync(photocoloration);
                 await _milibooContext.SaveChangesAsync();
+                return photocoloration;
             }
             else
             {

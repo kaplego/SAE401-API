@@ -23,7 +23,7 @@ namespace SAE401_API.Controllers
         // POST
         [HttpPost]
         [Authorize()]
-        public async Task<ActionResult> PostPaiement([FromBody] PaiementDTO paiementDTO)
+        public async Task<ActionResult<Aime?>> PostPaiement([FromBody] PaiementDTO paiementDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -50,7 +50,7 @@ namespace SAE401_API.Controllers
             };
 
             await dataRepository.AddPaiementAsync(paiement);
-            return NoContent();
+            return Ok(paiement);
         }
     }
 }

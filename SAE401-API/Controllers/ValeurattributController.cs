@@ -44,7 +44,7 @@ namespace SAE401_API.Controllers
         */
 
         [HttpPost]
-        public async Task<ActionResult> PostValeurattribut([FromBody] ValeurattributDTO valeurAttributDTO)
+        public async Task<ActionResult<Valeurattribut?>> PostValeurattribut([FromBody] ValeurattributDTO valeurAttributDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -59,11 +59,11 @@ namespace SAE401_API.Controllers
             };
 
             await dataRepository.AddValeurattributAsync(valeurAttribut);
-            return NoContent();
+            return Ok(valeurAttribut);
         }
 
         [HttpPut("{idattribut}/{idproduit}")]
-        public async Task<IActionResult> PutValeurattribut(int idattribut, int idproduit, [FromBody] ValeurattributDTO valeurAttributDTO)
+        public async Task<ActionResult<Valeurattribut?>> PutValeurattribut(int idattribut, int idproduit, [FromBody] ValeurattributDTO valeurAttributDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace SAE401_API.Controllers
             };
 
             await dataRepository.UpdateValeurattributAsync(existingValeurattribut.Value, updatedValeurattribut);
-            return NoContent();
+            return Ok(existingValeurattribut.Value);
         }
 
         [HttpDelete("{idattribut}/{idproduit}")]
@@ -103,7 +103,7 @@ namespace SAE401_API.Controllers
             }
 
             await dataRepository.DeleteValeurattributAsync(valeurAttribut.Value);
-            return NoContent();
+            return Ok();
         }
     }
 }

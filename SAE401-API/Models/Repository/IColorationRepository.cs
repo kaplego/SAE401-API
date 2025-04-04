@@ -6,7 +6,7 @@ namespace SAE401_API.Models.Repository
     public interface IColorationRepository<TEntity>
     {
         Task<ActionResult<TEntity?>> GetColorationByIdAsync(int idproduit, int idcouleur);
-        Task AddColorationAsync(TEntity entity);
-        Task UpdateColorationAsync(Coloration coloration, TEntity entity);
+        Task<Coloration> AddColorationAsync(TEntity entity);
+        Task<Coloration> UpdateColorationAsync(Coloration coloration, TEntity entity);
     }
 }
