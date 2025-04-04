@@ -24,12 +24,13 @@ namespace SAE401_API.Models.DataManager
             return detailPaniercomposition != null ? new ActionResult<TEntity>((TEntity)(object)detailPaniercomposition) : new NotFoundResult();
         }
 
-        public async Task AddDetailPanierCompositionAsync(TEntity entity)
+        public async Task<Detailpaniercomposition> AddDetailPanierCompositionAsync(TEntity entity)
         {
             if (entity is Detailpaniercomposition detailpaniercomposition)
             {
-                _milibooContext.Detailpaniercompositions.Add(detailpaniercomposition);
+                await _milibooContext.Detailpaniercompositions.AddAsync(detailpaniercomposition);
                 await _milibooContext.SaveChangesAsync();
+                return detailpaniercomposition;
             }
             else
             {
@@ -37,7 +38,7 @@ namespace SAE401_API.Models.DataManager
             }
         }
 
-        public async Task UpdateDetailPanierCompositionAsync(Detailpaniercomposition detailpaniercomposition, TEntity entity)
+        public async Task<Detailpaniercomposition> UpdateDetailPanierCompositionAsync(Detailpaniercomposition detailpaniercomposition, TEntity entity)
         {
             // Si l'entité est un Detailpanier, nous procédons à la mise à jour
             if (entity is Detailpaniercomposition dpc)
@@ -49,6 +50,7 @@ namespace SAE401_API.Models.DataManager
 
             _milibooContext.Entry(detailpaniercomposition).State = EntityState.Modified;
             await _milibooContext.SaveChangesAsync();
+            return detailpaniercomposition;
         }
 
         public async Task DeleteDetailPanierCompositionAsync(Detailpaniercomposition detailpaniercomposition)

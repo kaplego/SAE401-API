@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SAE401_API.Models.DTO;
+using SAE401_API.Models.EntityFramework;
 
 namespace SAE401_API.Models.Repository
 {
@@ -13,8 +14,8 @@ namespace SAE401_API.Models.Repository
         Task<ActionResult<TEntity>> GetProduitByIdAsync(int id);
         
 
-        Task AddProduitAsync(TEntity entity);
-        Task UpdateProduitAsync(TEntity entityToUpdate, ProduitDTO entity);
+        Task<Produit> AddProduitAsync(TEntity entity);
+        Task<Produit> UpdateProduitAsync(TEntity entityToUpdate, ProduitDTO entity);
         Task DeleteProduitAsync(TEntity entity);
     }
 }

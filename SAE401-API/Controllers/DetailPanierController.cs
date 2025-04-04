@@ -45,7 +45,7 @@ namespace SAE401_API.Controllers
 
         [HttpPut("{idproduit}/{idcouleur}/{idclient}")]
         [Authorize()]
-        public async Task<IActionResult> PutDetailPanier(int idproduit, int idcouleur, int idclient, DetailpanierDTO detailpanierDTO)
+        public async Task<ActionResult<Detailpanier?>> PutDetailPanier(int idproduit, int idcouleur, int idclient, DetailpanierDTO detailpanierDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -86,14 +86,14 @@ namespace SAE401_API.Controllers
             // Appeler la méthode de mise à jour dans le repository
             await dataRepository.UpdateDetailPanierAsync(produitToUpdate.Value, updatedDetailpanier);
 
-            return NoContent();
+            return Ok(produitToUpdate.Value);
         }
 
 
 
         [HttpPost]
         [Authorize()]
-        public async Task<ActionResult<Detailpanier>> PostDetailPanier(DetailpanierDTO detailpanier)
+        public async Task<ActionResult<Detailpanier?>> PostDetailPanier(DetailpanierDTO detailpanier)
         {
             if (!ModelState.IsValid)
             {
@@ -116,7 +116,7 @@ namespace SAE401_API.Controllers
 
             await dataRepository.AddDetailPanierAsync(detailpanierfinal);
 
-            return NoContent();
+            return Ok(detailpanierfinal);
         }
 
         [HttpDelete("{idproduit}/{idcouleur}/{idclient}")]
@@ -136,7 +136,7 @@ namespace SAE401_API.Controllers
             }
 
             await dataRepository.DeleteDetailPanierAsync(detailpanier.Value);
-            return NoContent();
+            return Ok();
         }
     }
 }

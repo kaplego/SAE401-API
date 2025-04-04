@@ -26,12 +26,13 @@ namespace SAE401_API.Models.DataManager
             return detailPanier != null ? new ActionResult<TEntity>((TEntity)(object)detailPanier) : new NotFoundResult();
         }
 
-        public async Task AddDetailPanierAsync(TEntity entity)
+        public async Task<Detailpanier> AddDetailPanierAsync(TEntity entity)
         {
             if (entity is Detailpanier detailpanier)
             {
-                _milibooContext.Detailpaniers.Add(detailpanier);
+                await _milibooContext.Detailpaniers.AddAsync(detailpanier);
                 await _milibooContext.SaveChangesAsync();
+                return detailpanier;
             }
             else
             {
@@ -39,7 +40,7 @@ namespace SAE401_API.Models.DataManager
             }
         }
 
-        public async Task UpdateDetailPanierAsync(Detailpanier detailpanier, TEntity entity)
+        public async Task<Detailpanier> UpdateDetailPanierAsync(Detailpanier detailpanier, TEntity entity)
         {
             // Si l'entité est un Detailpanier, nous procédons à la mise à jour
             if (entity is Detailpanier dp)
@@ -51,6 +52,7 @@ namespace SAE401_API.Models.DataManager
 
             _milibooContext.Entry(detailpanier).State = EntityState.Modified;
             await _milibooContext.SaveChangesAsync();
+            return detailpanier;
         }
 
         public async Task DeleteDetailPanierAsync(Detailpanier detailpanier)

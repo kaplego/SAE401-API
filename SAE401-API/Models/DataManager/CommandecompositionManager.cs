@@ -16,12 +16,13 @@ namespace SAE401_API.Models.DataManager
 
 
 
-        public async Task AddCommandecompositionAsync(TEntity entity)
+        public async Task<Commandecomposition> AddCommandecompositionAsync(TEntity entity)
         {
             if (entity is Commandecomposition commandecomposition)
             {
-                _milibooContext.Commandecompositions.Add(commandecomposition);
+                await _milibooContext.Commandecompositions.AddAsync(commandecomposition);
                 await _milibooContext.SaveChangesAsync();
+                return commandecomposition;
             }
             else
             {

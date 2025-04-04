@@ -24,12 +24,13 @@ namespace SAE401_API.Models.DataManager
             return aime != null ? new ActionResult<TEntity>((TEntity)(object)aime) : new NotFoundResult();
         }
 
-        public async Task AddAimeAsync(TEntity entity)
+        public async Task<Aime> AddAimeAsync(TEntity entity)
         {
             if (entity is Aime aime)
             {
-                _milibooContext.Aimes.Add(aime);
+                await _milibooContext.Aimes.AddAsync(aime);
                 await _milibooContext.SaveChangesAsync();
+                return aime;
             }
             else
             {

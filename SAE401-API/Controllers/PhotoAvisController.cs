@@ -23,7 +23,7 @@ namespace SAE401_API.Controllers
         // POST: api/PhotoAvis
         [HttpPost]
         [Authorize()]
-        public async Task<ActionResult<Photoavi>> PostPhotoAvis([FromBody] PhotoaviDTO paDTO)
+        public async Task<ActionResult<Photoavi?>> PostPhotoAvis([FromBody] PhotoaviDTO paDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -48,7 +48,7 @@ namespace SAE401_API.Controllers
 
             await dataRepository.AddPhotoAvisAsync(pa);
 
-            return NoContent();
+            return Ok(pa);
         }
     }
 }

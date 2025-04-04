@@ -27,10 +27,11 @@ namespace SAE401_API.Models.DataManager
                 .FirstOrDefaultAsync(c => c.Idphoto == id);
         }
 
-        public async Task AddPhotoAsync(Photo entity)
+        public async Task<Photo> AddPhotoAsync(Photo entity)
         {
-            milibooContext.Photos.Add(entity);
+            await milibooContext.Photos.AddAsync(entity);
             await milibooContext.SaveChangesAsync();
+            return entity;
         }
 
         public async Task DeletePhotoAsync(Photo photo)

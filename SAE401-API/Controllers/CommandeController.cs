@@ -22,7 +22,7 @@ namespace SAE401_API.Controllers
         // POST: api/Commande
         [HttpPost]
         [Authorize()]
-        public async Task<IActionResult> PostCommande([FromBody] CommandeDTO commandeDTO)
+        public async Task<ActionResult<Commande>> PostCommande([FromBody] CommandeDTO commandeDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -51,7 +51,7 @@ namespace SAE401_API.Controllers
 
             await _commandeRepository.AddCommandeAsync(commande);
 
-            return NoContent();
+            return Ok(commande);
         }
 
         // GET: api/Commande/5

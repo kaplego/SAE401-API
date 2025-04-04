@@ -20,7 +20,7 @@ namespace SAE401_API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> PostCommandecomposition([FromBody] CommandecompositionDTO commandecompositionDTO)
+        public async Task<ActionResult<Commandecomposition?>> PostCommandecomposition([FromBody] CommandecompositionDTO commandecompositionDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -37,7 +37,7 @@ namespace SAE401_API.Controllers
          
 
             await dataRepository.AddCommandecompositionAsync(commandecomposition);
-            return NoContent();
+            return Ok(commandecomposition);
         }
     }
 }

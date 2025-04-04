@@ -14,12 +14,13 @@ namespace SAE401_API.Models.DataManager
             _milibooContext = context;
         }
 
-        public async Task AddSignalementaviAsync(TEntity entity)
+        public async Task<Signalementavi> AddSignalementaviAsync(TEntity entity)
         {
             if (entity is Signalementavi signalementavi)
             {
-                _milibooContext.Signalementavis.Add(signalementavi);
+                await _milibooContext.Signalementavis.AddAsync(signalementavi);
                 await _milibooContext.SaveChangesAsync();
+                return signalementavi;
             }
             else
             {

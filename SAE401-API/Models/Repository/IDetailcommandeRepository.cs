@@ -5,7 +5,7 @@ namespace SAE401_API.Models.Repository
 {
     public interface IDetailcommandeRepository<TEntity>
     {
-        Task AddDetailcommandeAsync(TEntity entity);
+        Task<Detailcommande> AddDetailcommandeAsync(TEntity entity);
 
     }
 }

@@ -50,7 +50,7 @@ namespace SAE401_API.Controllers
         // Ajouter une relation "aime"
         [HttpPost]
         [Authorize()]
-        public async Task<ActionResult> PostAime([FromBody] AimeDTO aimeDTO)
+        public async Task<ActionResult<Aime?>> PostAime([FromBody] AimeDTO aimeDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -70,7 +70,7 @@ namespace SAE401_API.Controllers
             }
 
             await dataRepository.AddAimeAsync(aime);
-            return NoContent();
+            return Ok(aime);
         }
 
         // Supprimer une relation "aime"
@@ -91,7 +91,7 @@ namespace SAE401_API.Controllers
             }
 
             await dataRepository.DeleteAimeAsync(aime.Value);
-            return NoContent();
+            return Ok();
         }
     }
 }

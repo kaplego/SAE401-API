@@ -33,7 +33,7 @@ namespace SAE401_API.Controllers
         // POST: api/Professionel
         [HttpPost]
         [Authorize()]
-        public async Task<ActionResult<Professionel>> PostProfessionel([FromBody] ProfessionelDTO proDTO)
+        public async Task<ActionResult<Professionel?>> PostProfessionel([FromBody] ProfessionelDTO proDTO)
         {
             if(!ModelState.IsValid)
             {
@@ -56,13 +56,13 @@ namespace SAE401_API.Controllers
 
             await dataRepository.AddProfessionelAsync(newpro);
 
-            return NoContent();
+            return Ok(newpro);
         }
 
         // PUT: api/Professionel/{id}
         [HttpPut("{id}")]
         [Authorize()]
-        public async Task<IActionResult> PutProfessionel(int id, ProfessionelDTO pro)
+        public async Task<ActionResult<Professionel?>> PutProfessionel(int id, ProfessionelDTO pro)
         {
             if (!ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace SAE401_API.Controllers
             else
             {
                 await dataRepository.UpdateProfessionelAsync(proToUpdate.Value, pro);
-                return NoContent();
+                return Ok(proToUpdate.Value);
             }
         }
     }

@@ -24,12 +24,13 @@ namespace SAE401_API.Models.DataManager
             return valeurAttribut != null ? new ActionResult<TEntity>((TEntity)(object)valeurAttribut) : new NotFoundResult();
         }
 
-        public async Task AddValeurattributAsync(TEntity entity)
+        public async Task<Valeurattribut> AddValeurattributAsync(TEntity entity)
         {
             if (entity is Valeurattribut valeurattribut)
             {
-                _milibooContext.Valeurattributs.Add(valeurattribut);
+                await _milibooContext.Valeurattributs.AddAsync(valeurattribut);
                 await _milibooContext.SaveChangesAsync();
+                return valeurattribut;
             }
             else
             {
@@ -37,7 +38,7 @@ namespace SAE401_API.Models.DataManager
             }
         }
 
-        public async Task UpdateValeurattributAsync(Valeurattribut valeurattribut, TEntity entity)
+        public async Task<Valeurattribut> UpdateValeurattributAsync(Valeurattribut valeurattribut, TEntity entity)
         {
             if (entity is Valeurattribut updatedValeurattribut)
             {
@@ -47,6 +48,7 @@ namespace SAE401_API.Models.DataManager
 
             _milibooContext.Entry(valeurattribut).State = EntityState.Modified;
             await _milibooContext.SaveChangesAsync();
+            return valeurattribut;
         }
 
         public async Task DeleteValeurattributAsync(Valeurattribut valeurattribut)

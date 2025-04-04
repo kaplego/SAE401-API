@@ -22,7 +22,7 @@ namespace SAE401_API.Controllers
 
         // POST: api/Photo
         [HttpPost]
-        public async Task<ActionResult<Photo>> PostPhoto(PhotoDTO photoDTO)
+        public async Task<ActionResult<Photo?>> PostPhoto(PhotoDTO photoDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -38,7 +38,7 @@ namespace SAE401_API.Controllers
 
             await dataRepository.AddPhotoAsync(photo);
 
-            return NoContent();
+            return Ok(photo);
         }
 
         // DELETE: api/Photo/id
@@ -55,7 +55,7 @@ namespace SAE401_API.Controllers
             }
 
             await dataRepository.DeletePhotoAsync(photo.Value);
-            return NoContent();
+            return Ok();
         }
     }
 }

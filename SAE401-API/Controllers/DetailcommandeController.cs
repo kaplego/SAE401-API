@@ -20,7 +20,7 @@ namespace SAE401_API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> PostDetailcommande([FromBody] DetailcommandeDTO detailcommandeDTO)
+        public async Task<ActionResult<Detailcommande?>> PostDetailcommande([FromBody] DetailcommandeDTO detailcommandeDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -37,7 +37,7 @@ namespace SAE401_API.Controllers
 
 
             await dataRepository.AddDetailcommandeAsync(detailcommande);
-            return NoContent();
+            return Ok(detailcommande);
         }
     }
 }

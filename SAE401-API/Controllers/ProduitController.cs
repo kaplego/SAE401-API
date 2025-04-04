@@ -93,7 +93,7 @@ namespace SAE401_API.Controllers
 
         // PUT: api/Produit/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduit(int id, ProduitDTO produit)
+        public async Task<ActionResult<Produit?>> PutProduit(int id, ProduitDTO produit)
         {
             if (!ModelState.IsValid)
             {
@@ -115,13 +115,13 @@ namespace SAE401_API.Controllers
             else
             {
                 await dataRepository.UpdateProduitAsync(produitToUpdate.Value, produit);
-                return NoContent();
+                return Ok(produitToUpdate.Value);
             }
         }
 
         // POST: api/Produit
         [HttpPost]
-        public async Task<ActionResult<Produit>> PostProduit([FromBody] ProduitDTO produit)
+        public async Task<ActionResult<Produit?>> PostProduit([FromBody] ProduitDTO produit)
         {
             if (!ModelState.IsValid)
             {
@@ -142,7 +142,7 @@ namespace SAE401_API.Controllers
 
             await dataRepository.AddProduitAsync(newProduit);
 
-            return NoContent();
+            return Ok(newProduit);
         }
 
         // DELETE: api/Produit/{id} 

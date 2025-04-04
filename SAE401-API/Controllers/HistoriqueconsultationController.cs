@@ -38,7 +38,7 @@ namespace SAE401_API.Controllers
         // POST: api/Historiqueconsultation
         [HttpPost]
         [Authorize()]
-        public async Task<ActionResult<Historiqueconsultation>> PostHistoriqueconsultation(HistoriqueconsultationDTO historiqueconsultationDTO)
+        public async Task<ActionResult<Historiqueconsultation?>> PostHistoriqueconsultation(HistoriqueconsultationDTO historiqueconsultationDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -60,7 +60,7 @@ namespace SAE401_API.Controllers
 
             await dataRepository.AddHistoriqueconsultationAsync(historiqueConsultation);
 
-            return NoContent();
+            return Ok(historiqueConsultation);
         }
 
         // DELETE: api/Historiqueconsultation/idproduit/idclient
@@ -82,7 +82,7 @@ namespace SAE401_API.Controllers
             }
 
             await dataRepository.DeleteHistoriqueconsultationAsync(historiqueConsultation.Value);
-            return NoContent();
+            return Ok();
         }
     }
 }

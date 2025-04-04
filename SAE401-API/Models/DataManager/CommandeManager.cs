@@ -27,12 +27,13 @@ namespace SAE401_API.Models.DataManager
             return commande != null ? new ActionResult<TEntity>((TEntity)(object)commande) : new NotFoundResult();
         }
 
-        public async Task AddCommandeAsync(TEntity entity)
+        public async Task<Commande> AddCommandeAsync(TEntity entity)
         {
             if (entity is Commande commande)
             {
-                _milibooContext.Commandes.Add(commande);
+                await _milibooContext.Commandes.AddAsync(commande);
                 await _milibooContext.SaveChangesAsync();
+                return commande;
             }
             else
             {
