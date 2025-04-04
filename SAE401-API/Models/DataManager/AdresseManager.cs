@@ -2,6 +2,7 @@
 using SAE401_API.Models.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using SAE401_API.Models.DTO;
 
 namespace SAE401_API.Models.DataManager
 {
@@ -39,20 +40,20 @@ namespace SAE401_API.Models.DataManager
             }
         }
 
-        public async Task UpdateAdresseAsync(Adresse adresse, TEntity entity)
+        public async Task UpdateAdresseAsync(Adresse entity, AdresseDTO adresseDTO)
         {
-            if (entity is Adresse updatedAdresse)
+            if (entity is Adresse adr)
             {
-                adresse.Nomadresse = updatedAdresse.Nomadresse;
-                adresse.Numerorue = updatedAdresse.Numerorue;
-                adresse.Nomrue = updatedAdresse.Nomrue;
-                adresse.Codepostaladresse = updatedAdresse.Codepostaladresse;
-                adresse.Idpays = updatedAdresse.Idpays;
-                adresse.Iddepartement = updatedAdresse.Iddepartement;
-                adresse.Codeinsee = updatedAdresse.Codeinsee;
+                adr.Nomadresse = adresseDTO.Nomadresse;
+                adr.Numerorue = adresseDTO.Numerorue;
+                adr.Nomrue = adresseDTO.Nomrue;
+                adr.Codepostaladresse = adresseDTO.Codepostaladresse;
+                adr.Idpays = adresseDTO.Idpays;
+                adr.Iddepartement = adresseDTO.Iddepartement;
+                adr.Codeinsee = adresseDTO.Codeinsee;
             }
 
-            _milibooContext.Entry(adresse).State = EntityState.Modified;
+            _milibooContext.Entry(entity).State = EntityState.Modified;
             await _milibooContext.SaveChangesAsync();
         }
 

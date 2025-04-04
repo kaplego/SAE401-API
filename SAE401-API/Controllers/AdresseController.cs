@@ -92,25 +92,13 @@ namespace SAE401_API.Controllers
                 return NotFound();
             }
 
-            var updatedAdresse = new Adresse
-            {
-                Idpays = adresseDTO.Idpays,
-                Codeinsee = adresseDTO.Codeinsee,
-                Idclient = adresseDTO.Idclient,
-                Iddepartement = adresseDTO.Iddepartement,
-                Nomadresse = adresseDTO.Nomadresse,
-                Numerorue = adresseDTO.Numerorue,
-                Nomrue = adresseDTO.Nomrue,
-                Codepostaladresse = adresseDTO.Codepostaladresse
-            };
-
             var identity = HttpContext.User.Identity as ClaimsIdentity; // #claims2#
-            if (identity == null || identity.FindFirst("id").Value != updatedAdresse.Idclient.ToString()) // #if#
+            if (identity == null || identity.FindFirst("id").Value != existingAdresse.Value.ToString()) // #if#
             {
                 return Forbid(); // #forbid#
             }
 
-            await dataRepository.AddAdresseAsync(updatedAdresse);
+            await dataRepository.UpdateAdresseAsync(existingAdresse.Value, adresseDTO);
 
             return NoContent();
         }

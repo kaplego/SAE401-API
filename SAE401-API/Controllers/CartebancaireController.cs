@@ -67,8 +67,8 @@ namespace SAE401_API.Controllers
                 Dateexpirationcarte = cartebancaireDTO.Dateexpirationcarte
             };
 
-            await dataRepository.AddCartebancaireAsync(cartebancaire);
-            return NoContent();
+            Cartebancaire cb = await dataRepository.AddCartebancaireAsync(cartebancaire);
+            return Ok(cb);
         }
 
         // PUT: api/Cartebancaire/id
