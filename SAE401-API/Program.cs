@@ -87,6 +87,12 @@ builder.Services.AddAuthorization(config =>
     config.AddPolicy("Login", Policies.LoginPolicy());
 });
 
+builder.Services.AddLogging(logs =>
+{
+    logs.AddConsole();    
+    logs.AddAzureWebAppDiagnostics();
+});
+
 var app = builder.Build();
 
 app.UseCors(policy =>
@@ -113,3 +119,4 @@ app.UseMiddleware<ApiKeyPolicy>();
 app.MapControllers();
 
 app.Run();
+
