@@ -10,6 +10,7 @@ using SAE401_API.Models;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json.Serialization;
+using Microsoft.Extensions.Logging;
 
 Env.Load();
 
