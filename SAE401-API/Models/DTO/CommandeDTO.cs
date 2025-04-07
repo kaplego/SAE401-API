@@ -29,7 +29,7 @@ namespace SAE401_API.Models.DTO
         public int Idtransporteur { get; set; }
 
         [Required]
-        public DateTime Datecommande { get; set; } = DateTime.Now;
+        public DateTime Datecommande { get; set; } = DateTime.UtcNow;
 
         [Required]
         public bool Avecassurance { get; set; }

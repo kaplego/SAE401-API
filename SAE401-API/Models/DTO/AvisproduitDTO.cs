@@ -21,7 +21,7 @@ public partial class AvisproduitDTO
     public int Noteavis { get; set; }
 
     [Required]
-    public DateTime Dateavis { get; set; } = DateTime.Now;
+    public DateTime Dateavis { get; set; } = DateTime.UtcNow;
 
     public string? Commentaireavis { get; set; }
 

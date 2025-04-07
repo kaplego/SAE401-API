@@ -30,7 +30,7 @@ public partial class ClientDTO
     public string Telportableclient { get; set; } = null!;
 
     [Required]
-    public DateTime? Datecreationcompte { get; set; } = DateTime.Now;
+    public DateTime? Datecreationcompte { get; set; } = DateTime.UtcNow;
 
     public string? Hashmdp { get; set; } = null;
 

@@ -36,7 +36,7 @@ public partial class Commande
     [Column("cmd_datecommande")]
     [DateValidator]
     [Required]
-    public DateTime Datecommande { get; set; }= DateTime.Now;
+    public DateTime Datecommande { get; set; }= DateTime.UtcNow;
 
     [Column("cmd_avecassurance")]
     public bool Avecassurance { get; set; }

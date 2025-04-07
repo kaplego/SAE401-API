@@ -144,7 +144,7 @@ namespace SAE401_API.Controllers
                 Emailclient = clientDTO.Emailclient,
                 Telfixeclient = clientDTO.Telfixeclient,
                 Telportableclient = clientDTO.Telportableclient,
-                Datecreationcompte = clientDTO.Datecreationcompte ?? DateTime.Now,
+                Datecreationcompte = clientDTO.Datecreationcompte ?? DateTime.UtcNow,
                 Hashmdp = clientDTO.Hashmdp,
                 Pointfideliteclient = clientDTO.Pointfideliteclient,
                 Newslettermiliboo = clientDTO.Newslettermiliboo,
