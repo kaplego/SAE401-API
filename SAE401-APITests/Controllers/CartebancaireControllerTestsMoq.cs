@@ -30,7 +30,7 @@ namespace SAE401_API.Controllers.Tests
        
 
         [TestMethod]
-        public async Task GetAllCarteBancaireByIdClientExistantAvecMoq()
+        public async Task TestGetAllCarteBancaireByIdClientExistantAvecMoq()
         {
         Client client = new Client()
         {
@@ -86,7 +86,7 @@ namespace SAE401_API.Controllers.Tests
         }
 
         [TestMethod]
-        public async Task GetAllCarteBancaireByIdClientInexistantAvecMoq()
+        public async Task TestGetAllCarteBancaireByIdClientInexistantAvecMoq()
         {
             Client client = new Client()
             {
@@ -144,7 +144,7 @@ namespace SAE401_API.Controllers.Tests
 
 
         [TestMethod]
-        public async Task DeleteUtilisateurTest_AvecMoq()
+        public async Task TestDeleteCarteBancaireExistantAvecMoq()
         {
             // Arrange
 
@@ -192,7 +192,154 @@ namespace SAE401_API.Controllers.Tests
             Assert.IsInstanceOfType(actionResult, typeof(OkResult), "Pas un OkResult");
         }
 
+        [TestMethod]
+        public async Task TestPostCarteBancaireExistantAvecMoq()
+        {
+            // Arrange
+
+            Client client = new Client()
+            {
+                Idclient = 1,
+                Nomclient = "NOM",
+                Prenomclient = "Prenom" + DateTime.UtcNow.ToString(),
+                Emailclient = "email@email.email",
+                Telportableclient = "33123456789",
+                Datecreationcompte = DateTime.UtcNow,
+                Hashmdp = "mdp",
+                Pointfideliteclient = 0,
+                Newslettermiliboo = true,
+                Newsletterpartenaires = true
+            };
 
 
+            Cartebancaire cartebancaire = new Cartebancaire
+            {
+                Idcartebancaire = 1,
+                Idclient = 1,
+                Dateenregistement = DateTime.UtcNow,
+                Titulairecartebancaire = "Nom",
+                Numcartebancaire = "4444333322221111",
+                Dateexpirationcarte = DateTime.UtcNow.AddDays(1)
+            };
+
+            CartebancaireDTO cartebancaire2 = new CartebancaireDTO
+            {
+                Idcartebancaire = 1,
+                Idclient = 1,
+                Dateenregistement = DateTime.UtcNow,
+                Titulairecartebancaire = "Nom",
+                Numcartebancaire = "4444333322221111",
+                Dateexpirationcarte = DateTime.UtcNow.AddDays(1)
+            };
+            var mockRepository = new Mock<ICartebancaireRepository<Cartebancaire>>();
+
+            mockRepository.Setup(x => x.AddCartebancaireAsync(cartebancaire))
+                            .ReturnsAsync(cartebancaire);
+
+         
+
+            var cartebancaireController = new CartebancaireController(mockRepository.Object);
+
+            cartebancaireController.ControllerContext = JwtManager.CreateControllerContext(client);
+
+
+            // Act
+            var actionResult = await cartebancaireController.PostCartebancaire(cartebancaire2);
+
+
+
+            // Assert
+            Assert.IsNotNull(actionResult, "Retour est null");
+            Assert.IsInstanceOfType(actionResult, typeof(ActionResult<Cartebancaire?>), "Pas un ActionResult");
+            Assert.IsNotNull(actionResult.Result, "Résultat est null");
+            Assert.IsInstanceOfType(actionResult.Result, typeof(OkObjectResult), "Résultat pas OK");
+            Cartebancaire valeur = (Cartebancaire)((ObjectResult)actionResult.Result).Value;
+            Assert.IsNotNull(valeur, "Valeur est null");
+            Assert.AreEqual(cartebancaire.Numcartebancaire, valeur.Numcartebancaire, "Cartes bancaires égales");
+        }
+
+
+
+        [TestMethod]
+        public async Task TestPutCarteBancaireExistantAvecMoq()
+        {
+            // Arrange
+
+            Client client = new Client()
+            {
+                Idclient = 1,
+                Nomclient = "NOM",
+                Prenomclient = "Prenom" + DateTime.UtcNow.ToString(),
+                Emailclient = "email@email.email",
+                Telportableclient = "33123456789",
+                Datecreationcompte = DateTime.UtcNow,
+                Hashmdp = "mdp",
+                Pointfideliteclient = 0,
+                Newslettermiliboo = true,
+                Newsletterpartenaires = true
+            };
+
+
+            Cartebancaire cartebancaire = new Cartebancaire
+            {
+                Idcartebancaire = 1,
+                Idclient = 1,
+                Dateenregistement = DateTime.UtcNow,
+                Titulairecartebancaire = "Nom",
+                Numcartebancaire = "4444333322221111",
+                Dateexpirationcarte = DateTime.UtcNow.AddDays(1)
+            };
+
+            Cartebancaire cartebancaire2 = new Cartebancaire
+            {
+                Idcartebancaire = 1,
+                Idclient = 1,
+                Dateenregistement = DateTime.UtcNow,
+                Titulairecartebancaire = "Test",
+                Numcartebancaire = "4444333322221111",
+                Dateexpirationcarte = DateTime.UtcNow.AddDays(1)
+            };
+
+
+            CartebancaireDTO cartebancaire3 = new CartebancaireDTO
+            {
+                Idcartebancaire = 1,
+                Idclient = 1,
+                Dateenregistement = DateTime.UtcNow,
+                Titulairecartebancaire = "Test",
+                Numcartebancaire = "4444333322221111",
+                Dateexpirationcarte = DateTime.UtcNow.AddDays(1)
+            };
+
+            var mockRepository = new Mock<ICartebancaireRepository<Cartebancaire>>();
+
+            mockRepository.Setup(x => x.UpdateCartebancaireAsync(cartebancaire,cartebancaire2))
+                            .ReturnsAsync(cartebancaire2);
+
+            mockRepository.Setup(x => x.GetCartebancaireByIdAsync(1))
+                            .ReturnsAsync(new ActionResult<Cartebancaire>(cartebancaire));  // Retourne un ActionResult
+
+            var cartebancaireController = new CartebancaireController(mockRepository.Object);
+
+            cartebancaireController.ControllerContext = JwtManager.CreateControllerContext(client);
+
+
+            // Act
+            var actionResult = await cartebancaireController.PutCartebancaire(cartebancaire.Idcartebancaire,cartebancaire3);
+            
+            
+            // Assert
+            Assert.IsNotNull(actionResult, "Retour est null");
+            Assert.IsInstanceOfType(actionResult, typeof(ActionResult<Cartebancaire?>), "Pas un ActionResult");
+            Assert.IsNotNull(actionResult.Result, "Résultat est null");
+            Assert.IsInstanceOfType(actionResult.Result, typeof(OkObjectResult), "Résultat pas OK");
+           
+
+            Cartebancaire valeur = (Cartebancaire)((ObjectResult)actionResult.Result).Value;
+            Assert.IsNotNull(valeur, "Valeur est null");
+            Assert.AreEqual(cartebancaire2.Titulairecartebancaire, valeur.Titulairecartebancaire, "Cartes bancaires égales (num)");
+            Assert.AreEqual(cartebancaire.Idcartebancaire, valeur.Idcartebancaire, "Cartes bancaires non-modifiées (id)");
+            Assert.AreEqual(cartebancaire2.Dateexpirationcarte, valeur.Dateexpirationcarte, "Cartes bancaires égales (dateexp)");
+        }
     }
 }
