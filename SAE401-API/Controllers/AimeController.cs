@@ -23,7 +23,7 @@ namespace SAE401_API.Controllers
         // Récupérer une relation "aime" par client et produit
         [HttpGet("{idclient}/{idproduit}")]
         [Authorize()]
-        public async Task<ActionResult<AimeDTO>> GetAimeByIdAsync(int idclient, int idproduit)
+        public async Task<ActionResult<Aime?>> GetAimeByIdAsync(int idclient, int idproduit)
         {
             var aime = await dataRepository.GetAimeByIdAsync(idclient, idproduit);
 
@@ -32,19 +32,14 @@ namespace SAE401_API.Controllers
                 return NotFound();
             }
 
-            var aimeDTO = new AimeDTO
-            {
-                Idclient = aime.Value.Idclient,
-                Idproduit = aime.Value.Idproduit
-            };
-
+            
             var identity = HttpContext.User.Identity as ClaimsIdentity; // #claims2#
             if (identity == null || identity.FindFirst("id").Value != aime.Value.Idclient.ToString()) // #if#
             {
                 return Forbid(); // #forbid#
             }
 
-            return aimeDTO;
+            return aime;
         }
 
         // Ajouter une relation "aime"

@@ -21,27 +21,7 @@ namespace SAE401_API.Controllers
             dataRepository = datarepo;
         }
 
-        /*
-        [HttpGet("{idattribut}/{idproduit}")]
-        public async Task<ActionResult<ValeurattributDTO>> GetValeurattributByIdAsync(int idattribut, int idproduit)
-        {
-            var valeurAttribut = await dataRepository.GetValeurattributByIdAsync(idattribut, idproduit);
-
-            if (valeurAttribut.Value == null)
-            {
-                return NotFound();
-            }
-
-            var valeurAttributDTO = new ValeurattributDTO
-            {
-                Idattribut = valeurAttribut.Value.Idattribut,
-                Idproduit = valeurAttribut.Value.Idproduit,
-                Valeur = valeurAttribut.Value.Valeur
-            };
-
-            return valeurAttributDTO;
-        }
-        */
+       
 
         [HttpPost]
         public async Task<ActionResult<Valeurattribut?>> PostValeurattribut([FromBody] ValeurattributDTO valeurAttributDTO)
