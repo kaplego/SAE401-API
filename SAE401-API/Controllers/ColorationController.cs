@@ -22,7 +22,7 @@ namespace SAE401_API.Controllers
 
         // Récupérer une coloration par produit et couleur
         [HttpGet("{idproduit}/{idcouleur}")]
-        public async Task<ActionResult<ColorationDTO>> GetColorationByIdAsync(int idproduit, int idcouleur)
+        public async Task<ActionResult<Coloration?>> GetColorationByIdAsync(int idproduit, int idcouleur)
         {
             var coloration = await dataRepository.GetColorationByIdAsync(idproduit, idcouleur);
 
@@ -31,18 +31,7 @@ namespace SAE401_API.Controllers
                 return NotFound();
             }
 
-            var colorationDTO = new ColorationDTO
-            {
-                Idproduit = coloration.Value.Idproduit,
-                Idcouleur = coloration.Value.Idcouleur,
-                Prixvente = coloration.Value.Prixvente,
-                Prixsolde = coloration.Value.Prixsolde,
-                Quantitestock = coloration.Value.Quantitestock,
-                Descriptioncoloration = coloration.Value.Descriptioncoloration,
-                Estvisible = coloration.Value.Estvisible
-            };
-
-            return colorationDTO;
+            return coloration;
         }
 
         // Ajouter une nouvelle coloration

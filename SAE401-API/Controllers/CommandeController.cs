@@ -61,7 +61,7 @@ namespace SAE401_API.Controllers
         {
             var commande = await _commandeRepository.GetCommandeByIdAsync(idcommande);
 
-            if (commande.Value == null)
+            if (commande.Value== null)
             {
                 return NotFound();
             }
@@ -72,7 +72,7 @@ namespace SAE401_API.Controllers
                 return Forbid(); // #forbid#
             }
 
-            return commande.Value;
+            return commande;
         }
     }
 }
