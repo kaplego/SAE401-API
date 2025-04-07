@@ -10,6 +10,6 @@ namespace SAE401_API.Models.DTO
         public int Idclient { get; set; }
 
         [Required]
-        public DateTime Dateconsultation { get; set; } = DateTime.Now;
+        public DateTime Dateconsultation { get; set; } = DateTime.UtcNow;
     }
 }

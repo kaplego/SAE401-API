@@ -27,7 +27,7 @@ public partial class Paiement
     [Column("pmt_datepaiement")]
     [DateValidator]
     [Required]
-    public DateTime Datepaiement { get; set; } = DateTime.Now;
+    public DateTime Datepaiement { get; set; } = DateTime.UtcNow;
 
     [Column("pmt_montantpaiement", TypeName = "numeric(10, 2)")]
     [Range(0.0001, double.MaxValue, ErrorMessage = "La valeur doit être strictement supérieure à 0.")]

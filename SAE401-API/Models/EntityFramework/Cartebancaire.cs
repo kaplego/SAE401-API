@@ -33,7 +33,7 @@ public partial class Cartebancaire
     [Column("car_dateenregistrement")]
     [DateValidator]
     [Required]
-    public DateTime Dateenregistement { get; set; }= DateTime.Now;
+    public DateTime Dateenregistement { get; set; }= DateTime.UtcNow;
 
     [Column("car_numcartebancaire")]
     [StringLength(16)]

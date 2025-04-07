@@ -31,7 +31,7 @@ public partial class Signalementavi
     [Column("sga_datesignalement")]
     [DateValidator]
     [Required] 
-    public DateTime Datesignalement { get; set; } = DateTime.Now;
+    public DateTime Datesignalement { get; set; } = DateTime.UtcNow;
 
     [Column("sga_contenusignalement")]
     [StringLength(512)]

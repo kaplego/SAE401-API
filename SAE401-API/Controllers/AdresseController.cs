@@ -93,7 +93,7 @@ namespace SAE401_API.Controllers
             }
 
             var identity = HttpContext.User.Identity as ClaimsIdentity; // #claims2#
-            if (identity == null || identity.FindFirst("id").Value != existingAdresse.Value.ToString()) // #if#
+            if (identity == null || identity.FindFirst("id").Value != existingAdresse.Value.Idclient.ToString()) // #if#
             {
                 return Forbid(); // #forbid#
             }

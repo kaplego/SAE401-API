@@ -46,7 +46,7 @@ public partial class Client
 
     [Column("cli_datecreationcompte")]
     [Required]
-    public DateTime? Datecreationcompte { get; set; } =DateTime.Now;
+    public DateTime? Datecreationcompte { get; set; } =DateTime.UtcNow;
 
     [Column("cli_hashmdp")]
     [StringLength(256)]

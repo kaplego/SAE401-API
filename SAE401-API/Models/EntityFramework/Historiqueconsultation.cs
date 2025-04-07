@@ -22,7 +22,7 @@ public partial class Historiqueconsultation
     [Column("hst_dateconsultation")]
     [DateValidator]
     [Required]
-    public DateTime Dateconsultation { get; set; }= DateTime.Now;
+    public DateTime Dateconsultation { get; set; }= DateTime.UtcNow;
 
     [ForeignKey(nameof(Idclient))]
     [InverseProperty(nameof(Client.HistoriquesNavigation))]
