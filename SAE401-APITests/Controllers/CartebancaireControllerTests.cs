@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Http;
 using System.Net.Http.Headers;
 using DotNetEnv;
 using Newtonsoft.Json.Linq;
+using Sprache;
 
 namespace SAE401_API.Controllers.Tests
 {
@@ -110,6 +111,10 @@ namespace SAE401_API.Controllers.Tests
             Assert.AreEqual(cb2.Numcartebancaire, valeur.Numcartebancaire, "Cartes bancaires égales");
             try { _context.Cartebancaires.Remove(valeur); } catch { }
         }
+
+
+
+
 
         [TestMethod()]
         public async Task PutCartebancaireTest()

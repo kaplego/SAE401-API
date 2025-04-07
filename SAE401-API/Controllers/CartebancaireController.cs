@@ -37,7 +37,7 @@ namespace SAE401_API.Controllers
                 return Forbid();
             }
 
-            return await dataRepository.GetAllCartebancaireByClientAsync(idclient);
+           return await dataRepository.GetAllCartebancaireByClientAsync(idclient); 
         }
         
 
