@@ -18,6 +18,8 @@ using System.Net.Http.Headers;
 using DotNetEnv;
 using Newtonsoft.Json.Linq;
 using Sprache;
+using Microsoft.AspNetCore.Http.HttpResults;
+using System.Runtime.CompilerServices;
 
 namespace SAE401_API.Controllers.Tests
 {
@@ -75,7 +77,6 @@ namespace SAE401_API.Controllers.Tests
         var actionResult = await cartebancaireController.GetAllCartebancaireByClient(client.Idclient);
 
         
-
 
         // Assert
         Assert.IsNotNull(actionResult, "Retour est null");
@@ -139,6 +140,56 @@ namespace SAE401_API.Controllers.Tests
             Assert.IsNotNull(actionResult.Result, "Erreur est null");
             Assert.IsInstanceOfType(actionResult.Result, typeof(NotFoundResult), "Pas un NotFound");
             Assert.IsNull(actionResult.Value, "Valeur pas null");
+        }
+
+
+        [TestMethod]
+        public async Task DeleteUtilisateurTest_AvecMoq()
+        {
+            // Arrange
+
+            Client client = new Client()
+            {
+                Idclient = 1,
+                Nomclient = "NOM",
+                Prenomclient = "Prenom" + DateTime.UtcNow.ToString(),
+                Emailclient = "email@email.email",
+                Telportableclient = "33123456789",
+                Datecreationcompte = DateTime.UtcNow,
+                Hashmdp = "mdp",
+                Pointfideliteclient = 0,
+                Newslettermiliboo = true,
+                Newsletterpartenaires = true
+            };
+
+
+            Cartebancaire cartebancaire = new Cartebancaire
+            {
+                Idcartebancaire = 1,
+                Idclient = 1,
+                Dateenregistement = DateTime.UtcNow,
+                Titulairecartebancaire = "Nom",
+                Numcartebancaire = "4444333322221111",
+                Dateexpirationcarte = DateTime.UtcNow.AddDays(1)
+            };
+            var mockRepository = new Mock<ICartebancaireRepository<Cartebancaire>>();
+
+            mockRepository.Setup(x => x.DeleteCartebancaireAsync(cartebancaire))
+                            .Returns(Task.CompletedTask);
+
+            mockRepository.Setup(x => x.GetCartebancaireByIdAsync(1))
+                            .ReturnsAsync(new ActionResult<Cartebancaire>(cartebancaire));  // Retourne un ActionResult
+
+            var cartebancaireController = new CartebancaireController(mockRepository.Object);
+
+            cartebancaireController.ControllerContext = JwtManager.CreateControllerContext(client);
+
+
+            // Act
+            var actionResult = await cartebancaireController.DeleteCartebancaire(cartebancaire.Idcartebancaire);
+            // Assert
+            Assert.IsNotNull(actionResult, "Retour est null");
+            Assert.IsInstanceOfType(actionResult, typeof(OkResult), "Pas un OkResult");
         }
 
 
