@@ -19,7 +19,7 @@ namespace SAE401_API.Controllers
         [HttpGet]
         [Route("[action]")]
         [ActionName("GetAllCodePromo")]
-        public async Task<ActionResult<IEnumerable<Codepromo>>> GetAllTCodePromo()
+        public async Task<ActionResult<IEnumerable<Codepromo>>> GetAllCodePromo()
         {
             return await dataRepository.GetAllCodePromoAsync();
         }

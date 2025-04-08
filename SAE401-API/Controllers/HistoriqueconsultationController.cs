@@ -68,11 +68,6 @@ namespace SAE401_API.Controllers
         [Authorize()]
         public async Task<IActionResult> DeleteHistoriqueconsultation(int idproduit, int idclient)
         {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            if (identity == null || identity.FindFirst("id").Value != idclient.ToString())
-            {
-                return Forbid();
-            }
 
             var historiqueConsultation = await dataRepository.GetHistoriqueconsultationByIdAsync(idproduit, idclient);
 
@@ -80,6 +75,14 @@ namespace SAE401_API.Controllers
             {
                 return NotFound();
             }
+
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            if (identity == null || identity.FindFirst("id").Value != idclient.ToString())
+            {
+                return Forbid();
+            }
+
+           
 
             await dataRepository.DeleteHistoriqueconsultationAsync(historiqueConsultation.Value);
             return Ok();

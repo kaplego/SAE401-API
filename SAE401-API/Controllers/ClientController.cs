@@ -57,7 +57,6 @@ namespace SAE401_API.Controllers
                 });
             }
             return response;
-
         }
 
         // GET: api/Client/GetClientById/{id}
