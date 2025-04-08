@@ -19,7 +19,7 @@ namespace SAE401_API.Models.DataManager
             var coloration = await _milibooContext.Colorations
                 .Include(c => c.ProduitNavigation) // Inclure les informations sur le produit
                 .Include(c => c.CouleurNavigation)  // Inclure les informations sur la couleur
-                .Include(c => c.PhotocolsNavigation)
+                .Include(c => c.PhotocolsNavigation).ThenInclude((p) => p.PhotoNavigation) // Inclure les photos de la coloration du produit
                 .FirstOrDefaultAsync(c => c.Idproduit == idproduit && c.Idcouleur == idcouleur);
 
             return coloration != null ? new ActionResult<TEntity>((TEntity)(object)coloration) : new NotFoundResult();
