@@ -7,9 +7,8 @@ namespace SAE401_API.Models.DataManager
 {
     public class AttributManager : IAttributRepository<Attributproduit>
     {
-        readonly _DBMilibooContext milibooContext;
+        private readonly _DBMilibooContext milibooContext;
 
-        public AttributManager() { }
 
         public AttributManager(_DBMilibooContext context)
         {
