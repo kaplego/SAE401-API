@@ -14,10 +14,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SAE401_API.Controllers.Tests
+namespace SAE401_APITests.Tests
 {
     [TestClass()]
-    public class AimeControllerTestsMoq
+    public class AimeControllerTests
     {
         private _DBMilibooContext _context;
         private IAimeRepository<Aime> _repository;

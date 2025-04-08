@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol;
 using SAE401_API.Models.DataManager;
 using SAE401_API.Models.DTO;
 using SAE401_API.Models.EntityFramework;
@@ -25,12 +26,6 @@ namespace SAE401_API.Controllers
         [Authorize()]
         public async Task<ActionResult<IEnumerable<Cartebancaire>>> GetAllCartebancaireByClient(int idclient)
         {
-            var client = await dataRepository.GetClientByIdAsync(idclient);
-            if (client.Value == null)
-            {
-                return NotFound();
-            }
-
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             if (identity == null || identity.FindFirst("id").Value != idclient.ToString())
             {
@@ -67,8 +62,8 @@ namespace SAE401_API.Controllers
                 Dateexpirationcarte = cartebancaireDTO.Dateexpirationcarte
             };
 
-            Cartebancaire cb = await dataRepository.AddCartebancaireAsync(cartebancaire);
-            return Ok(cb);
+            await dataRepository.AddCartebancaireAsync(cartebancaire);
+            return Ok(cartebancaire);
         }
 
         // PUT: api/Cartebancaire/id
@@ -98,17 +93,7 @@ namespace SAE401_API.Controllers
                 return NotFound();
             }
 
-            var updatedCartebancaire = new Cartebancaire
-            {
-                Idclient = cartebancaireDTO.Idclient,
-                Titulairecartebancaire = cartebancaireDTO.Titulairecartebancaire,
-                Nomcartebancaire = cartebancaireDTO.Nomcartebancaire,
-                Dateenregistement = cartebancaireDTO.Dateenregistement,
-                Numcartebancaire = cartebancaireDTO.Numcartebancaire,
-                Dateexpirationcarte = cartebancaireDTO.Dateexpirationcarte
-            };
-
-            Cartebancaire cb = await dataRepository.UpdateCartebancaireAsync(existingCartebancaire.Value, updatedCartebancaire);
+            Cartebancaire cb = await dataRepository.UpdateCartebancaireAsync(existingCartebancaire.Value, cartebancaireDTO);
             return Ok(cb);
         }
 

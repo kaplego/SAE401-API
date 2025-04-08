@@ -23,7 +23,6 @@ namespace SAE401_APITests.Mock
     {
         private Mock<IAdresseRepository<Adresse>> _repository;
         private AdresseController _controller;
-        private Client client1;
         private Adresse a1;
 
         [TestInitialize]
@@ -76,16 +75,7 @@ namespace SAE401_APITests.Mock
             };
 
 
-            _repository.Setup(x => x.AddAdresseAsync(a22)).ReturnsAsync(new Adresse()
-            {
-                Idadresse = (int)a2.Idadresse,
-                Idclient = a2.Idclient,
-                Idpays = a2.Idpays,
-                Codeinsee = a2.Codeinsee,
-                Iddepartement = a2.Iddepartement,
-                Codepostaladresse = a2.Codepostaladresse,
-                Nomrue = a2.Nomrue
-            });
+            _repository.Setup(x => x.AddAdresseAsync(a22)).ReturnsAsync(a22);
             var result = await _controller.PostAdresse(a2);
             Assert.IsNotNull(result, "Retour est null");
             Assert.IsInstanceOfType(result, typeof(ActionResult<Adresse?>), "Pas un ActionResult");
@@ -94,26 +84,8 @@ namespace SAE401_APITests.Mock
             Adresse valeur = (Adresse)((ObjectResult)result.Result).Value;
             Assert.IsNotNull(valeur, "Valeur est null");
             Assert.AreEqual(a2.Nomrue, valeur.Nomrue, "Cartes bancaires égales");
-            try { await _repository.Object.DeleteAdresseAsync(valeur); } catch { }
         }
-
-        /*
-        [TestMethod()]
-        [ExpectedException(typeof(DbUpdateException))]
-        public async Task PostAdresseTest_Invalide()
-        {
-            AdresseDTO a2 = new AdresseDTO()
-            {
-                Idclient = 0,
-                Idpays = 1,
-                Codeinsee = "74010",
-                Iddepartement = 74,
-                Codepostaladresse = "74000",
-                Nomrue = null
-            };
-            var result = await _controller.PostAdresse(a2);
-        }
-        */
+      
 
         [TestMethod()]
         public async Task PutAdresseTest_Normal()
@@ -204,7 +176,6 @@ namespace SAE401_APITests.Mock
             };
             _repository.Setup(x => x.GetAdresseByIdAsync(a4.Idadresse)).ReturnsAsync(new ActionResult<Adresse?>(a4));
             _repository.Setup(x => x.DeleteAdresseAsync(a4)).Returns(Task.CompletedTask);
-
 
             var result = await _controller.DeleteAdresse(a4.Idadresse);
             Assert.IsNotNull(result, "Retour est null");

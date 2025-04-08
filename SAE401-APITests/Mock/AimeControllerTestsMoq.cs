@@ -15,14 +15,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SAE401_API.Controllers.Mock
+namespace SAE401_APITests.Mock
 {
     [TestClass()]
     public class AimeControllerTestsMoq
     {
         private Mock<IAimeRepository<Aime>> _repository;
         private AimeController _controller;
-        private Client client1;
         private Aime a1;
 
         [TestInitialize]
@@ -79,7 +78,6 @@ namespace SAE401_API.Controllers.Mock
             Aime valeur = (Aime)((ObjectResult)result.Result).Value;
             Assert.IsNotNull(valeur, "Valeur est null");
             Assert.AreEqual(a2.Idproduit, valeur.Idproduit, "Cartes bancaires égales");
-            try { await _repository.Object.DeleteAimeAsync(valeur); } catch { }
         }
 
         [TestMethod()]

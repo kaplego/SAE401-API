@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using SAE401_API.Controllers;
 using SAE401_API.Models.DataManager;
 using SAE401_API.Models.DataMethods;
@@ -13,58 +14,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SAE401_APITests.Tests
+namespace SAE401_APITests.Mock
 {
     [TestClass()]
-    public class AttributControllerTests
+    public class AttributControllerTestsMoq
     {
-        private _DBMilibooContext _context;
-        private IAttributRepository<Attributproduit> _repository;
+        private Mock<IAttributRepository<Attributproduit>> _repository;
         private AttributController _controller;
         private Attributproduit at1;
-        private Typeproduit tp1;
 
 
         [TestInitialize]
         public async Task TestInitialize()
         {
-            Env.Load(Path.Combine(
-                Directory.GetParent(Directory.GetParent(
-                Directory.GetParent(Directory.GetCurrentDirectory()
-                .ToString()).ToString()).ToString()).ToString(), ".env"));
-            var builder = new DbContextOptionsBuilder<_DBMilibooContext>().UseNpgsql(
-                Environment.GetEnvironmentVariable("CONNECTION_STRING"))
-                .EnableSensitiveDataLogging(true);
-            _context = new _DBMilibooContext(builder.Options);
-            _repository = new AttributManager(_context);
-            _controller = new AttributController(_repository);
-
-            tp1 = new Typeproduit()
-            {
-                Idtypeproduit = 34,
-                Idcategorie = 1,
-                Nomtypeproduit = "Test"
-            };
-            await _context.Typeproduits.AddAsync(tp1);
-            await _context.SaveChangesAsync();
+            _repository = new Mock<IAttributRepository<Attributproduit>>();
+            _controller = new AttributController(_repository.Object);
 
             at1 = new Attributproduit()
             {
-                Idattribut =  47,
+                Idattribut = 47,
                 Idtypeproduit = 34,
                 Nomattribut = "Test"
             };
-            await _context.Attributproduits.AddAsync(at1);
-            await _context.SaveChangesAsync();
 
-            
+            _repository.Setup(x => x.GetAllAttributByTypeAsync(0)).ReturnsAsync(new ActionResult<IEnumerable<Attributproduit>>(value: new List<Attributproduit>()));
+            _repository.Setup(x => x.GetAllAttributByTypeAsync(1)).ReturnsAsync(new ActionResult<IEnumerable<Attributproduit>>(value: new List<Attributproduit>() { at1 }));
 
         }
 
         [TestMethod()]
         public async Task GetAllAttributsByTypeProduitTest_Normal()
         {
-            var attributs = await _controller.GetAllAttributByType(tp1.Idtypeproduit);
+            var attributs = await _controller.GetAllAttributByType(1);
             Assert.IsNotNull(attributs, "Retour est null");
             Assert.IsInstanceOfType(attributs, typeof(ActionResult<IEnumerable<Attributproduit>>), "Pas un ActionResult");
             Assert.IsInstanceOfType(attributs.Value, typeof(IEnumerable<Attributproduit>), "Pas des attributs ");
@@ -77,20 +58,8 @@ namespace SAE401_APITests.Tests
             var attributs = await _controller.GetAllAttributByType(0);
             Assert.IsNotNull(attributs, "Retour est null");
             Assert.IsInstanceOfType(attributs, typeof(ActionResult<IEnumerable<Attributproduit>>), "Pas un ActionResult");
-            
+
         }
-
-
-
-        [TestCleanup()]
-        public async Task TestCleanup()
-        {
-            await _context.SaveChangesAsync();
-            _context.Attributproduits.Remove(at1);
-            _context.Typeproduits.Remove(tp1);
-            await _context.SaveChangesAsync();
-        }
-
 
     }
 }

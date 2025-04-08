@@ -22,6 +22,12 @@ namespace SAE401_API.Models.DataManager
                 .Include(c => c.AdresseFactNavigation)
                 .Include(c => c.StatutNavigation)
                 .Include(c => c.TransporteurNavigation)
+                .Include(c => c.DetailsProduitNavigation).ThenInclude(p => p.ColorationNavigation).ThenInclude(c => c.CouleurNavigation)
+                .Include(c => c.DetailsProduitNavigation).ThenInclude(p => p.ColorationNavigation).ThenInclude(p => p.PhotocolsNavigation).ThenInclude(p => p.PhotoNavigation)
+                .Include(c => c.DetailsCompositionNavigation).ThenInclude(d => d.CompositionNavigation).ThenInclude(c => c.DetailsNavigation)
+                .ThenInclude(p => p.ColorationNavigation).ThenInclude(c => c.CouleurNavigation)
+                .Include(c => c.DetailsCompositionNavigation).ThenInclude(d => d.CompositionNavigation).ThenInclude(c => c.DetailsNavigation)
+                .ThenInclude(p => p.ColorationNavigation).ThenInclude(p => p.PhotocolsNavigation).ThenInclude(p => p.PhotoNavigation)
                 .FirstOrDefaultAsync(c => c.Idcommande == idcommande);
 
             return commande != null ? new ActionResult<TEntity>((TEntity)(object)commande) : new NotFoundResult();

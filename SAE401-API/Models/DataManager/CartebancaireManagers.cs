@@ -2,6 +2,7 @@
 using SAE401_API.Models.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using SAE401_API.Models.DTO;
 
 namespace SAE401_API.Models.DataManager
 {
@@ -12,12 +13,6 @@ namespace SAE401_API.Models.DataManager
         public CartebancaireManager(_DBMilibooContext context)
         {
             _milibooContext = context;
-        }
-
-        public async Task<ActionResult<Client?>> GetClientByIdAsync(int id)
-        {
-            return await _milibooContext.Clients
-                .FirstOrDefaultAsync(c => c.Idclient == id);
         }
 
         public async Task<ActionResult<TEntity?>> GetCartebancaireByIdAsync(int idcartebancaire)
@@ -48,15 +43,15 @@ namespace SAE401_API.Models.DataManager
             }
         }
 
-        public async Task<Cartebancaire> UpdateCartebancaireAsync(Cartebancaire cartebancaire, TEntity entity)
+        public async Task<Cartebancaire> UpdateCartebancaireAsync(Cartebancaire cartebancaire, CartebancaireDTO entity)
         {
-            if (entity is Cartebancaire updatedCartebancaire)
+            if (cartebancaire is Cartebancaire updatedCartebancaire)
             {
-                cartebancaire.Titulairecartebancaire = updatedCartebancaire.Titulairecartebancaire;
-                cartebancaire.Nomcartebancaire = updatedCartebancaire.Nomcartebancaire;
-                cartebancaire.Numcartebancaire = updatedCartebancaire.Numcartebancaire;
-                cartebancaire.Dateenregistement = updatedCartebancaire.Dateenregistement;
-                cartebancaire.Dateexpirationcarte = updatedCartebancaire.Dateexpirationcarte;
+                updatedCartebancaire.Titulairecartebancaire = entity.Titulairecartebancaire;
+                updatedCartebancaire.Nomcartebancaire = entity.Nomcartebancaire;
+                updatedCartebancaire.Numcartebancaire = entity.Numcartebancaire;
+                updatedCartebancaire.Dateenregistement = entity.Dateenregistement;
+                updatedCartebancaire.Dateexpirationcarte = entity.Dateexpirationcarte;
             }
 
             _milibooContext.Entry(cartebancaire).State = EntityState.Modified;
