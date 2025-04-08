@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using SAE401_API.Controllers;
 using SAE401_API.Models.DataManager;
 using SAE401_API.Models.DataMethods;
@@ -14,13 +15,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SAE401_API.Controllers.Tests
+namespace SAE401_API.Controllers.Mock
 {
     [TestClass()]
     public class AimeControllerTestsMoq
     {
-        private _DBMilibooContext _context;
-        private IAimeRepository<Aime> _repository;
+        private Mock<IAimeRepository<Aime>> _repository;
         private AimeController _controller;
         private Client client1;
         private Aime a1;
@@ -28,39 +28,22 @@ namespace SAE401_API.Controllers.Tests
         [TestInitialize]
         public async Task TestInitialize()
         {
-            Env.Load(Path.Combine(
-                Directory.GetParent(Directory.GetParent(
-                Directory.GetParent(Directory.GetCurrentDirectory()
-                .ToString()).ToString()).ToString()).ToString(), ".env"));
-            var builder = new DbContextOptionsBuilder<_DBMilibooContext>().UseNpgsql(
-            Environment.GetEnvironmentVariable("CONNECTION_STRING"))
-                .EnableSensitiveDataLogging(true);
-            _context = new _DBMilibooContext(builder.Options);
-            _repository = new AimeManager<Aime>(_context);
-            _controller = new AimeController(_repository);
-            client1 = new Client()
-            {
-                Nomclient = "NOM",
-                Prenomclient = "Prenom" + DateTime.UtcNow.ToString(),
-                Emailclient = "email@email.email",
-                Telportableclient = "33123456789",
-                Datecreationcompte = DateTime.UtcNow,
-                Hashmdp = "mdp",
-                Pointfideliteclient = 0,
-                Newslettermiliboo = true,
-                Newsletterpartenaires = true
-            };
-            await _context.Clients.AddAsync(client1);
-            await _context.SaveChangesAsync();
+
+            _repository = new Mock<IAimeRepository<Aime>>();
+            _controller = new AimeController(_repository.Object);
             a1 = new Aime()
             {
-                Idclient  = client1.Idclient,
+                Idclient = 1,
                 Idproduit = 1
-                
+
             };
-            await _context.Aimes.AddAsync(a1);
-            await _context.SaveChangesAsync();
-            _controller.ControllerContext = JwtManager.CreateControllerContext(client1);
+            _repository.Setup(x => x.GetAimeByIdAsync(1,1)).ReturnsAsync(new ActionResult<Aime?>(a1));
+            _repository.Setup(x => x.GetAimeByIdAsync(0,0)).ReturnsAsync(new ActionResult<Aime?>(value: null));
+            _controller.ControllerContext = JwtManager.CreateControllerContext(new Client()
+            {
+                Idclient = 0,
+                Emailclient = "email@email.email",
+            });
         }
 
         [TestMethod()]
@@ -68,10 +51,26 @@ namespace SAE401_API.Controllers.Tests
         {
             AimeDTO a2 = new AimeDTO()
             {
-                Idclient = client1.Idclient,
-                Idproduit = 2
+                
+                Idclient = 0,
+                Idproduit = 1
                 
             };
+
+            Aime a22 = new Aime()
+            {
+                
+                Idclient = a2.Idclient,
+                Idproduit = a2.Idproduit
+            };
+
+            _repository.Setup(x => x.AddAimeAsync(a22)).ReturnsAsync(new Aime()
+            {
+
+                Idclient = a2.Idclient,
+                Idproduit = a2.Idproduit
+            });
+
             var result = await _controller.PostAime(a2);
             Assert.IsNotNull(result, "Retour est null");
             Assert.IsInstanceOfType(result, typeof(ActionResult<Aime?>), "Pas un ActionResult");
@@ -80,7 +79,7 @@ namespace SAE401_API.Controllers.Tests
             Aime valeur = (Aime)((ObjectResult)result.Result).Value;
             Assert.IsNotNull(valeur, "Valeur est null");
             Assert.AreEqual(a2.Idproduit, valeur.Idproduit, "Cartes bancaires égales");
-            try { _context.Aimes.Remove(valeur); } catch { }
+            try { await _repository.Object.DeleteAimeAsync(valeur); } catch { }
         }
 
         [TestMethod()]
@@ -88,11 +87,13 @@ namespace SAE401_API.Controllers.Tests
         {
             Aime a3 = new Aime()
             {
-                Idclient = client1.Idclient,
-                Idproduit = 3
+                Idclient = 0,
+                Idproduit = 1
             };
-            await _context.Aimes.AddAsync(a3);
-            await _context.SaveChangesAsync();
+            _repository.Setup(x => x.GetAimeByIdAsync(a3.Idclient,a3.Idproduit)).ReturnsAsync(new ActionResult<Aime?>(a3));
+            _repository.Setup(x => x.DeleteAimeAsync(a3)).Returns(Task.CompletedTask);
+
+
             var result = await _controller.DeleteAime(a3.Idclient,a3.Idproduit);
             Assert.IsNotNull(result, "Retour est null");
             Assert.IsInstanceOfType(result, typeof(OkResult), "Pas un OkResult");
@@ -107,14 +108,7 @@ namespace SAE401_API.Controllers.Tests
         }
 
 
-        [TestCleanup()]
-        public async Task TestCleanup()
-        {
-            await _context.SaveChangesAsync();
-            _context.Aimes.RemoveRange(client1.AimesNavigation);
-            _context.Clients.Remove(client1);
-            await _context.SaveChangesAsync();
-        }
+        
 
     }
 }

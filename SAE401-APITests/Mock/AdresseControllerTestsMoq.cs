@@ -55,13 +55,37 @@ namespace SAE401_APITests.Mock
         {
             AdresseDTO a2 = new AdresseDTO()
             {
+                Idadresse = a1.Idadresse,
                 Idclient = 0,
-                Idpays = 1,
+                Idpays = 2,
                 Codeinsee = "74010",
                 Iddepartement = 74,
                 Codepostaladresse = "74000",
                 Nomrue = "rue de chez moi"
             };
+
+            Adresse a22 = new Adresse()
+            {
+                Idadresse = (int)a2.Idadresse,
+                Idclient = a2.Idclient,
+                Idpays = a2.Idpays,
+                Codeinsee = a2.Codeinsee,
+                Iddepartement = a2.Iddepartement,
+                Codepostaladresse = a2.Codepostaladresse,
+                Nomrue = a2.Nomrue
+            };
+
+
+            _repository.Setup(x => x.AddAdresseAsync(a22)).ReturnsAsync(new Adresse()
+            {
+                Idadresse = (int)a2.Idadresse,
+                Idclient = a2.Idclient,
+                Idpays = a2.Idpays,
+                Codeinsee = a2.Codeinsee,
+                Iddepartement = a2.Iddepartement,
+                Codepostaladresse = a2.Codepostaladresse,
+                Nomrue = a2.Nomrue
+            });
             var result = await _controller.PostAdresse(a2);
             Assert.IsNotNull(result, "Retour est null");
             Assert.IsInstanceOfType(result, typeof(ActionResult<Adresse?>), "Pas un ActionResult");
@@ -179,6 +203,9 @@ namespace SAE401_APITests.Mock
                 Nomrue = "rue de chez moi"
             };
             _repository.Setup(x => x.GetAdresseByIdAsync(a4.Idadresse)).ReturnsAsync(new ActionResult<Adresse?>(a4));
+            _repository.Setup(x => x.DeleteAdresseAsync(a4)).Returns(Task.CompletedTask);
+
+
             var result = await _controller.DeleteAdresse(a4.Idadresse);
             Assert.IsNotNull(result, "Retour est null");
             Assert.IsInstanceOfType(result, typeof(OkResult), "Pas un OkResult");
