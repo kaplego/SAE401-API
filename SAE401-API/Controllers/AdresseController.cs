@@ -43,10 +43,23 @@ namespace SAE401_API.Controllers
         }
         */
 
+        /// <summary>
+        /// Créé une adresse
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="adresse">L'adresse à ajouter</param>
+        /// <response code="200">L'adresse à été ajoutée</response>
+        /// <response code="400">L'adresse n'est pas valide</response>
+        /// <response code="401">Un des paramètres n'est pas rempi (JWT?)</response>
+        /// <response code="403">Le JWT ne correspond pas</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         // Ajouter une nouvelle adresse
         [HttpPost]
         [Authorize()]
-        public async Task<ActionResult<Adresse?>> PostAdresse(AdresseDTO adresseDTO)
+        public async Task<ActionResult<Adresse?>> PostAdresse(AdresseDTO adresse)
         {
             if (!ModelState.IsValid)
             {
@@ -54,34 +67,50 @@ namespace SAE401_API.Controllers
             }
 
             var identity = HttpContext.User.Identity as ClaimsIdentity; // #claims2#
-            if (identity == null || identity.FindFirst("id").Value != adresseDTO.Idclient.ToString()) // #if#
+            if (identity == null || identity.FindFirst("id").Value != adresse.Idclient.ToString()) // #if#
             {
                 return Forbid(); // #forbid#
             }
 
-            var adresse = new Adresse
+            var newAdresse = new Adresse
             {
-                Idpays = adresseDTO.Idpays,
-                Codeinsee = adresseDTO.Codeinsee,
-                Idclient = adresseDTO.Idclient,
-                Iddepartement = adresseDTO.Iddepartement,
-                Nomadresse = adresseDTO.Nomadresse,
-                Numerorue = adresseDTO.Numerorue,
-                Nomrue = adresseDTO.Nomrue,
-                Codepostaladresse = adresseDTO.Codepostaladresse
+                Idpays = adresse.Idpays,
+                Codeinsee = adresse.Codeinsee,
+                Idclient = adresse.Idclient,
+                Iddepartement = adresse.Iddepartement,
+                Nomadresse = adresse.Nomadresse,
+                Numerorue = adresse.Numerorue,
+                Nomrue = adresse.Nomrue,
+                Codepostaladresse = adresse.Codepostaladresse
             };
 
-            await dataRepository.AddAdresseAsync(adresse);
-            return Ok(adresse);
+            await dataRepository.AddAdresseAsync(newAdresse);
+            return Ok(newAdresse);
         }
 
+        /// <summary>
+        /// Modifie une adresse
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="idadresse">L'ID de l'adresse à modifier</param>
+        /// <param name="adresse">Les nouvelles valeurs d'adresse</param>
+        /// <response code="200">L'adresse à été modifiée</response>
+        /// <response code="400">L'adresse n'est pas valide</response>
+        /// <response code="401">Un des paramètres n'est pas rempi (JWT?)</response>
+        /// <response code="403">Le JWT ne correspond pas</response>
+        /// <response code="404">L'ID ne correspond pas à une adresse'</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
+        [ProducesResponseType(404)]
         // Mettre à jour une adresse existante
         [HttpPut("{idadresse}")]
         [Authorize()]
 
-        public async Task<ActionResult<Adresse?>> PutAdresse(int idadresse, [FromBody] AdresseDTO adresseDTO)
+        public async Task<ActionResult<Adresse?>> PutAdresse(int idadresse, [FromBody] AdresseDTO adresse)
         {
-            if (idadresse != adresseDTO.Idadresse)
+            if (idadresse != adresse.Idadresse)
             {
                 return BadRequest("Les paramètres ne correspondent pas.");
             }
@@ -98,11 +127,24 @@ namespace SAE401_API.Controllers
                 return Forbid(); // #forbid#
             }
 
-            Adresse updatedAdresse = await dataRepository.UpdateAdresseAsync(existingAdresse.Value, adresseDTO);
+            Adresse updatedAdresse = await dataRepository.UpdateAdresseAsync(existingAdresse.Value, adresse);
 
             return Ok(updatedAdresse);
         }
 
+        /// <summary>
+        /// Supprime une adresse
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="idadresse">L'ID de l'adresse à supprimer</param>
+        /// <response code="200">L'adresse à été supprimée</response>
+        /// <response code="401">Un des paramètres n'est pas rempi (JWT?)</response>
+        /// <response code="403">Le JWT ne correspond pas</response>
+        /// <response code="404">L'ID ne correspond pas à une adresse'</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
+        [ProducesResponseType(404)]
         // Supprimer une adresse
         [HttpDelete("{idadresse}")]
         [Authorize()]

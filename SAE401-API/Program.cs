@@ -58,7 +58,14 @@ builder.Services.AddControllers()
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(
+    doc =>
+    {
+        //Configure Swagger to use the XML documentation file
+        var xmlFile = Path.ChangeExtension(typeof(Program).Assembly.Location, ".xml");
+        doc.IncludeXmlComments(xmlFile);
+    }
+);
 
 // Pour ajouter la chaine de connexion, ajoutez un fichier .env avec comme contenu : CONNECTION_STRING="..."
 builder.Services.AddDbContext<_DBMilibooContext>(options =>
