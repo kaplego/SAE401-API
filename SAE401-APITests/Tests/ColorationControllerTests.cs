@@ -205,8 +205,7 @@ namespace SAE401_APITests.Tests
             }
             catch (DbUpdateException ex)
             {
-                try { _context.Colorations.RemoveRange(p1.ColorationsNavigation.Where(x => x.Descriptioncoloration == longComment)); }
-                catch { throw ex; }
+                _context.Colorations.Remove((Coloration)ex.Entries.First().Entity);
                 throw ex;
             }
         }

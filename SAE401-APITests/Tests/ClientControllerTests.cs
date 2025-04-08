@@ -178,14 +178,7 @@ namespace SAE401_APITests.Tests
             }
             catch (DbUpdateException ex)
             {
-                try
-                {
-                    _context.Clients.Remove((Client)ex.Entries.First().Entity);
-                }
-                catch
-                {
-                    throw ex;
-                }
+                _context.Clients.Remove((Client)ex.Entries.First().Entity);
                 throw ex;
             }
         }

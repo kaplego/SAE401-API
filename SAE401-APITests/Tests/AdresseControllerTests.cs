@@ -109,8 +109,7 @@ namespace SAE401_APITests.Tests
             }
             catch (DbUpdateException ex)
             {
-                try { _context.Adresses.RemoveRange(client1.AdressesNavigation.Where(x => x.Nomrue == null)); }
-                catch { throw ex; }
+                _context.Adresses.Remove((Adresse)ex.Entries.First().Entity);
                 throw ex;
             }
         }

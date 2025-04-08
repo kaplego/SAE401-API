@@ -125,8 +125,7 @@ namespace SAE401_APITests.Tests
             }
             catch (DbUpdateException ex)
             {
-                try { _context.Cartebancaires.RemoveRange(client1.CartesNavigation.Where(x => x.Numcartebancaire == null)); }
-                catch { throw ex; }
+                _context.Cartebancaires.Remove((Cartebancaire)ex.Entries.First().Entity);
                 throw ex;
             }
         }
@@ -175,8 +174,7 @@ namespace SAE401_APITests.Tests
             }
             catch (DbUpdateException ex)
             {
-                try { _context.Cartebancaires.RemoveRange(client1.CartesNavigation.Where(x => x.Numcartebancaire == null)); }
-                catch { throw ex; }
+                _context.Cartebancaires.Remove((Cartebancaire)ex.Entries.First().Entity);
                 throw ex;
             }
         }

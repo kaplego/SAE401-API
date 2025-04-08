@@ -114,14 +114,7 @@ namespace SAE401_APITests.Tests
             }
             catch (DbUpdateException ex)
             {
-                try
-                {
-                    _context.Avisproduits.RemoveRange(client1.AvisNavigation.Where(x => x.Commentaireavis == longComment));
-                }
-                catch
-                {
-                    throw ex;
-                }
+                _context.Avisproduits.Remove((Avisproduit)ex.Entries.First().Entity);
                 throw ex;
             }
         }

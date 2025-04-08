@@ -145,8 +145,7 @@ namespace SAE401_APITests.Tests
             }
             catch (DbUpdateException ex)
             {
-                try { _context.Commandes.RemoveRange(client1.CommandesNavigation.Where(x => x.Instructionlivraison == longComment)); }
-                catch { throw ex; }
+                _context.Commandes.Remove((Commande)ex.Entries.First().Entity);
                 throw ex;
             }
         }
