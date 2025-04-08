@@ -85,7 +85,8 @@ namespace SAE401_APITests.Tests
             Assert.IsInstanceOfType(result.Result, typeof(OkObjectResult), "Résultat pas OK");
             Avisproduit valeur = (Avisproduit)((ObjectResult)result.Result).Value;
             Assert.IsNotNull(valeur, "Valeur est null");
-            Assert.AreEqual(a2.Commentaireavis, valeur.Commentaireavis, "avis égales");
+            Assert.IsInstanceOfType(valeur, typeof(Avisproduit), "Pas un avis");
+            Assert.AreEqual(a2.Commentaireavis, valeur.Commentaireavis, "avis égaux");
             try { _context.Avisproduits.Remove(valeur); } catch { }
         }
 

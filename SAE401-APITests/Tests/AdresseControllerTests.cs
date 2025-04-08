@@ -135,6 +135,7 @@ namespace SAE401_APITests.Tests
             Assert.IsInstanceOfType(result.Result, typeof(OkObjectResult), "Résultat pas OK");
             Adresse valeur = (Adresse)((ObjectResult)result.Result).Value;
             Assert.IsNotNull(valeur, "Valeur est null");
+            Assert.IsInstanceOfType(valeur, typeof(Adresse), "Pas une adresse");
             Assert.AreEqual(a3.Idpays, valeur.Idpays, "Adresses égales (pays)");
             Assert.AreEqual(a1.Idadresse, valeur.Idadresse, "Adresses non-modifiées (id)");
         }

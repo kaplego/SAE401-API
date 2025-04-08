@@ -43,9 +43,9 @@ namespace SAE401_API.Controllers
         [AllowAnonymous]
         [Route("[action]")]
         [ActionName("GetClientByLogin")]
-        public async Task<IActionResult> GetClientByLogin(Login login)
+        public async Task<ActionResult> GetClientByLogin(Login login)
         {
-            IActionResult response = Forbid();
+            ActionResult response = Forbid();
             ActionResult<Client> client = await dataRepository.GetClientByLoginAsync(login.email, login.password);
             if (client.Value != null)
             {
