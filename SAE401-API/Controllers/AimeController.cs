@@ -20,7 +20,7 @@ namespace SAE401_API.Controllers
             dataRepository = datarepo;
         }
 
-        // Récupérer une relation "aime" par client et produit
+        /*/ Récupérer une relation "aime" par client et produit
         [HttpGet("{idclient}/{idproduit}")]
         [Authorize()]
         public async Task<ActionResult<Aime?>> GetAimeByIdAsync(int idclient, int idproduit)
@@ -41,6 +41,7 @@ namespace SAE401_API.Controllers
 
             return aime;
         }
+        /*/
 
         // Ajouter une relation "aime"
         [HttpPost]
