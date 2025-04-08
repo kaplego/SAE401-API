@@ -20,6 +20,8 @@ namespace SAE401_API.Controllers
         [ActionName("GetAllAttributByType")]
         public async Task<ActionResult<IEnumerable<Attributproduit>>> GetAllAttributByType(int id)
         {
+
+
             return await dataRepository.GetAllAttributByTypeAsync(id);
 
         }

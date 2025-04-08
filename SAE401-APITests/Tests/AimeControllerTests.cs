@@ -116,18 +116,5 @@ namespace SAE401_API.Controllers.Tests
             await _context.SaveChangesAsync();
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

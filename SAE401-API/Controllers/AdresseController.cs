@@ -98,9 +98,9 @@ namespace SAE401_API.Controllers
                 return Forbid(); // #forbid#
             }
 
-            await dataRepository.UpdateAdresseAsync(existingAdresse.Value, adresseDTO);
+            Adresse updatedAdresse = await dataRepository.UpdateAdresseAsync(existingAdresse.Value, adresseDTO);
 
-            return Ok(existingAdresse.Value);
+            return Ok(updatedAdresse);
         }
 
         // Supprimer une adresse
