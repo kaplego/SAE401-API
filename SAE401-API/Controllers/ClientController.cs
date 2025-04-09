@@ -121,8 +121,8 @@ namespace SAE401_API.Controllers
 
             else
             {
-                await dataRepository.UpdateClientAsync(clientToUpdate.Value, client);
-                return Ok(clientToUpdate.Value);
+                Client c = await dataRepository.UpdateClientAsync(clientToUpdate.Value, client);
+                return Ok(c);
             }
         }
 

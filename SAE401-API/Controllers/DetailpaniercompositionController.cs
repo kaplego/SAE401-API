@@ -24,7 +24,7 @@ namespace SAE401_API.Controllers
 
         [HttpPut("{idcomposition}/{idclient}")]
         [Authorize()]
-        public async Task<ActionResult<Detailpaniercomposition?>> PutDetailPanoerComposition(int idcomposition, int idclient, DetailpaniercompositionDTO detailpaniercompositionDTO)
+        public async Task<ActionResult<Detailpaniercomposition?>> PutDetailPanierComposition(int idcomposition, int idclient, DetailpaniercompositionDTO detailpaniercompositionDTO)
         {
             if (!ModelState.IsValid)
             {

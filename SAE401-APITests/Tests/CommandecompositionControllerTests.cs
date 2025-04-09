@@ -22,6 +22,8 @@ namespace SAE401_APITests.Tests
         private _DBMilibooContext _context;
         private ICommandecompositionRepository<Commandecomposition> _repository;
         private CommandecompositionController _controller;
+        private Client client1;
+        private Commande cmd1;
         private Commandecomposition commandecompo1;
 
 
@@ -38,15 +40,41 @@ namespace SAE401_APITests.Tests
             _context = new _DBMilibooContext(builder.Options);
             _repository = new CommandecompositionManager<Commandecomposition>(_context);
             _controller = new CommandecompositionController(_repository);
+            client1 = new Client()
+            {
+                Nomclient = "NOM",
+                Prenomclient = "Prenom" + DateTime.UtcNow.ToString(),
+                Emailclient = "email@email.email",
+                Telportableclient = "33123456789",
+                Datecreationcompte = DateTime.UtcNow,
+                Hashmdp = "mdp",
+                Pointfideliteclient = 0,
+                Newslettermiliboo = true,
+                Newsletterpartenaires = true
+            };
+            await _context.Clients.AddAsync(client1);
+            await _context.SaveChangesAsync();
+            cmd1 = new Commande()
+            {
+                Idclient = client1.Idclient,
+                IdadresseLivr = 1,
+                IdadresseFact = 1,
+                Idstatut = 1,
+                Idtransporteur = 1,
+                Avecassurance = true,
+                Aveclivraisonexpress = true
+            };
+            await _context.Commandes.AddAsync(cmd1);
+            await _context.SaveChangesAsync();
             commandecompo1 = new Commandecomposition()
             {
                 Idcomposition = 1,
-                Idcommande = 3,
+                Idcommande = cmd1.Idcommande,
                 Quantitecompositioncommande = 1
             };
             await _context.Commandecompositions.AddAsync(commandecompo1);
             await _context.SaveChangesAsync();
-
+            _controller.ControllerContext = JwtManager.CreateControllerContext(client1);
         }
 
 
@@ -57,7 +85,7 @@ namespace SAE401_APITests.Tests
             CommandecompositionDTO c2 = new CommandecompositionDTO()
             {
                 Idcomposition = 2,
-                Idcommande = 3,
+                Idcommande = cmd1.Idcommande,
                 Quantitecompositioncommande = 1
             };
             var result = await _controller.PostCommandecomposition(c2);
@@ -81,6 +109,8 @@ namespace SAE401_APITests.Tests
         {
             await _context.SaveChangesAsync();
             _context.Commandecompositions.Remove(commandecompo1);
+            _context.Commandes.Remove(cmd1);
+            _context.Clients.Remove(client1);
             await _context.SaveChangesAsync();
         }
 
