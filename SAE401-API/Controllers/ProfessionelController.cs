@@ -91,8 +91,8 @@ namespace SAE401_API.Controllers
 
             else
             {
-                await dataRepository.UpdateProfessionelAsync(proToUpdate.Value, pro);
-                return Ok(proToUpdate.Value);
+                Professionel newpro = await dataRepository.UpdateProfessionelAsync(proToUpdate.Value, pro);
+                return Ok(newpro);
             }
         }
     }
