@@ -77,7 +77,7 @@ namespace SAE401_API.Controllers
         [Route("[action]/{id}")]
         [ActionName("GetProduitById")]
 
-        public async Task<ActionResult<Produit>> GetAllProduitById(int id)
+        public async Task<ActionResult<Produit>> GetProduitById(int id)
         {
             var produit =await dataRepository.GetProduitByIdAsync(id);
 

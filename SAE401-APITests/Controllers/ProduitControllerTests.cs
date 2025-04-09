@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SAE401_API.Controllers;
 using SAE401_API.Models.DataManager;
+using SAE401_API.Models.DTO;
 using SAE401_API.Models.EntityFramework;
 using SAE401_API.Models.Repository;
 using System;
@@ -163,7 +164,183 @@ namespace SAE401_API.Controllers.Tests
             Assert.AreEqual(p1, produits.Value.Last(), "produits égales");
         }
 
+        [TestMethod()]
+        public async Task GetAllProduitsByTypeTest_Normal()
+        {
+            var produits = await _controller.GetAllProduitByType(-1);
+            Assert.IsNotNull(produits, "Retour est null");
+            Assert.IsInstanceOfType(produits, typeof(ActionResult<IEnumerable<Produit>>), "Pas un ActionResult");
+            Assert.IsInstanceOfType(produits.Value, typeof(IEnumerable<Produit>), "Pas des produits ");
+            Assert.AreEqual(p1, produits.Value.Last(), "produits égales");
+        }
 
+
+
+
+        [TestMethod()]
+        public async Task GetProduitByIdTest_Normal()
+        {
+            var result = await _controller.GetProduitById(p1.Idproduit);
+            Assert.IsNotNull(result, "Retour est null");
+            Assert.IsInstanceOfType(result, typeof(ActionResult<Produit?>), "Pas un ActionResult");
+            Assert.IsNull(result.Result, "Résultat est pas null");
+            Assert.IsNotNull(result.Value, "Valeur est null");
+            Assert.IsInstanceOfType(result.Value, typeof(Produit), "Pas un Produit");
+            Assert.AreEqual(p1, result.Value, "Client égaux");
+        }
+
+        [TestMethod()]
+        public async Task GetProduitByIdTest_Innexistant()
+        {
+            var result = await _controller.GetProduitById(-1);
+            Assert.IsNotNull(result, "Retour est null");
+            Assert.IsInstanceOfType(result, typeof(ActionResult<Produit?>), "Pas un ActionResult");
+            Assert.IsNotNull(result.Result, "Résultat est null");
+            Assert.IsInstanceOfType(result.Result, typeof(NotFoundResult), "Pas un NotFound");
+            Assert.IsNull(result.Value, "Valeur est pas null");
+        }
+
+        [TestMethod()]
+        public async Task PostProduitTest_Normal()
+        {
+            ProduitDTO p2 = new ProduitDTO()
+            {
+                Idtypeproduit = t1.Idtypeproduit,
+                Idpays = 1,
+                Nomproduit = "Produit2",
+                Delailivraison = 1,
+                Coutlivraison = 1,
+                Nbpaiementmax = 1
+            };
+            var result = await _controller.PostProduit(p2);
+            Assert.IsNotNull(result, "Retour est null");
+            Assert.IsInstanceOfType(result, typeof(ActionResult<Produit?>), "Pas un ActionResult");
+            Assert.IsNotNull(result.Result, "Résultat est null");
+            Assert.IsInstanceOfType(result.Result, typeof(OkObjectResult), "Résultat pas OK");
+            Produit valeur = (Produit)((ObjectResult)result.Result).Value;
+            Assert.IsNotNull(valeur, "Valeur est null");
+            Assert.AreEqual(p2.Nomproduit, valeur.Nomproduit, "produits égales");
+            try { _context.Produits.Remove(valeur); } catch { }
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(DbUpdateException))]
+        public async Task PostProduitTest_Invalide()
+        {
+            ProduitDTO p3 = new ProduitDTO()
+            {
+                Idtypeproduit = t1.Idtypeproduit,
+                Idpays = 1,
+                Nomproduit = "Produit3",
+                Delailivraison = 1,
+                Coutlivraison = 100000000000000,
+                Nbpaiementmax = 1
+            };
+            try
+            {
+                var result = await _controller.PostProduit(p3);
+            }
+            catch (DbUpdateException ex)
+            {
+                _context.Produits.Remove((Produit)ex.Entries.First().Entity);
+                throw ex;
+            }
+        }
+
+
+        [TestMethod()]
+        public async Task PutProduitTest_Normal()
+        {
+            ProduitDTO p4 = new ProduitDTO()
+            {
+                Idproduit = p1.Idproduit,
+                Idtypeproduit = t1.Idtypeproduit,
+                Idpays = 1,
+                Nomproduit = "Produit4",
+                Delailivraison = 1,
+                Coutlivraison = 1,
+                Nbpaiementmax = 10
+            };
+            var result = await _controller.PutProduit(p1.Idproduit, p4);
+            Assert.IsNotNull(result, "Retour est null");
+            Assert.IsInstanceOfType(result, typeof(ActionResult<Produit?>), "Pas un ActionResult");
+            Assert.IsNotNull(result.Result, "Résultat est null");
+            Assert.IsInstanceOfType(result.Result, typeof(OkObjectResult), "Résultat pas OK");
+            Produit valeur = (Produit)((ObjectResult)result.Result).Value;
+            Assert.IsNotNull(valeur, "Valeur est null");
+            Assert.AreEqual(p4.Coutlivraison, valeur.Coutlivraison, "Cartes bancaires égales (titulaire)");
+            Assert.AreEqual(p1.Idproduit, valeur.Idproduit, "Cartes bancaires non-modifiées (id)");
+            Assert.AreEqual(p4.Nbpaiementmax, valeur.Nbpaiementmax, "Cartes bancaires égales (dateexp)");
+        }
+
+
+        [TestMethod()]
+        [ExpectedException(typeof(DbUpdateException))]
+        public async Task PutProduitTest_Invalide()
+        {
+            ProduitDTO p5 = new ProduitDTO()
+            {
+                Idproduit = p1.Idproduit,
+                Idtypeproduit = t1.Idtypeproduit,
+                Idpays = 1,
+                Nomproduit = "Produit4",
+                Delailivraison = 1,
+                Coutlivraison = 100000000000000,
+                Nbpaiementmax = 10
+            };
+            try
+            {
+                var result = await _controller.PutProduit(p1.Idproduit, p5);
+            }
+            catch (DbUpdateException ex)
+            {
+                Produit p = (Produit)ex.Entries.First().Entity;
+                p.Coutlivraison = 1;
+                throw ex;
+            }
+        }
+
+
+        [TestMethod()]
+        public async Task PutProduitTest_Innégal()
+        {
+            ProduitDTO p6 = new ProduitDTO()
+            {
+                Idproduit = 0,
+                Idtypeproduit = t1.Idtypeproduit,
+                Idpays = 1,
+                Nomproduit = "Produit4",
+                Delailivraison = 1,
+                Coutlivraison = 1,
+                Nbpaiementmax = 10
+            };
+            var result = await _controller.PutProduit(-1, p6);
+            Assert.IsNotNull(result, "Retour est null");
+            Assert.IsInstanceOfType(result, typeof(ActionResult<Produit?>), "Pas un ActionResult");
+            Assert.IsNotNull(result.Result, "Résultat est null");
+            Assert.IsInstanceOfType(result.Result, typeof(BadRequestResult), "Résultat pas BadRequest");
+        }
+
+
+        [TestMethod()]
+        public async Task PutProduitTest_Introuvable()
+        {
+            ProduitDTO p7 = new ProduitDTO()
+            {
+                Idproduit = -1,
+                Idtypeproduit = t1.Idtypeproduit,
+                Idpays = 1,
+                Nomproduit = "Produit4",
+                Delailivraison = 1,
+                Coutlivraison = 1,
+                Nbpaiementmax = 10
+            };
+            var result = await _controller.PutProduit(-1, p7);
+            Assert.IsNotNull(result, "Retour est null");
+            Assert.IsInstanceOfType(result, typeof(ActionResult<Produit?>), "Pas un ActionResult");
+            Assert.IsNotNull(result.Result, "Résultat est null");
+            Assert.IsInstanceOfType(result.Result, typeof(NotFoundResult), "Résultat pas NotFound");
+        }
 
 
 
