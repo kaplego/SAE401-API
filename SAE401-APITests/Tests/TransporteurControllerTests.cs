@@ -15,12 +15,12 @@ using System.Threading.Tasks;
 namespace SAE401_APITests.Tests
 {
     [TestClass()]
-    public class RegroupementControllerTests
+    public class TransporteurControllerTests
     {
         private _DBMilibooContext _context;
-        private IRegroupementRepository<Regroupementproduit> _repository;
-        private RegroupementController _controller;
-        private Regroupementproduit r1;
+        private ITransporteurRepository<Transporteur> _repository;
+        private TransporteurController _controller;
+        private Transporteur t1;
 
 
         [TestInitialize]
@@ -34,37 +34,37 @@ namespace SAE401_APITests.Tests
                 Environment.GetEnvironmentVariable("CONNECTION_STRING"))
                 .EnableSensitiveDataLogging(true);
             _context = new _DBMilibooContext(builder.Options);
-            _repository = new RegroupementManager(_context);
-            _controller = new RegroupementController(_repository);
+            _repository = new TransporteurManager(_context);
+            _controller = new TransporteurController(_repository);
 
 
 
-            r1 = new Regroupementproduit()
+            t1 = new Transporteur()
             {
-                Idregroupement = 5,
-                Nomregroupement = "Test"
+                Idtransporteur = 6,
+                Nomtransporteur = "Test"
             };
-            await _context.Regroupementproduits.AddAsync(r1);
+            await _context.Transporteurs.AddAsync(t1);
             await _context.SaveChangesAsync();
         }
 
-        [TestMethod()]
-        public async Task GetAllRegroupementsTest_Normal()
-        {
-            var regroupements = await _controller.GetAllRegroupement();
-            Assert.IsNotNull(regroupements, "Retour est null");
-            Assert.IsInstanceOfType(regroupements, typeof(ActionResult<IEnumerable<Regroupementproduit>>), "Pas un ActionResult");
-            Assert.IsInstanceOfType(regroupements.Value, typeof(IEnumerable<Regroupementproduit>), "Pas des regroupements ");
-            Assert.AreEqual(r1, regroupements.Value.Last(), "regrouepements égales");
-        }
 
+        [TestMethod()]
+        public async Task GetAllTransporteursTest_Normal()
+        {
+            var transporteurs = await _controller.GetAllTransporteur();
+            Assert.IsNotNull(transporteurs, "Retour est null");
+            Assert.IsInstanceOfType(transporteurs, typeof(ActionResult<IEnumerable<Transporteur>>), "Pas un ActionResult");
+            Assert.IsInstanceOfType(transporteurs.Value, typeof(IEnumerable<Transporteur>), "Pas des transporteurs ");
+            Assert.AreEqual(t1, transporteurs.Value.Last(), "transporteurs égales");
+        }
 
 
         [TestCleanup()]
         public async Task TestCleanup()
         {
             await _context.SaveChangesAsync();
-            _context.Regroupementproduits.Remove(r1);
+            _context.Transporteurs.Remove(t1);
             await _context.SaveChangesAsync();
         }
 

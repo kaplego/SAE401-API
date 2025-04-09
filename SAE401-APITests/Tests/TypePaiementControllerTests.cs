@@ -15,12 +15,12 @@ using System.Threading.Tasks;
 namespace SAE401_APITests.Tests
 {
     [TestClass()]
-    public class RegroupementControllerTests
+    public class TypePaiementControllerTests
     {
         private _DBMilibooContext _context;
-        private IRegroupementRepository<Regroupementproduit> _repository;
-        private RegroupementController _controller;
-        private Regroupementproduit r1;
+        private ITypePaiementRepository<Typepaiement> _repository;
+        private TypePaiementController _controller;
+        private Typepaiement t1;
 
 
         [TestInitialize]
@@ -34,40 +34,39 @@ namespace SAE401_APITests.Tests
                 Environment.GetEnvironmentVariable("CONNECTION_STRING"))
                 .EnableSensitiveDataLogging(true);
             _context = new _DBMilibooContext(builder.Options);
-            _repository = new RegroupementManager(_context);
-            _controller = new RegroupementController(_repository);
+            _repository = new TypePaiementManager(_context);
+            _controller = new TypePaiementController(_repository);
 
 
 
-            r1 = new Regroupementproduit()
+            t1 = new Typepaiement()
             {
-                Idregroupement = 5,
-                Nomregroupement = "Test"
+                Idtypepaiement = 4,
+                Nomtypepaiement = "Test"
+
             };
-            await _context.Regroupementproduits.AddAsync(r1);
+            await _context.Typepaiements.AddAsync(t1);
             await _context.SaveChangesAsync();
         }
 
-        [TestMethod()]
-        public async Task GetAllRegroupementsTest_Normal()
-        {
-            var regroupements = await _controller.GetAllRegroupement();
-            Assert.IsNotNull(regroupements, "Retour est null");
-            Assert.IsInstanceOfType(regroupements, typeof(ActionResult<IEnumerable<Regroupementproduit>>), "Pas un ActionResult");
-            Assert.IsInstanceOfType(regroupements.Value, typeof(IEnumerable<Regroupementproduit>), "Pas des regroupements ");
-            Assert.AreEqual(r1, regroupements.Value.Last(), "regrouepements égales");
-        }
 
+        [TestMethod()]
+        public async Task GetAllTypePaiementsTest_Normal()
+        {
+            var typepaiements = await _controller.GetAllTypePaiement();
+            Assert.IsNotNull(typepaiements, "Retour est null");
+            Assert.IsInstanceOfType(typepaiements, typeof(ActionResult<IEnumerable<Typepaiement>>), "Pas un ActionResult");
+            Assert.IsInstanceOfType(typepaiements.Value, typeof(IEnumerable<Typepaiement>), "Pas des type paiements ");
+            Assert.AreEqual(t1, typepaiements.Value.Last(), "type paiements égales");
+        }
 
 
         [TestCleanup()]
         public async Task TestCleanup()
         {
             await _context.SaveChangesAsync();
-            _context.Regroupementproduits.Remove(r1);
+            _context.Typepaiements.Remove(t1);
             await _context.SaveChangesAsync();
         }
-
-
     }
 }

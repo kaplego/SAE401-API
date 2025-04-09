@@ -12,15 +12,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SAE401_APITests.Tests
+namespace SAE401_API.Controllers.Tests
 {
     [TestClass()]
-    public class RegroupementControllerTests
+    public class VilleControllerTests
     {
         private _DBMilibooContext _context;
-        private IRegroupementRepository<Regroupementproduit> _repository;
-        private RegroupementController _controller;
-        private Regroupementproduit r1;
+        private IVilleRepository<Ville> _repository;
+        private VilleController _controller;
+        private Ville v1;
 
 
         [TestInitialize]
@@ -34,40 +34,45 @@ namespace SAE401_APITests.Tests
                 Environment.GetEnvironmentVariable("CONNECTION_STRING"))
                 .EnableSensitiveDataLogging(true);
             _context = new _DBMilibooContext(builder.Options);
-            _repository = new RegroupementManager(_context);
-            _controller = new RegroupementController(_repository);
+            _repository = new VilleManager(_context);
+            _controller = new VilleController(_repository);
 
-
-
-            r1 = new Regroupementproduit()
+            v1 = new Ville()
             {
-                Idregroupement = 5,
-                Nomregroupement = "Test"
+                Codeinsee = "99183",
+                Nomville = "Test"
+
             };
-            await _context.Regroupementproduits.AddAsync(r1);
+            await _context.Villes.AddAsync(v1);
             await _context.SaveChangesAsync();
+
         }
+
+
 
         [TestMethod()]
-        public async Task GetAllRegroupementsTest_Normal()
+        public async Task GetAllVillesTest_Normal()
         {
-            var regroupements = await _controller.GetAllRegroupement();
-            Assert.IsNotNull(regroupements, "Retour est null");
-            Assert.IsInstanceOfType(regroupements, typeof(ActionResult<IEnumerable<Regroupementproduit>>), "Pas un ActionResult");
-            Assert.IsInstanceOfType(regroupements.Value, typeof(IEnumerable<Regroupementproduit>), "Pas des regroupements ");
-            Assert.AreEqual(r1, regroupements.Value.Last(), "regrouepements égales");
+            var villes = await _controller.GetAllVille();
+            Assert.IsNotNull(villes, "Retour est null");
+            Assert.IsInstanceOfType(villes, typeof(ActionResult<IEnumerable<Ville>>), "Pas un ActionResult");
+            Assert.IsInstanceOfType(villes.Value, typeof(IEnumerable<Ville>), "Pas des villes ");
+            Assert.AreEqual(v1, villes.Value.Last(), "villes égales");
         }
-
 
 
         [TestCleanup()]
         public async Task TestCleanup()
         {
             await _context.SaveChangesAsync();
-            _context.Regroupementproduits.Remove(r1);
+            _context.Villes.Remove(v1);
             await _context.SaveChangesAsync();
         }
 
 
     }
+
+
+        
+   
 }
