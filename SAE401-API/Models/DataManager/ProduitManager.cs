@@ -52,7 +52,7 @@ namespace SAE401_API.Models.DataManager
             {
                 produits.AddRange(GetAllProduitByCategorieAsync(cat.Idcategorie).Result.Value);
             }
-            foreach (Produit p in produits) { p.TypeNavigation = null; }
+           
             return produits;
         }
 

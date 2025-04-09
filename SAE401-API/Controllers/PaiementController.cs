@@ -23,7 +23,7 @@ namespace SAE401_API.Controllers
         // POST
         [HttpPost]
         [Authorize()]
-        public async Task<ActionResult<Aime?>> PostPaiement([FromBody] PaiementDTO paiementDTO)
+        public async Task<ActionResult<Paiement?>> PostPaiement([FromBody] PaiementDTO paiementDTO)
         {
             if (!ModelState.IsValid)
             {
