@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SAE401_API.Controllers.Tests
+namespace SAE401_APITests.Tests
 {
     [TestClass()]
     public class ValeurattributControllerTests
@@ -105,7 +105,7 @@ namespace SAE401_API.Controllers.Tests
                 Idproduit = 1,
                 Valeur = "Teste"
             };
-            var result = await _controller.PutValeurattribut(v1.Idattribut,v1.Idproduit, v4);
+            var result = await _controller.PutValeurattribut(v1.Idattribut, v1.Idproduit, v4);
             Assert.IsNotNull(result, "Retour est null");
             Assert.IsInstanceOfType(result, typeof(ActionResult<Valeurattribut?>), "Pas un ActionResult");
             Assert.IsNotNull(result.Result, "Résultat est null");
@@ -151,7 +151,7 @@ namespace SAE401_API.Controllers.Tests
                 Idproduit = 1,
                 Valeur = "Tes"
             };
-            var result = await _controller.PutValeurattribut(-1,-1, v6);
+            var result = await _controller.PutValeurattribut(-1, -1, v6);
             Assert.IsNotNull(result, "Retour est null");
             Assert.IsInstanceOfType(result, typeof(ActionResult<Valeurattribut?>), "Pas un ActionResult");
             Assert.IsNotNull(result.Result, "Résultat est null");
@@ -168,7 +168,7 @@ namespace SAE401_API.Controllers.Tests
                 Idproduit = -1,
                 Valeur = "Tes"
             };
-            var result = await _controller.PutValeurattribut(-1,-1, v7);
+            var result = await _controller.PutValeurattribut(-1, -1, v7);
             Assert.IsNotNull(result, "Retour est null");
             Assert.IsInstanceOfType(result, typeof(ActionResult<Valeurattribut?>), "Pas un ActionResult");
             Assert.IsNotNull(result.Result, "Résultat est null");
@@ -186,7 +186,7 @@ namespace SAE401_API.Controllers.Tests
             };
             await _context.Valeurattributs.AddAsync(v8);
             await _context.SaveChangesAsync();
-            var result = await _controller.DeleteValeurattribut(v8.Idattribut,v8.Idproduit);
+            var result = await _controller.DeleteValeurattribut(v8.Idattribut, v8.Idproduit);
             Assert.IsNotNull(result, "Retour est null");
             Assert.IsInstanceOfType(result, typeof(OkResult), "Pas un OkResult");
         }
@@ -194,7 +194,7 @@ namespace SAE401_API.Controllers.Tests
         [TestMethod()]
         public async Task DeleteValeurTest_Introuvable()
         {
-            var result = await _controller.DeleteValeurattribut(0,0);
+            var result = await _controller.DeleteValeurattribut(0, 0);
             Assert.IsNotNull(result, "Retour est null");
             Assert.IsInstanceOfType(result, typeof(NotFoundResult), "Pas un NotFoundResult");
         }
