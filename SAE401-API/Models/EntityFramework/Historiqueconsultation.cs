@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using SAE401_API.Validation;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
-using SAE401_API.Validation;
 
 namespace SAE401_API.Models.EntityFramework;
 
@@ -22,7 +20,7 @@ public partial class Historiqueconsultation
     [Column("hst_dateconsultation")]
     [DateValidator]
     [Required]
-    public DateTime Dateconsultation { get; set; }= DateTime.UtcNow;
+    public DateTime Dateconsultation { get; set; } = DateTime.UtcNow;
 
     [ForeignKey(nameof(Idclient))]
     [InverseProperty(nameof(Client.HistoriquesNavigation))]

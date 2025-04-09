@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace SAE401_API.Models.DTO
+﻿namespace SAE401_API.Models.DTO
 {
     public class DetailpaniercompositionDTO
     {

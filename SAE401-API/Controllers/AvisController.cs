@@ -71,7 +71,7 @@ namespace SAE401_API.Controllers
         /// <response code="200">L'avis à été suprimé</response>
         /// <response code="401">Un des paramètres n'est pas rempi (JWT?)</response>
         /// <response code="403">Le JWT ne correspond pas</response>
-        /// <response code="404">L'avis n'est pas trouvé/response>
+        /// <response code="404">L'avis n'est pas trouvé</response>
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]

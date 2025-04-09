@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using SAE401_API.Validation;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
-using SAE401_API.Validation;
 
 namespace SAE401_API.Models.EntityFramework;
 
 [Table("t_e_signalementavis_sga")]
-[Index(nameof(Idavis),nameof(Emailsignalement), Name = "ix_t_e_signalementavis_sga_idavis_emailsignalement", IsUnique = true)]
+[Index(nameof(Idavis), nameof(Emailsignalement), Name = "ix_t_e_signalementavis_sga_idavis_emailsignalement", IsUnique = true)]
 
 public partial class Signalementavi
 {
@@ -30,7 +28,7 @@ public partial class Signalementavi
 
     [Column("sga_datesignalement")]
     [DateValidator]
-    [Required] 
+    [Required]
     public DateTime Datesignalement { get; set; } = DateTime.UtcNow;
 
     [Column("sga_contenusignalement")]

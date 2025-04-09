@@ -15,6 +15,10 @@ namespace SAE401_API.Controllers
             dataRepository = datarepo;
         }
 
+        /// <summary>
+        /// Obtiens les départements
+        /// </summary>
+        /// <returns>Http response</returns>
         // GET: api/Departement/GetAllDepartement
         [HttpGet]
         [Route("[action]")]

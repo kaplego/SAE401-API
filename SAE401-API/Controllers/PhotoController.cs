@@ -16,27 +16,45 @@ namespace SAE401_API.Controllers
             dataRepository = datarepo;
         }
 
+        /// <summary>
+        /// Créé une photo
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="photo">La photo à ajouter</param>
+        /// <response code="200">La photo à été créée</response>
+        /// <response code="400">La photo n'est pas valide</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
         // POST: api/Photo
         [HttpPost]
-        public async Task<ActionResult<Photo?>> PostPhoto(PhotoDTO photoDTO)
+        public async Task<ActionResult<Photo?>> PostPhoto(PhotoDTO photo)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var photo = new Photo
+            var newphoto = new Photo
             {
-                Sourcephoto = photoDTO.Sourcephoto,
-                Descriptionphoto = photoDTO.Descriptionphoto
+                Sourcephoto = photo.Sourcephoto,
+                Descriptionphoto = photo.Descriptionphoto
             };
 
 
-            await dataRepository.AddPhotoAsync(photo);
+            await dataRepository.AddPhotoAsync(newphoto);
 
-            return Ok(photo);
+            return Ok(newphoto);
         }
 
+        /// <summary>
+        /// Supprime une photo
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="idphoto">L'IDphoto à supprimer</param>
+        /// <response code="200">La photo à été supprimée</response>
+        /// <response code="404">La photo n'est pas trouvée</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         // DELETE: api/Photo/id
         [HttpDelete("{idphoto}")]
         public async Task<IActionResult> DeletePhoto(int idphoto)

@@ -42,10 +42,23 @@ namespace SAE401_API.Controllers
         }
 
 
+        /// <summary>
+        /// Créé une carte bancaire
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="cb">La carte à ajouter</param>
+        /// <response code="200">La carte à été ajoutée</response>
+        /// <response code="400">La carte n'est pas valide</response>
+        /// <response code="401">Un des paramètres n'est pas rempi (JWT?)</response>
+        /// <response code="403">Le JWT ne correspond pas</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         // POST: api/Cartebancaire
         [HttpPost]
         [Authorize()]
-        public async Task<ActionResult<Cartebancaire?>> PostCartebancaire([FromBody] CartebancaireDTO cartebancaireDTO)
+        public async Task<ActionResult<Cartebancaire?>> PostCartebancaire([FromBody] CartebancaireDTO cb)
         {
             if (!ModelState.IsValid)
             {
@@ -53,29 +66,45 @@ namespace SAE401_API.Controllers
             }
 
             var identity = HttpContext.User.Identity as ClaimsIdentity;
-            if (identity == null || identity.FindFirst("id").Value != cartebancaireDTO.Idclient.ToString())
+            if (identity == null || identity.FindFirst("id").Value != cb.Idclient.ToString())
             {
                 return Forbid();
             }
 
             var cartebancaire = new Cartebancaire
             {
-                Idclient = cartebancaireDTO.Idclient,
-                Titulairecartebancaire = cartebancaireDTO.Titulairecartebancaire,
-                Nomcartebancaire = cartebancaireDTO.Nomcartebancaire,
-                Dateenregistement = cartebancaireDTO.Dateenregistement,
-                Numcartebancaire = cartebancaireDTO.Numcartebancaire,
-                Dateexpirationcarte = cartebancaireDTO.Dateexpirationcarte
+                Idclient = cb.Idclient,
+                Titulairecartebancaire = cb.Titulairecartebancaire,
+                Nomcartebancaire = cb.Nomcartebancaire,
+                Dateenregistement = cb.Dateenregistement,
+                Numcartebancaire = cb.Numcartebancaire,
+                Dateexpirationcarte = cb.Dateexpirationcarte
             };
 
             await dataRepository.AddCartebancaireAsync(cartebancaire);
             return Ok(cartebancaire);
         }
 
+        /// <summary>
+        /// Modifie une carte bancaire
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="idcartebancaire">L'ID de la carte à modifier</param>
+        /// <param name="cartebancaire">La carte mise à jour</param>
+        /// <response code="200">La carte à été modifiée</response>
+        /// <response code="400">La carte n'est pas valide</response>
+        /// <response code="401">Un des paramètres n'est pas rempi (JWT?)</response>
+        /// <response code="403">Le JWT ne correspond pas</response>
+        /// <response code="404">La carte n'est pas trouvée</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
+        [ProducesResponseType(404)]
         // PUT: api/Cartebancaire/id
         [HttpPut("{idcartebancaire}")]
         [Authorize()]
-        public async Task<ActionResult<Cartebancaire?>> PutCartebancaire(int idcartebancaire, [FromBody] CartebancaireDTO cartebancaireDTO)
+        public async Task<ActionResult<Cartebancaire?>> PutCartebancaire(int idcartebancaire, [FromBody] CartebancaireDTO cartebancaire)
         {
             if (!ModelState.IsValid)
             {
@@ -83,12 +112,12 @@ namespace SAE401_API.Controllers
             }
 
             var identity = HttpContext.User.Identity as ClaimsIdentity;
-            if (identity == null || identity.FindFirst("id").Value != cartebancaireDTO.Idclient.ToString())
+            if (identity == null || identity.FindFirst("id").Value != cartebancaire.Idclient.ToString())
             {
                 return Forbid();
             }
 
-            if (idcartebancaire != cartebancaireDTO.Idcartebancaire)
+            if (idcartebancaire != cartebancaire.Idcartebancaire)
             {
                 return BadRequest("Les paramètres ne correspondent pas.");
             }
@@ -99,10 +128,23 @@ namespace SAE401_API.Controllers
                 return NotFound();
             }
 
-            Cartebancaire cb = await dataRepository.UpdateCartebancaireAsync(existingCartebancaire.Value, cartebancaireDTO);
+            Cartebancaire cb = await dataRepository.UpdateCartebancaireAsync(existingCartebancaire.Value, cartebancaire);
             return Ok(cb);
         }
 
+        /// <summary>
+        /// Supprime une carte bancaire
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="idcartebancaire">L'ID de la carte à supprimer</param>
+        /// <response code="200">La carte à été supprimée</response>
+        /// <response code="401">Un des paramètres n'est pas rempi (JWT?)</response>
+        /// <response code="403">Le JWT ne correspond pas</response>
+        /// <response code="404">La carte n'est pas trouvée</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
+        [ProducesResponseType(404)]
         // DELETE: api/Cartebancaire/id
         [HttpDelete("{idcartebancaire}")]
         [Authorize()]

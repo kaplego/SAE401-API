@@ -1,17 +1,8 @@
-﻿using DotNetEnv;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
 using SAE401_API.Controllers;
-using SAE401_API.Models.DataManager;
 using SAE401_API.Models.EntityFramework;
 using SAE401_API.Models.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SAE401_APITests.Mock
 {
@@ -29,14 +20,14 @@ namespace SAE401_APITests.Mock
             _repository = new Mock<ICategorieRepository<Categorieproduit>>();
             _controller = new CategorieController(_repository.Object);
 
-        
+
 
             ct1 = new Categorieproduit()
             {
-               Idcategorie = 34,
-               Nomcategorie = "Test",
-               Descriptioncategorie = "Test",
-               Estfiltrable = true
+                Idcategorie = 34,
+                Nomcategorie = "Test",
+                Descriptioncategorie = "Test",
+                Estfiltrable = true
             };
             _repository.Setup(x => x.GetAllCategorieAsync()).ReturnsAsync(new ActionResult<IEnumerable<Categorieproduit>>(new List<Categorieproduit>() { ct1 }));
 

@@ -1,19 +1,12 @@
 ﻿using DotNetEnv;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NuGet.Protocol.Core.Types;
 using SAE401_API.Controllers;
 using SAE401_API.Models.DataManager;
 using SAE401_API.Models.DataMethods;
 using SAE401_API.Models.DTO;
 using SAE401_API.Models.EntityFramework;
 using SAE401_API.Models.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SAE401_APITests.Tests
 {

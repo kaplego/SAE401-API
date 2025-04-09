@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
-using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SAE401_API.Models.DTO;
 
@@ -23,7 +18,7 @@ public partial class ClientDTO
     [Required]
     public string Emailclient { get; set; } = null!;
 
-  
+
     public string? Telfixeclient { get; set; }
 
     [Required]

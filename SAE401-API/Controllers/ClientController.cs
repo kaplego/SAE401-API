@@ -61,7 +61,7 @@ namespace SAE401_API.Controllers
         /// Obtiens un client
         /// </summary>
         /// <returns>Http response</returns>
-        /// <param name="id">L'id du client'</param>
+        /// <param name="id">L'id du client</param>
         /// <response code="401">Un des paramètres n'est pas rempi (JWT?)</response>
         /// <response code="403">Le JWT ne correspond pas</response>
         /// <response code="404">Le client n'est pas trouvé</response>
@@ -100,6 +100,22 @@ namespace SAE401_API.Controllers
             return client;
         }
 
+        /// <summary>
+        /// Modifie un client
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="id">L'ID du client à modifier</param>
+        /// <param name="client">Le client mis à jour</param>
+        /// <response code="200">Le client à été modifié</response>
+        /// <response code="400">Le client n'est pas valide</response>
+        /// <response code="401">Un des paramètres n'est pas rempi (JWT?)</response>
+        /// <response code="403">Le JWT ne correspond pas</response>
+        /// <response code="404">Le client n'est pas trouvé</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
+        [ProducesResponseType(404)]
         // PUT: api/Client/{id}
         [HttpPut("{id}")]
         [Authorize()]
@@ -135,9 +151,18 @@ namespace SAE401_API.Controllers
             }
         }
 
+        /// <summary>
+        /// Créé un client
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="client">Le client à ajouter</param>
+        /// <response code="200">Le client à été créé</response>
+        /// <response code="400">Le client n'est pas valide</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
         // POST: api/Client
         [HttpPost]
-        public async Task<ActionResult<Client?>> PostClient([FromBody] ClientDTO clientDTO)
+        public async Task<ActionResult<Client?>> PostClient([FromBody] ClientDTO client)
         {
             if (!ModelState.IsValid)
             {
@@ -146,17 +171,17 @@ namespace SAE401_API.Controllers
 
             Client newclient = new Client()
             {
-                Nomclient = clientDTO.Nomclient,
-                Prenomclient = clientDTO.Prenomclient,
-                Civiliteclient = clientDTO.Civiliteclient,
-                Emailclient = clientDTO.Emailclient,
-                Telfixeclient = clientDTO.Telfixeclient,
-                Telportableclient = clientDTO.Telportableclient,
-                Datecreationcompte = clientDTO.Datecreationcompte ?? DateTime.UtcNow,
-                Hashmdp = clientDTO.Hashmdp,
-                Pointfideliteclient = clientDTO.Pointfideliteclient,
-                Newslettermiliboo = clientDTO.Newslettermiliboo,
-                Newsletterpartenaires = clientDTO.Newsletterpartenaires,
+                Nomclient = client.Nomclient,
+                Prenomclient = client.Prenomclient,
+                Civiliteclient = client.Civiliteclient,
+                Emailclient = client.Emailclient,
+                Telfixeclient = client.Telfixeclient,
+                Telportableclient = client.Telportableclient,
+                Datecreationcompte = client.Datecreationcompte ?? DateTime.UtcNow,
+                Hashmdp = client.Hashmdp,
+                Pointfideliteclient = client.Pointfideliteclient,
+                Newslettermiliboo = client.Newslettermiliboo,
+                Newsletterpartenaires = client.Newsletterpartenaires,
             };
 
             await dataRepository.AddClientAsync(newclient);

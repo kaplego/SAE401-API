@@ -20,9 +20,26 @@ namespace SAE401_API.Controllers
         }
 
 
+        /// <summary>
+        /// Modifie une relation DtPnCp
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="idcomposition">L'IDcomposition à modifier</param>
+        /// <param name="idclient">L'IDclient à modifier</param>
+        /// <param name="detailpaniercomposition">La relation mise à jour</param>
+        /// <response code="200">La relation à été modifiée</response>
+        /// <response code="400">La relation n'est pas valide</response>
+        /// <response code="401">Un des paramètres n'est pas rempi (JWT?)</response>
+        /// <response code="403">Le JWT ne correspond pas</response>
+        /// <response code="404">La relation n'est pas trouvée</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
+        [ProducesResponseType(404)]
         [HttpPut("{idcomposition}/{idclient}")]
         [Authorize()]
-        public async Task<ActionResult<Detailpaniercomposition?>> PutDetailPanierComposition(int idcomposition, int idclient, DetailpaniercompositionDTO detailpaniercompositionDTO)
+        public async Task<ActionResult<Detailpaniercomposition?>> PutDetailPanierComposition(int idcomposition, int idclient, DetailpaniercompositionDTO detailpaniercomposition)
         {
             if (!ModelState.IsValid)
             {
@@ -30,7 +47,7 @@ namespace SAE401_API.Controllers
             }
 
             // Vérification de l'intégrité des paramètres
-            if (idcomposition != detailpaniercompositionDTO.Idcomposition || idclient != detailpaniercompositionDTO.Idclient)
+            if (idcomposition != detailpaniercomposition.Idcomposition || idclient != detailpaniercomposition.Idclient)
             {
                 return BadRequest("Les paramètres ne correspondent pas.");
             }
@@ -46,9 +63,9 @@ namespace SAE401_API.Controllers
             // Convertir le DTO en une instance de Detailpanier
             var updatedDetailpaniercomposition = new Detailpaniercomposition
             {
-                Idcomposition = detailpaniercompositionDTO.Idcomposition,
-                Idclient = detailpaniercompositionDTO.Idclient,
-                Quantitepaniercomposition = detailpaniercompositionDTO.Quantitepaniercomposition
+                Idcomposition = detailpaniercomposition.Idcomposition,
+                Idclient = detailpaniercomposition.Idclient,
+                Quantitepaniercomposition = detailpaniercomposition.Quantitepaniercomposition
                 // Ajoutez ici d'autres propriétés du DTO si nécessaire
             };
 
@@ -66,7 +83,19 @@ namespace SAE401_API.Controllers
         }
 
 
-
+        /// <summary>
+        /// Créé une relation DtPnCp
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="detailpaniercomposition">La relation à ajouter</param>
+        /// <response code="200">La relation à été créée</response>
+        /// <response code="400">La relation n'est pas valide</response>
+        /// <response code="401">Un des paramètres n'est pas rempi (JWT?)</response>
+        /// <response code="403">Le JWT ne correspond pas</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         [HttpPost]
         [Authorize()]
         public async Task<ActionResult<Detailpaniercomposition?>> PostDetailPanierComposition(DetailpaniercompositionDTO detailpaniercomposition)
@@ -94,6 +123,21 @@ namespace SAE401_API.Controllers
             return Ok(detailpaniercompositionfinal);
         }
 
+
+        /// <summary>
+        /// Supprime une relation DtPnCp
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="idcomposition">L'IDcomposition à supprimer</param>
+        /// <param name="idclient">L'IDclient à supprimer</param>
+        /// <response code="200">La relation à été supprimée</response>
+        /// <response code="401">Un des paramètres n'est pas rempi (JWT?)</response>
+        /// <response code="403">Le JWT ne correspond pas</response>
+        /// <response code="404">La relation n'est pas trouvée</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
+        [ProducesResponseType(404)]
         [HttpDelete("{idcomposition}/{idclient}")]
         [Authorize()]
         public async Task<IActionResult> DeleteDetailPanierComposition(int idcomposition, int idclient)

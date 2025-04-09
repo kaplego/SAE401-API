@@ -1,17 +1,10 @@
 ﻿using DotNetEnv;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SAE401_API.Controllers;
 using SAE401_API.Models.DataManager;
-using SAE401_API.Models.DataMethods;
 using SAE401_API.Models.EntityFramework;
 using SAE401_API.Models.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SAE401_APITests.Tests
 {
@@ -50,14 +43,14 @@ namespace SAE401_APITests.Tests
 
             at1 = new Attributproduit()
             {
-                Idattribut =  47,
+                Idattribut = 47,
                 Idtypeproduit = 34,
                 Nomattribut = "Test"
             };
             await _context.Attributproduits.AddAsync(at1);
             await _context.SaveChangesAsync();
 
-            
+
 
         }
 
@@ -77,7 +70,7 @@ namespace SAE401_APITests.Tests
             var attributs = await _controller.GetAllAttributByType(0);
             Assert.IsNotNull(attributs, "Retour est null");
             Assert.IsInstanceOfType(attributs, typeof(ActionResult<IEnumerable<Attributproduit>>), "Pas un ActionResult");
-            
+
         }
 
 

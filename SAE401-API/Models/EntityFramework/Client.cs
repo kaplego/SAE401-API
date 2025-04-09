@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
 namespace SAE401_API.Models.EntityFramework;
 
 [Table("t_e_client_cli")]
-[Index(nameof(Nomclient),nameof(Prenomclient),nameof(Telportableclient), Name = "ix_t_e_client_cli_nomclient_prenomclient_telportableclient", IsUnique = true)]
+[Index(nameof(Nomclient), nameof(Prenomclient), nameof(Telportableclient), Name = "ix_t_e_client_cli_nomclient_prenomclient_telportableclient", IsUnique = true)]
 
 public partial class Client
 {
@@ -46,7 +44,7 @@ public partial class Client
 
     [Column("cli_datecreationcompte")]
     [Required]
-    public DateTime? Datecreationcompte { get; set; } =DateTime.UtcNow;
+    public DateTime? Datecreationcompte { get; set; } = DateTime.UtcNow;
 
     [Column("cli_hashmdp")]
     [StringLength(256)]

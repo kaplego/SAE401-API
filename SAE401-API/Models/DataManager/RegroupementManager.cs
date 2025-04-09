@@ -18,7 +18,7 @@ namespace SAE401_API.Models.DataManager
 
         public async Task<ActionResult<IEnumerable<Regroupementproduit>>> GetAllRegroupementAsync()
         {
-            return await milibooContext.Regroupementproduits                                  
+            return await milibooContext.Regroupementproduits
                                        .ToListAsync();
         }
 

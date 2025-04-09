@@ -18,41 +18,65 @@ namespace SAE401_API.Controllers
             _commandeRepository = commandeRepository;
         }
 
+        /// <summary>
+        /// Créé une commande
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="commande">La commande à ajouter</param>
+        /// <response code="200">La commande à été créée</response>
+        /// <response code="400">La commande n'est pas valide</response>
+        /// <response code="401">Un des paramètres n'est pas rempi (JWT?)</response>
+        /// <response code="403">Le JWT ne correspond pas</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         // POST: api/Commande
         [HttpPost]
         [Authorize()]
-        public async Task<ActionResult<Commande>> PostCommande([FromBody] CommandeDTO commandeDTO)
+        public async Task<ActionResult<Commande>> PostCommande([FromBody] CommandeDTO commande)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var commande = new Commande
+            var newcommande = new Commande
             {
-                Idclient = commandeDTO.Idclient,
-                IdadresseLivr = commandeDTO.IdadresseLivr,
-                IdadresseFact = commandeDTO.IdadresseFact,
-                Idcodepromo = commandeDTO.Idcodepromo,
-                Idstatut = commandeDTO.Idstatut,
-                Idtransporteur = commandeDTO.Idtransporteur,
-                Datecommande = commandeDTO.Datecommande,
-                Avecassurance = commandeDTO.Avecassurance,
-                Aveclivraisonexpress = commandeDTO.Aveclivraisonexpress,
-                Instructionlivraison = commandeDTO.Instructionlivraison
+                Idclient = commande.Idclient,
+                IdadresseLivr = commande.IdadresseLivr,
+                IdadresseFact = commande.IdadresseFact,
+                Idcodepromo = commande.Idcodepromo,
+                Idstatut = commande.Idstatut,
+                Idtransporteur = commande.Idtransporteur,
+                Datecommande = commande.Datecommande,
+                Avecassurance = commande.Avecassurance,
+                Aveclivraisonexpress = commande.Aveclivraisonexpress,
+                Instructionlivraison = commande.Instructionlivraison
             };
 
             var identity = HttpContext.User.Identity as ClaimsIdentity; // #claims2#
-            if (identity == null || identity.FindFirst("id").Value != commande.Idclient.ToString()) // #if#
+            if (identity == null || identity.FindFirst("id").Value != newcommande.Idclient.ToString()) // #if#
             {
                 return Forbid(); // #forbid#
             }
 
-            await _commandeRepository.AddCommandeAsync(commande);
+            await _commandeRepository.AddCommandeAsync(newcommande);
 
-            return Ok(commande);
+            return Ok(newcommande);
         }
 
+        /// <summary>
+        /// Obtiens une commande
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="idcommande">L'ID de la commande</param>
+        /// <response code="401">Un des paramètres n'est pas rempi (JWT?)</response>
+        /// <response code="403">Le JWT ne correspond pas</response>
+        /// <response code="404">La commande n'est pas trouvée</response>
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
+        [ProducesResponseType(404)]
         // GET: api/Commande/5
         [HttpGet("{idcommande}")]
         [Authorize()]

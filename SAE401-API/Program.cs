@@ -1,16 +1,13 @@
-using Microsoft.EntityFrameworkCore;
-using SAE401_API.Models.EntityFramework;
 using DotNetEnv;
-using SAE401_API.Models.Repository;
-using SAE401_API.Models.DataManager;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using SAE401_API.Models;
-using Microsoft.AspNetCore.Http.Json;
-using Microsoft.AspNetCore.Mvc;
+using SAE401_API.Models.DataManager;
+using SAE401_API.Models.EntityFramework;
+using SAE401_API.Models.Repository;
+using System.Text;
 using System.Text.Json.Serialization;
-using Microsoft.Extensions.Logging;
 
 Env.Load();
 
@@ -97,7 +94,7 @@ builder.Services.AddAuthorization(config =>
 
 builder.Services.AddLogging(logs =>
 {
-    logs.AddConsole();    
+    logs.AddConsole();
     logs.AddAzureWebAppDiagnostics();
 });
 

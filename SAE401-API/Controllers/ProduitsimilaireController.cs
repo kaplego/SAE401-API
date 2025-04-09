@@ -33,22 +33,42 @@ namespace SAE401_API.Controllers
         }
         */
 
+
+        /// <summary>
+        /// Créé une relation PdSm
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="produitsimilaire">La relation à ajouter</param>
+        /// <response code="200">La relation à été créée</response>
+        /// <response code="400">La relation n'est pas valide</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
         // POST api/produitsimilaire
         [HttpPost]
 
-        public async Task<ActionResult<Produitsimilaire?>> PostProduitsimilaire([FromBody] ProduitsimilaireDTO produitsimilaireDTO)
+        public async Task<ActionResult<Produitsimilaire?>> PostProduitsimilaire([FromBody] ProduitsimilaireDTO produitsimilaire)
         {
-            var produitSimilaire = new Produitsimilaire
+            var ps = new Produitsimilaire
             {
-                IdproduitRef = produitsimilaireDTO.IdproduitRef,
-                IdproduitSim = produitsimilaireDTO.IdproduitSim
+                IdproduitRef = produitsimilaire.IdproduitRef,
+                IdproduitSim = produitsimilaire.IdproduitSim
             };
 
-            await _produitsimilaireRepository.AddProduitsimilaireAsync(produitSimilaire);
+            await _produitsimilaireRepository.AddProduitsimilaireAsync(ps);
 
-            return Ok(produitSimilaire);
+            return Ok(ps);
         }
 
+        /// <summary>
+        /// Supprime une relation PdSm
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="idproduitRef">L'IDproduit parent/original</param>
+        /// <param name="idproduitSim">L'IDproduit similaire/enfant</param>
+        /// <response code="200">La relation à été supprimée</response>
+        /// <response code="404">La relation n'est pas trouvée</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         // DELETE api/produitsimilaire/{idproduitRef}/{idproduitSim}
         [HttpDelete("{idproduitRef}/{idproduitSim}")]
 

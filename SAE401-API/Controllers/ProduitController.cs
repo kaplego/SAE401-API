@@ -16,6 +16,10 @@ namespace SAE401_API.Controllers
             dataRepository = datarepo;
         }
 
+        /// <summary>
+        /// Obtiens les produits
+        /// </summary>
+        /// <returns>Http response</returns>
         // GET: api/Produit/GetAllProduit
         [HttpGet]
         [Route("[action]")]
@@ -25,6 +29,11 @@ namespace SAE401_API.Controllers
             return await dataRepository.GetAllProduitAsync();
         }
 
+        /// <summary>
+        /// Obtiens les produits selon une recherche
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="recherche">La recherche à effectuer</param>
         //GET: api/Produit/GetAllProduitByRecherche/{recherhe}
         [HttpGet]
         [Route("[action]/{recherche}")]
@@ -35,6 +44,11 @@ namespace SAE401_API.Controllers
 
         }
 
+        /// <summary>
+        /// Obtiens les produits selon leur regroupement
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="idregroupement">Le regroupement</param>
         //GET: api/Produit/GetAllProduitByRegroupement/{idregroupement}
         [HttpGet]
         [Route("[action]/{idregroupement}")]
@@ -45,6 +59,11 @@ namespace SAE401_API.Controllers
 
         }
 
+        /// <summary>
+        /// Obtiens les produits selon leur catégorie
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="idcategorie">La catégorie</param>
         //GET: api/Produit/GetAllProduitByCategorie/{idcategorie}
         [HttpGet]
         [Route("[action]/{idcategorie}")]
@@ -55,6 +74,11 @@ namespace SAE401_API.Controllers
 
         }
 
+        /// <summary>
+        /// Obtiens les produits selon leur type
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="idtype">Le type</param>
         //GET: api/Produit/GetAllProduitByType/{idtype}
         [HttpGet]
         [Route("[action]/{idtype}")]
@@ -65,6 +89,12 @@ namespace SAE401_API.Controllers
 
         }
 
+        /// <summary>
+        /// Obtiens un produit
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <response code="404">Le produit n'est pas trouvé</response>
+        [ProducesResponseType(404)]
         // GET: api/Produit/GetProduitById/{id}
         [HttpGet]
         [Route("[action]/{id}")]
@@ -83,7 +113,18 @@ namespace SAE401_API.Controllers
         }
 
 
-
+        /// <summary>
+        /// Modifie un produit
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="id">L'IDproduit à modifier</param>
+        /// <param name="produit">Le produit mis à jour</param>
+        /// <response code="200">Le produit à été modifié</response>
+        /// <response code="400">Le produit n'est pas valide</response>
+        /// <response code="404">Le produit n'est pas trouvé</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         // PUT: api/Produit/{id}
         [HttpPut("{id}")]
         public async Task<ActionResult<Produit?>> PutProduit(int id, ProduitDTO produit)
@@ -112,6 +153,15 @@ namespace SAE401_API.Controllers
             }
         }
 
+        /// <summary>
+        /// Créé un produit
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="produit">Le produit à ajouter</param>
+        /// <response code="200">Le produit à été créé</response>
+        /// <response code="400">Le produit n'est pas valide</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
         // POST: api/Produit
         [HttpPost]
         public async Task<ActionResult<Produit?>> PostProduit([FromBody] ProduitDTO produit)

@@ -16,6 +16,10 @@ namespace SAE401_API.Controllers
             dataRepository = datarepo;
         }
 
+        /// <summary>
+        /// Obtiens les transporteurs
+        /// </summary>
+        /// <returns>Http response</returns>
         [HttpGet]
         [Route("[action]")]
         [ActionName("GetAllTransporteur")]

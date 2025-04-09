@@ -1,19 +1,11 @@
 ﻿using DotNetEnv;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SAE401_API.Controllers;
 using SAE401_API.Models.DataManager;
-using SAE401_API.Models.DataMethods;
 using SAE401_API.Models.DTO;
 using SAE401_API.Models.EntityFramework;
 using SAE401_API.Models.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.Pkcs;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SAE401_APITests.Tests
 {
@@ -40,7 +32,7 @@ namespace SAE401_APITests.Tests
             _context = new _DBMilibooContext(builder.Options);
             _repository = new ColorationManager<Coloration>(_context);
             _controller = new ColorationController(_repository);
-            
+
             c1 = new Coloration()
             {
                 Idproduit = 1,
@@ -71,7 +63,7 @@ namespace SAE401_APITests.Tests
         [TestMethod()]
         public async Task GetColorationById_Normal()
         {
-            var coloration = await _controller.GetColorationByIdAsync(c1.Idproduit,c1.Idcouleur);
+            var coloration = await _controller.GetColorationByIdAsync(c1.Idproduit, c1.Idcouleur);
             Assert.IsNotNull(coloration, "Retour est null");
             Assert.IsInstanceOfType(coloration, typeof(ActionResult<Coloration>), "Pas un ActionResult");
             Assert.IsInstanceOfType(coloration.Value, typeof(Coloration), "Pas une coloration");
@@ -115,7 +107,7 @@ namespace SAE401_APITests.Tests
 
 
 
-        
+
 
 
         [TestMethod()]
@@ -131,7 +123,7 @@ namespace SAE401_APITests.Tests
                 Descriptioncoloration = "Test",
                 Estvisible = true
             };
-            var result = await _controller.PutColoration(c1.Idproduit,c1.Idcouleur, c3);
+            var result = await _controller.PutColoration(c1.Idproduit, c1.Idcouleur, c3);
             Assert.IsNotNull(result, "Retour est null");
             Assert.IsInstanceOfType(result, typeof(ActionResult<Coloration?>), "Pas un ActionResult");
             Assert.IsNotNull(result.Result, "Résultat est null");
@@ -156,7 +148,7 @@ namespace SAE401_APITests.Tests
                 Descriptioncoloration = "Test",
                 Estvisible = true
             };
-            var result = await _controller.PutColoration(c1.Idproduit,c1.Idcouleur, c4);
+            var result = await _controller.PutColoration(c1.Idproduit, c1.Idcouleur, c4);
             Assert.IsNotNull(result, "Retour est null");
             Assert.IsInstanceOfType(result, typeof(ActionResult<Coloration?>), "Pas un ActionResult");
             Assert.IsNotNull(result.Result, "Résultat est null");
@@ -176,7 +168,7 @@ namespace SAE401_APITests.Tests
                 Descriptioncoloration = "Test",
                 Estvisible = true
             };
-            var result = await _controller.PutColoration(-1,-1, c5);
+            var result = await _controller.PutColoration(-1, -1, c5);
             Assert.IsNotNull(result, "Retour est null");
             Assert.IsInstanceOfType(result, typeof(ActionResult<Coloration?>), "Pas un ActionResult");
             Assert.IsNotNull(result.Result, "Résultat est null");

@@ -1,7 +1,7 @@
-﻿using SAE401_API.Models.Repository;
-using SAE401_API.Models.EntityFramework;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SAE401_API.Models.EntityFramework;
+using SAE401_API.Models.Repository;
 
 namespace SAE401_API.Models.DataManager
 {
@@ -14,7 +14,7 @@ namespace SAE401_API.Models.DataManager
             _milibooContext = context;
         }
 
-        public async Task<ActionResult<TEntity?>> GetDetailPanierCompositionByIdAsync(int  idcomposition,  int idclient)
+        public async Task<ActionResult<TEntity?>> GetDetailPanierCompositionByIdAsync(int idcomposition, int idclient)
         {
             var detailPaniercomposition = await _milibooContext.Detailpaniercompositions
                 .Include(d => d.ClientNavigation)  // Inclure les informations sur le type de produit

@@ -16,6 +16,10 @@ namespace SAE401_API.Controllers
             dataRepository = datarepo;
         }
 
+        /// <summary>
+        /// Obtiens les types de paiement
+        /// </summary>
+        /// <returns>Http response</returns>
         [HttpGet]
         [Route("[action]")]
         [ActionName("GetAllTypePaiement")]

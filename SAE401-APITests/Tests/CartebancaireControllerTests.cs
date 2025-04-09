@@ -1,23 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DotNetEnv;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 using SAE401_API.Controllers;
 using SAE401_API.Models.DataManager;
-using SAE401_API.Models.EntityFramework;
-using SAE401_API.Models.DTO;
-using SAE401_API.Models.Repository;
 using SAE401_API.Models.DataMethods;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using System.Net.Http.Headers;
-using DotNetEnv;
-using Newtonsoft.Json.Linq;
-using Npgsql;
+using SAE401_API.Models.DTO;
+using SAE401_API.Models.EntityFramework;
+using SAE401_API.Models.Repository;
 
 namespace SAE401_APITests.Tests
 {
@@ -36,7 +25,7 @@ namespace SAE401_APITests.Tests
             Env.Load(Path.Combine(
                 Directory.GetParent(Directory.GetParent(
                 Directory.GetParent(Directory.GetCurrentDirectory()
-                .ToString()).ToString()).ToString()).ToString(),".env"));
+                .ToString()).ToString()).ToString()).ToString(), ".env"));
             var builder = new DbContextOptionsBuilder<_DBMilibooContext>().UseNpgsql(
                 Environment.GetEnvironmentVariable("CONNECTION_STRING"))
                 .EnableSensitiveDataLogging(true);

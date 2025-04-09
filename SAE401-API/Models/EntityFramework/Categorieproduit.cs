@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Net.Sockets;
-using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
@@ -17,7 +14,7 @@ public partial class Categorieproduit
     public int Idcategorie { get; set; }
 
 
-    
+
     [Column("cat_idcategorie2")]
     public int? IdcategorieParent { get; set; }
 

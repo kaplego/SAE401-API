@@ -15,6 +15,10 @@ namespace SAE401_API.Controllers
             dataRepository = datarepo;
         }
 
+        /// <summary>
+        /// Obtiens les pays
+        /// </summary>
+        /// <returns>Http response</returns>
         // GET: api/Pays/GetAllPays
         [HttpGet]
         [Route("[action]")]

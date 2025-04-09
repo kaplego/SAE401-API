@@ -1,9 +1,9 @@
-﻿using SAE401_API.Models.EntityFramework;
-using SAE401_API.Models.Repository;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SAE401_API.Models.DataMethods;
 using SAE401_API.Models.DTO;
+using SAE401_API.Models.EntityFramework;
+using SAE401_API.Models.Repository;
 
 
 namespace SAE401_API.Models.DataManager
@@ -19,7 +19,7 @@ namespace SAE401_API.Models.DataManager
             milibooContext = context;
         }
 
-        public async Task<ActionResult<IEnumerable<Produit>>>GetAllProduitAsync()
+        public async Task<ActionResult<IEnumerable<Produit>>> GetAllProduitAsync()
         {
             return await milibooContext.Produits
                 .Include(p => p.ColorationsNavigation).ThenInclude(c => c.CouleurNavigation)
@@ -55,7 +55,7 @@ namespace SAE401_API.Models.DataManager
             {
                 produits.AddRange(GetAllProduitByCategorieAsync(cat.Idcategorie).Result.Value);
             }
-           
+
             return produits;
         }
 
@@ -120,7 +120,7 @@ namespace SAE401_API.Models.DataManager
                 .Include(p => p.ValeursNavigation)
                 .Include(p => p.ColorationsNavigation).ThenInclude(c => c.CouleurNavigation)
                 .Include(p => p.ColorationsNavigation).ThenInclude(c => c.PhotocolsNavigation).ThenInclude(p => p.PhotoNavigation)
-                .Include(p => p.AvisNavigation).ThenInclude(a => a.PhotoavisNavigation).ThenInclude(p =>p.PhotoNavigation)
+                .Include(p => p.AvisNavigation).ThenInclude(a => a.PhotoavisNavigation).ThenInclude(p => p.PhotoNavigation)
                 .FirstOrDefaultAsync(p => p.Idproduit == id);
         }
 
@@ -131,7 +131,7 @@ namespace SAE401_API.Models.DataManager
             return entity;
         }
 
-        
+
         public async Task<Produit> UpdateProduitAsync(Produit produit, ProduitDTO entity)
         {
             milibooContext.Entry(produit).State = EntityState.Modified;
@@ -148,11 +148,11 @@ namespace SAE401_API.Models.DataManager
             return produit;
         }
 
-        public async Task  DeleteProduitAsync(Produit produit)
+        public async Task DeleteProduitAsync(Produit produit)
         {
             milibooContext.Produits.Remove(produit);
             await milibooContext.SaveChangesAsync();
         }
-        
+
     }
 }

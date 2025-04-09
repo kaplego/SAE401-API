@@ -21,6 +21,6 @@ namespace SAE401_API.Models.DataManager
             return await milibooContext.Typepaiements
                                        .ToListAsync();
         }
-    
+
     }
 }

@@ -1,19 +1,10 @@
-﻿using DotNetEnv;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
 using SAE401_API.Controllers;
-using SAE401_API.Models.DataManager;
 using SAE401_API.Models.DataMethods;
 using SAE401_API.Models.DTO;
 using SAE401_API.Models.EntityFramework;
 using SAE401_API.Models.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SAE401_APITests.Mock
 {
@@ -36,8 +27,8 @@ namespace SAE401_APITests.Mock
                 Idproduit = 1
 
             };
-            _repository.Setup(x => x.GetAimeByIdAsync(1,1)).ReturnsAsync(new ActionResult<Aime?>(a1));
-            _repository.Setup(x => x.GetAimeByIdAsync(0,0)).ReturnsAsync(new ActionResult<Aime?>(value: null));
+            _repository.Setup(x => x.GetAimeByIdAsync(1, 1)).ReturnsAsync(new ActionResult<Aime?>(a1));
+            _repository.Setup(x => x.GetAimeByIdAsync(0, 0)).ReturnsAsync(new ActionResult<Aime?>(value: null));
             _controller.ControllerContext = JwtManager.CreateControllerContext(new Client()
             {
                 Idclient = 0,
@@ -50,15 +41,15 @@ namespace SAE401_APITests.Mock
         {
             AimeDTO a2 = new AimeDTO()
             {
-                
+
                 Idclient = 0,
                 Idproduit = 1
-                
+
             };
 
             Aime a22 = new Aime()
             {
-                
+
                 Idclient = a2.Idclient,
                 Idproduit = a2.Idproduit
             };
@@ -88,11 +79,11 @@ namespace SAE401_APITests.Mock
                 Idclient = 0,
                 Idproduit = 1
             };
-            _repository.Setup(x => x.GetAimeByIdAsync(a3.Idclient,a3.Idproduit)).ReturnsAsync(new ActionResult<Aime?>(a3));
+            _repository.Setup(x => x.GetAimeByIdAsync(a3.Idclient, a3.Idproduit)).ReturnsAsync(new ActionResult<Aime?>(a3));
             _repository.Setup(x => x.DeleteAimeAsync(a3)).Returns(Task.CompletedTask);
 
 
-            var result = await _controller.DeleteAime(a3.Idclient,a3.Idproduit);
+            var result = await _controller.DeleteAime(a3.Idclient, a3.Idproduit);
             Assert.IsNotNull(result, "Retour est null");
             Assert.IsInstanceOfType(result, typeof(OkResult), "Pas un OkResult");
         }
@@ -100,13 +91,13 @@ namespace SAE401_APITests.Mock
         [TestMethod()]
         public async Task DeleteAimeTest_Introuvable()
         {
-            var result = await _controller.DeleteAime(0,0);
+            var result = await _controller.DeleteAime(0, 0);
             Assert.IsNotNull(result, "Retour est null");
             Assert.IsInstanceOfType(result, typeof(NotFoundResult), "Pas un NotFoundResult");
         }
 
 
-        
+
 
     }
 }

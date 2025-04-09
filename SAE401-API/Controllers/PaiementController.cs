@@ -18,17 +18,31 @@ namespace SAE401_API.Controllers
             dataRepository = datarepo;
         }
 
+
+        /// <summary>
+        /// Créé un paiement
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="paiement">Le paiement à ajouter</param>
+        /// <response code="200">Le paiement à été créé</response>
+        /// <response code="400">Le paiement n'est pas valide</response>
+        /// <response code="401">Un des paramètres n'est pas rempi (JWT?)</response>
+        /// <response code="403">Le JWT ne correspond pas</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         // POST
         [HttpPost]
         [Authorize()]
-        public async Task<ActionResult<Paiement?>> PostPaiement([FromBody] PaiementDTO paiementDTO)
+        public async Task<ActionResult<Paiement?>> PostPaiement([FromBody] PaiementDTO paiement)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var commande = await dataRepository.GetCommandeByIdAsync(paiementDTO.Idcommande);
+            var commande = await dataRepository.GetCommandeByIdAsync(paiement.Idcommande);
             if (commande == null) NotFound();
 
             var identity = HttpContext.User.Identity as ClaimsIdentity;
@@ -37,18 +51,18 @@ namespace SAE401_API.Controllers
                 return Forbid();
             }
 
-            var paiement = new Paiement
+            var newpaiement = new Paiement
             {
-                Idcartebancaire = paiementDTO.Idcartebancaire,
-                Idcommande = paiementDTO.Idcommande,
-                Idtypepaiement = paiementDTO.Idtypepaiement,
-                Datepaiement = paiementDTO.Datepaiement,
-                Montantpaiement = paiementDTO.Montantpaiement,
-                Indicepaiement = paiementDTO.Indicepaiement
+                Idcartebancaire = paiement.Idcartebancaire,
+                Idcommande = paiement.Idcommande,
+                Idtypepaiement = paiement.Idtypepaiement,
+                Datepaiement = paiement.Datepaiement,
+                Montantpaiement = paiement.Montantpaiement,
+                Indicepaiement = paiement.Indicepaiement
             };
 
-            await dataRepository.AddPaiementAsync(paiement);
-            return Ok(paiement);
+            await dataRepository.AddPaiementAsync(newpaiement);
+            return Ok(newpaiement);
         }
     }
 }

@@ -1,24 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SAE401_API.Controllers;
-using SAE401_API.Models.DataManager;
-using SAE401_API.Models.EntityFramework;
-using SAE401_API.Models.DTO;
-using SAE401_API.Models.Repository;
 using SAE401_API.Models.DataMethods;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using System.Net.Http.Headers;
-using DotNetEnv;
-using Newtonsoft.Json.Linq;
-using Npgsql;
-using NuGet.Protocol;
+using SAE401_API.Models.DTO;
+using SAE401_API.Models.EntityFramework;
+using SAE401_API.Models.Repository;
 
 namespace SAE401_APITests.Mock
 {
@@ -62,7 +48,7 @@ namespace SAE401_APITests.Mock
             Assert.IsInstanceOfType(carteBancaires.Value, typeof(IEnumerable<Cartebancaire>), "Pas des cartes bancaires");
             Assert.AreEqual(cb1, carteBancaires.Value.First(), "Cartes bancaires égales");
         }
-        
+
         [TestMethod()]
         public async Task PostCartebancaireTest_Normal()
         {
@@ -176,6 +162,6 @@ namespace SAE401_APITests.Mock
             Assert.IsNotNull(result, "Retour est null");
             Assert.IsInstanceOfType(result, typeof(NotFoundResult), "Pas un NotFoundResult");
         }
-        
+
     }
 }

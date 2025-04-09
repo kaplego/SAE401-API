@@ -18,17 +18,30 @@ namespace SAE401_API.Controllers
             dataRepository = datarepo;
         }
 
+        /// <summary>
+        /// Créé une relation PhAv
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="photoavis">La relation à ajouter</param>
+        /// <response code="200">La relation à été créée</response>
+        /// <response code="400">La relation n'est pas valide</response>
+        /// <response code="401">Un des paramètres n'est pas rempi (JWT?)</response>
+        /// <response code="403">Le JWT ne correspond pas</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         // POST: api/PhotoAvis
         [HttpPost]
         [Authorize()]
-        public async Task<ActionResult<Photoavi?>> PostPhotoAvis([FromBody] PhotoaviDTO paDTO)
+        public async Task<ActionResult<Photoavi?>> PostPhotoAvis([FromBody] PhotoaviDTO photoavis)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var avis = await dataRepository.GetAvisByIdAsync(paDTO.Idavis);
+            var avis = await dataRepository.GetAvisByIdAsync(photoavis.Idavis);
             if (avis == null) NotFound();
 
             var identity = HttpContext.User.Identity as ClaimsIdentity;
@@ -39,8 +52,8 @@ namespace SAE401_API.Controllers
 
             var pa = new Photoavi
             {
-                Idavis = paDTO.Idavis,
-                Idphoto = paDTO.Idphoto
+                Idavis = photoavis.Idavis,
+                Idphoto = photoavis.Idphoto
             };
 
 

@@ -9,5 +9,5 @@ namespace SAE401_API.Models.Repository
         Task<Commande> AddCommandeAsync(TEntity entity);
 
     }
-      
+
 }

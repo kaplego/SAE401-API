@@ -16,6 +16,10 @@ namespace SAE401_API.Controllers
             dataRepository = datarepo;
         }
 
+        /// <summary>
+        /// Récupère les codes promos
+        /// </summary>
+        /// <returns>Http response</returns>
         [HttpGet]
         [Route("[action]")]
         [ActionName("GetAllCodePromo")]

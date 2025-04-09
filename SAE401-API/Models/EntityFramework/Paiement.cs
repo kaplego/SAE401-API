@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using SAE401_API.Validation;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
-using SAE401_API.Validation;
 
 namespace SAE401_API.Models.EntityFramework;
 

@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using SAE401_API.Validation;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
-using SAE401_API.Validation;
 
 namespace SAE401_API.Models.EntityFramework;
 
 [Table("t_e_cartebancaire_car")]
-[Index(nameof(Idclient),nameof(Nomcartebancaire), Name = "ix_t_e_cartebancaire_car_idclient_nomcartebancaire", IsUnique = true)]
+[Index(nameof(Idclient), nameof(Nomcartebancaire), Name = "ix_t_e_cartebancaire_car_idclient_nomcartebancaire", IsUnique = true)]
 [Index(nameof(Idclient), nameof(Numcartebancaire), Name = "ix_t_e_cartebancaire_car_idclient_numcartebancaire", IsUnique = true)]
 
 public partial class Cartebancaire
@@ -33,7 +31,7 @@ public partial class Cartebancaire
     [Column("car_dateenregistrement")]
     [DateValidator]
     [Required]
-    public DateTime Dateenregistement { get; set; }= DateTime.UtcNow;
+    public DateTime Dateenregistement { get; set; } = DateTime.UtcNow;
 
     [Column("car_numcartebancaire")]
     [StringLength(16)]

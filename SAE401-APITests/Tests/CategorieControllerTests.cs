@@ -1,16 +1,10 @@
 ﻿using DotNetEnv;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SAE401_API.Controllers;
 using SAE401_API.Models.DataManager;
 using SAE401_API.Models.EntityFramework;
 using SAE401_API.Models.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SAE401_APITests.Tests
 {
@@ -37,14 +31,14 @@ namespace SAE401_APITests.Tests
             _repository = new CategorieManager(_context);
             _controller = new CategorieController(_repository);
 
-            
+
 
             ct1 = new Categorieproduit()
             {
-               Idcategorie = 34,
-               Nomcategorie = "Test",
-               Descriptioncategorie = "Test",
-               Estfiltrable = true
+                Idcategorie = 34,
+                Nomcategorie = "Test",
+                Descriptioncategorie = "Test",
+                Estfiltrable = true
             };
             await _context.Categorieproduits.AddAsync(ct1);
             await _context.SaveChangesAsync();

@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace SAE401_API.Models.EntityFramework;
 
 [Table("t_e_attributproduit_att")]
-[Index(nameof(Idtypeproduit),nameof(Nomattribut), Name = "ix_t_e_attributproduit_att_idtypeproduit_nomattribut", IsUnique = true)]
+[Index(nameof(Idtypeproduit), nameof(Nomattribut), Name = "ix_t_e_attributproduit_att_idtypeproduit_nomattribut", IsUnique = true)]
 
 public partial class Attributproduit
 {

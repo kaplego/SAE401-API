@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace SAE401_API.Models
+﻿namespace SAE401_API.Models
 {
     public class ApiKeyPolicy
     {

@@ -16,8 +16,17 @@ namespace SAE401_API.Controllers
             dataRepository = datarepo;
         }
 
+        /// <summary>
+        /// Créé un signalement
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="signalement">Le signalement à ajouter</param>
+        /// <response code="200">Le signalement à été créé</response>
+        /// <response code="400">Le signalement n'est pas valide</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
         [HttpPost]
-        public async Task<ActionResult<Signalementavi?>> PostSignalementavi([FromBody] SignalementaviDTO signalementaviDTO)
+        public async Task<ActionResult<Signalementavi?>> PostSignalementavi([FromBody] SignalementaviDTO signalement)
         {
             if (!ModelState.IsValid)
             {
@@ -26,11 +35,11 @@ namespace SAE401_API.Controllers
 
             var signalementavi = new Signalementavi
             {
-                Idavis = signalementaviDTO.Idavis,
-                Idtypesignalement = signalementaviDTO.Idtypesignalement,
-                Emailsignalement = signalementaviDTO.Emailsignalement,
-                Datesignalement = signalementaviDTO.Datesignalement,
-                Contenusignalement = signalementaviDTO.Contenusignalement
+                Idavis = signalement.Idavis,
+                Idtypesignalement = signalement.Idtypesignalement,
+                Emailsignalement = signalement.Emailsignalement,
+                Datesignalement = signalement.Datesignalement,
+                Contenusignalement = signalement.Contenusignalement
             };
 
             await dataRepository.AddSignalementaviAsync(signalementavi);

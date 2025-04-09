@@ -1,19 +1,10 @@
-﻿using DotNetEnv;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
 using SAE401_API.Controllers;
-using SAE401_API.Models.DataManager;
 using SAE401_API.Models.DataMethods;
 using SAE401_API.Models.DTO;
 using SAE401_API.Models.EntityFramework;
 using SAE401_API.Models.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SAE401_APITests.Mock
 {
@@ -50,7 +41,7 @@ namespace SAE401_APITests.Mock
         [TestMethod()]
         public async Task GetClientByLoginTest_Normal()
         {
-            ClientController.Login login = new ClientController.Login() { email = "client@email.domain", password = "mdp"};
+            ClientController.Login login = new ClientController.Login() { email = "client@email.domain", password = "mdp" };
             _repository.Setup(x => x.GetClientByLoginAsync(login.email, login.password)).ReturnsAsync(c1);
             var result = await _controller.GetClientByLogin(login);
             Assert.IsNotNull(result, "Retour est null");

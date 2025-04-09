@@ -18,16 +18,30 @@ namespace SAE401_API.Controllers
             dataRepository = datarepo;
         }
 
+
+        /// <summary>
+        /// Créé une relation CmdCp
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="commandecomposition">La relation à ajouter</param>
+        /// <response code="200">La relation à été modifiée</response>
+        /// <response code="400">La relation n'est pas valide</response>
+        /// <response code="401">Un des paramètres n'est pas rempi (JWT?)</response>
+        /// <response code="403">Le JWT ne correspond pas</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<Commandecomposition?>> PostCommandecomposition([FromBody] CommandecompositionDTO commandecompositionDTO)
+        public async Task<ActionResult<Commandecomposition?>> PostCommandecomposition([FromBody] CommandecompositionDTO commandecomposition)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            Commande? comm = await dataRepository.GetCommandeByIdAsync(commandecompositionDTO.Idcommande);
+            Commande? comm = await dataRepository.GetCommandeByIdAsync(commandecomposition.Idcommande);
 
             if (comm == null)
             {
@@ -40,15 +54,15 @@ namespace SAE401_API.Controllers
                 return Forbid();
             }
 
-            var commandecomposition = new Commandecomposition
+            var cmdcp = new Commandecomposition
             {
-                Idcomposition = commandecompositionDTO.Idcomposition,
-                Idcommande = commandecompositionDTO.Idcommande,
-                Quantitecompositioncommande = commandecompositionDTO.Quantitecompositioncommande
+                Idcomposition = commandecomposition.Idcomposition,
+                Idcommande = commandecomposition.Idcommande,
+                Quantitecompositioncommande = commandecomposition.Quantitecompositioncommande
             };
 
-            await dataRepository.AddCommandecompositionAsync(commandecomposition);
-            return Ok(commandecomposition);
+            await dataRepository.AddCommandecompositionAsync(cmdcp);
+            return Ok(cmdcp);
         }
     }
 }

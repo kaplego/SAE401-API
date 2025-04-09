@@ -6,6 +6,6 @@ namespace SAE401_API.Models.Repository
     {
         Task<ActionResult<IEnumerable<TEntity>>> GetAllCodePromoAsync();
     }
-    
-   
+
+
 }

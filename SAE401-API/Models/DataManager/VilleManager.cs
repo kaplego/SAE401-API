@@ -1,9 +1,7 @@
-﻿using SAE401_API.Models.EntityFramework;
-using SAE401_API.Models.Repository;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SAE401_API.Models.DataMethods;
-using SAE401_API.Models.DTO;
+using SAE401_API.Models.EntityFramework;
+using SAE401_API.Models.Repository;
 
 
 namespace SAE401_API.Models.DataManager
@@ -19,7 +17,7 @@ namespace SAE401_API.Models.DataManager
             milibooContext = context;
         }
 
-        public async Task<ActionResult<IEnumerable<Ville>>>GetAllVilleAsync()
+        public async Task<ActionResult<IEnumerable<Ville>>> GetAllVilleAsync()
         {
             return await milibooContext.Villes.ToListAsync();
         }

@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using SAE401_API.Validation;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
-using SAE401_API.Validation;
 
 namespace SAE401_API.Models.EntityFramework;
 
 [Table("t_e_avisproduit_avi")]
-[Index(nameof(Idclient),nameof(Idproduit), Name = "ix_t_e_avisproduit_avi_idclient_idproduit", IsUnique = true)]
+[Index(nameof(Idclient), nameof(Idproduit), Name = "ix_t_e_avisproduit_avi_idclient_idproduit", IsUnique = true)]
 
 public partial class Avisproduit
 {

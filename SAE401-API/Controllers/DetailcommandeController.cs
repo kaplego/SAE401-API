@@ -18,16 +18,29 @@ namespace SAE401_API.Controllers
             dataRepository = datarepo;
         }
 
+        /// <summary>
+        /// Créé une relation DtCmd
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="detailcommande">La relation à ajouter</param>
+        /// <response code="200">La relation à été ajoutée</response>
+        /// <response code="400">La relation n'est pas valide</response>
+        /// <response code="401">Un des paramètres n'est pas rempi (JWT?)</response>
+        /// <response code="403">Le JWT ne correspond pas</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<Detailcommande?>> PostDetailcommande([FromBody] DetailcommandeDTO detailcommandeDTO)
+        public async Task<ActionResult<Detailcommande?>> PostDetailcommande([FromBody] DetailcommandeDTO detailcommande)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            Commande? comm = await dataRepository.GetCommandeByIdAsync(detailcommandeDTO.Idcommande);
+            Commande? comm = await dataRepository.GetCommandeByIdAsync(detailcommande.Idcommande);
 
             if (comm == null)
             {
@@ -40,17 +53,17 @@ namespace SAE401_API.Controllers
                 return Forbid();
             }
 
-            var detailcommande = new Detailcommande
+            var newdetailcommande = new Detailcommande
             {
-                Idproduit = detailcommandeDTO.Idproduit,
-                Idcouleur = detailcommandeDTO.Idcouleur,
-                Idcommande = detailcommandeDTO.Idcommande,
-                Quantitecommande = detailcommandeDTO.Quantitecommande
+                Idproduit = detailcommande.Idproduit,
+                Idcouleur = detailcommande.Idcouleur,
+                Idcommande = detailcommande.Idcommande,
+                Quantitecommande = detailcommande.Quantitecommande
             };
 
 
-            await dataRepository.AddDetailcommandeAsync(detailcommande);
-            return Ok(detailcommande);
+            await dataRepository.AddDetailcommandeAsync(newdetailcommande);
+            return Ok(newdetailcommande);
         }
     }
 }

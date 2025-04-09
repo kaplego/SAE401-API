@@ -8,5 +8,5 @@ namespace SAE401_API.Models.Repository
         Task<ActionResult<TEntity?>> GetAvisByIdAsync(int idavis);
         Task<Avisproduit> AddAvisAsync(TEntity entity);
         Task DeleteAvisAsync(TEntity entity);
-    }  
+    }
 }

@@ -1,18 +1,12 @@
 ﻿using DotNetEnv;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SAE401_API.Controllers;
 using SAE401_API.Models.DataManager;
 using SAE401_API.Models.DataMethods;
 using SAE401_API.Models.DTO;
 using SAE401_API.Models.EntityFramework;
 using SAE401_API.Models.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SAE401_APITests.Tests
 {
@@ -54,9 +48,9 @@ namespace SAE401_APITests.Tests
             await _context.SaveChangesAsync();
             a1 = new Aime()
             {
-                Idclient  = client1.Idclient,
+                Idclient = client1.Idclient,
                 Idproduit = 1
-                
+
             };
             await _context.Aimes.AddAsync(a1);
             await _context.SaveChangesAsync();
@@ -70,7 +64,7 @@ namespace SAE401_APITests.Tests
             {
                 Idclient = client1.Idclient,
                 Idproduit = 2
-                
+
             };
             var result = await _controller.PostAime(a2);
             Assert.IsNotNull(result, "Retour est null");
@@ -93,7 +87,7 @@ namespace SAE401_APITests.Tests
             };
             await _context.Aimes.AddAsync(a3);
             await _context.SaveChangesAsync();
-            var result = await _controller.DeleteAime(a3.Idclient,a3.Idproduit);
+            var result = await _controller.DeleteAime(a3.Idclient, a3.Idproduit);
             Assert.IsNotNull(result, "Retour est null");
             Assert.IsInstanceOfType(result, typeof(OkResult), "Pas un OkResult");
         }
@@ -101,7 +95,7 @@ namespace SAE401_APITests.Tests
         [TestMethod()]
         public async Task DeleteAimeTest_Introuvable()
         {
-            var result = await _controller.DeleteAime(0,0);
+            var result = await _controller.DeleteAime(0, 0);
             Assert.IsNotNull(result, "Retour est null");
             Assert.IsInstanceOfType(result, typeof(NotFoundResult), "Pas un NotFoundResult");
         }

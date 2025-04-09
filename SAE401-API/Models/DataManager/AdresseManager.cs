@@ -1,8 +1,8 @@
-﻿using SAE401_API.Models.EntityFramework;
-using SAE401_API.Models.Repository;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
 using SAE401_API.Models.DTO;
+using SAE401_API.Models.EntityFramework;
+using SAE401_API.Models.Repository;
 
 namespace SAE401_API.Models.DataManager
 {

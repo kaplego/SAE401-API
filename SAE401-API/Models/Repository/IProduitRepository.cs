@@ -12,7 +12,7 @@ namespace SAE401_API.Models.Repository
         Task<ActionResult<IEnumerable<TEntity>>> GetAllProduitByCategorieAsync(int id);
         Task<ActionResult<IEnumerable<TEntity>>> GetAllProduitByTypeAsync(int id);
         Task<ActionResult<TEntity?>> GetProduitByIdAsync(int id);
-        
+
 
         Task<Produit> AddProduitAsync(TEntity entity);
         Task<Produit> UpdateProduitAsync(TEntity entityToUpdate, ProduitDTO entity);

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using SAE401_API.Validation;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
-using SAE401_API.Validation;
 
 namespace SAE401_API.Models.EntityFramework;
 
@@ -36,7 +33,7 @@ public partial class Commande
     [Column("cmd_datecommande")]
     [DateValidator]
     [Required]
-    public DateTime Datecommande { get; set; }= DateTime.UtcNow;
+    public DateTime Datecommande { get; set; } = DateTime.UtcNow;
 
     [Column("cmd_avecassurance")]
     public bool Avecassurance { get; set; }

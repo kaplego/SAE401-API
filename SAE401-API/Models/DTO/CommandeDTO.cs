@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SAE401_API.Models.DTO
 {
     public partial class CommandeDTO
     {
-        public int? Idcommande {  get; set; }
+        public int? Idcommande { get; set; }
 
 
         [Required]

@@ -15,6 +15,10 @@ namespace SAE401_API.Controllers
             dataRepository = datarepo;
         }
 
+        /// <summary>
+        /// Obtiens les villes
+        /// </summary>
+        /// <returns>Http response</returns>
         // GET: api/Ville/GetAllVille
         [HttpGet]
         [Route("[action]")]
