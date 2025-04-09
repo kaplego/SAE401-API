@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SAE401_API.Controllers.Tests
+namespace SAE401_APITests.Tests
 {
     [TestClass()]
     public class ProduitControllerTests
@@ -85,10 +85,10 @@ namespace SAE401_API.Controllers.Tests
 
             col1 = new Couleur()
             {
-                Idcouleur =30,
-               Nomcouleur = "Test",
-               Rgbcouleur = "ffffff"
-               
+                Idcouleur = 30,
+                Nomcouleur = "Test",
+                Rgbcouleur = "ffffff"
+
             };
             await _context.Couleurs.AddAsync(col1);
             await _context.SaveChangesAsync();
@@ -117,7 +117,7 @@ namespace SAE401_API.Controllers.Tests
                 Idcouleur = col1.Idcouleur,
                 Idregroupement = r1.Idregroupement
 
-               
+
             };
             await _context.Detailregroupements.AddAsync(d1);
             await _context.SaveChangesAsync();

@@ -69,12 +69,7 @@ namespace SAE401_API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            if (identity == null || identity.FindFirst("id").Value != id.ToString())
-            {
-                return Forbid();
-            }
-
+            
             if (id != pro.Idclient)
             {
                 return BadRequest();
@@ -86,6 +81,13 @@ namespace SAE401_API.Controllers
             {
                 return NotFound();
             }
+
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            if (identity == null || identity.FindFirst("id").Value != id.ToString())
+            {
+                return Forbid();
+            }
+
 
             else
             {

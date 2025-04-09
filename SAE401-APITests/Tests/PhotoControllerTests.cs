@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SAE401_API.Controllers.Tests
+namespace SAE401_APITests.Tests
 {
     [TestClass()]
     public class PhotoControllerTests
@@ -79,7 +79,7 @@ namespace SAE401_API.Controllers.Tests
 
             PhotoDTO p3 = new PhotoDTO()
             {
-                Sourcephoto= "Test",
+                Sourcephoto = "Test",
                 Descriptionphoto = longComment
             };
 
@@ -112,7 +112,7 @@ namespace SAE401_API.Controllers.Tests
         }
 
         [TestMethod()]
-        public async Task DeleteAvisTest_Introuvable()
+        public async Task DeletePhotoTest_Introuvable()
         {
             var result = await _controller.DeletePhoto(0);
             Assert.IsNotNull(result, "Retour est null");
