@@ -20,11 +20,25 @@ namespace SAE401_API.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Commandecomposition?>> PostCommandecomposition([FromBody] CommandecompositionDTO commandecompositionDTO)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+
+            Commande? comm = await dataRepository.GetCommandeByIdAsync(commandecompositionDTO.Idcommande);
+
+            if (comm == null)
+            {
+                return NotFound();
+            }
+
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            if (identity == null || identity.FindFirst("id").Value != comm.Idclient.ToString())
+            {
+                return Forbid();
             }
 
             var commandecomposition = new Commandecomposition
@@ -33,8 +47,6 @@ namespace SAE401_API.Controllers
                 Idcommande = commandecompositionDTO.Idcommande,
                 Quantitecompositioncommande = commandecompositionDTO.Quantitecompositioncommande
             };
-
-         
 
             await dataRepository.AddCommandecompositionAsync(commandecomposition);
             return Ok(commandecomposition);

@@ -20,11 +20,25 @@ namespace SAE401_API.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Detailcommande?>> PostDetailcommande([FromBody] DetailcommandeDTO detailcommandeDTO)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+
+            Commande? comm = await dataRepository.GetCommandeByIdAsync(detailcommandeDTO.Idcommande);
+
+            if (comm == null)
+            {
+                return NotFound();
+            }
+
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            if (identity == null || identity.FindFirst("id").Value != comm.Idclient.ToString())
+            {
+                return Forbid();
             }
 
             var detailcommande = new Detailcommande

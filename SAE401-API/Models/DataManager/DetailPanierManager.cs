@@ -2,6 +2,7 @@
 using SAE401_API.Models.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SAE401_API.Models.DTO;
 
 namespace SAE401_API.Models.DataManager
 {
@@ -40,18 +41,14 @@ namespace SAE401_API.Models.DataManager
             }
         }
 
-        public async Task<Detailpanier> UpdateDetailPanierAsync(Detailpanier detailpanier, TEntity entity)
+        public async Task<Detailpanier> UpdateDetailPanierAsync(Detailpanier detailpanier, DetailpanierDTO entity)
         {
-            // Si l'entité est un Detailpanier, nous procédons à la mise à jour
-            if (entity is Detailpanier dp)
-            {
                 // Mise à jour de l'entité existante avec les valeurs du DTO
-                detailpanier.Quantitepanier = dp.Quantitepanier;
-                // Ajoutez ici toutes les autres propriétés nécessaires à la mise à jour
-            }
+            detailpanier.Quantitepanier = entity.Quantitepanier;
 
             _milibooContext.Entry(detailpanier).State = EntityState.Modified;
             await _milibooContext.SaveChangesAsync();
+
             return detailpanier;
         }
 

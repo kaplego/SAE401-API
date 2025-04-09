@@ -41,9 +41,12 @@ namespace SAE401_API.Models.DataManager
         public async Task<ActionResult<IEnumerable<Produit>>> GetAllProduitByCategorieAsync(int id)
         {
 
-            Categorieproduit categorie = await milibooContext.Categorieproduits
+            Categorieproduit? categorie = await milibooContext.Categorieproduits
                 .Include(c => c.CategorieEnfanteNavigation)
-                .FirstAsync(c => c.Idcategorie == id);
+                .FirstOrDefaultAsync(c => c.Idcategorie == id);
+
+            if (categorie == null) return new List<Produit>();
+
             List<Produit> produits = await milibooContext.Produits
                 .Include(p => p.TypeNavigation).Include(p => p.ColorationsNavigation).ThenInclude(c => c.CouleurNavigation)
                 .Include(p => p.ColorationsNavigation).ThenInclude(c => c.PhotocolsNavigation).ThenInclude(p => p.PhotoNavigation)

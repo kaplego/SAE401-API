@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol;
 using SAE401_API.Models.DataManager;
 using SAE401_API.Models.DTO;
 using SAE401_API.Models.EntityFramework;
@@ -66,27 +67,16 @@ namespace SAE401_API.Controllers
                 return NotFound();
             }
 
-            // Convertir le DTO en une instance de Detailpanier
-            var updatedDetailpanier = new Detailpanier
-            {
-                Idproduit = detailpanierDTO.Idproduit,
-                Idcouleur = detailpanierDTO.Idcouleur,
-                Idclient = detailpanierDTO.Idclient,
-                Quantitepanier = detailpanierDTO.Quantitepanier
-                // Ajoutez ici d'autres propriétés du DTO si nécessaire
-            };
-
-
             var identity = HttpContext.User.Identity as ClaimsIdentity; // #claims2#
-            if (identity == null || identity.FindFirst("id").Value != updatedDetailpanier.Idclient.ToString()) // #if#
+            if (identity == null || identity.FindFirst("id").Value != detailpanierDTO.Idclient.ToString()) // #if#
             {
                 return Forbid(); // #forbid#
             }
 
             // Appeler la méthode de mise à jour dans le repository
-            await dataRepository.UpdateDetailPanierAsync(produitToUpdate.Value, updatedDetailpanier);
+            Detailpanier dp = await dataRepository.UpdateDetailPanierAsync(produitToUpdate.Value, detailpanierDTO);
 
-            return Ok(produitToUpdate.Value);
+            return Ok(dp);
         }
 
 

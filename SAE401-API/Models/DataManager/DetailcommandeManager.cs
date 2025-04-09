@@ -29,6 +29,9 @@ namespace SAE401_API.Models.DataManager
             }
         }
 
-
+        public async Task<Commande?> GetCommandeByIdAsync(int id)
+        {
+            return await _milibooContext.Commandes.FirstOrDefaultAsync(c => c.Idcommande == id);
+        }
     }
 }

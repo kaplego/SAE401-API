@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SAE401_API.Controllers;
 using SAE401_API.Models.DataManager;
+using SAE401_API.Models.DataMethods;
 using SAE401_API.Models.DTO;
 using SAE401_API.Models.EntityFramework;
 using SAE401_API.Models.Repository;
@@ -21,6 +22,8 @@ namespace SAE401_APITests.Tests
         private _DBMilibooContext _context;
         private IDetailcommandeRepository<Detailcommande> _repository;
         private DetailcommandeController _controller;
+        private Client client1;
+        private Commande cmd1;
         private Detailcommande detail1;
 
 
@@ -37,16 +40,42 @@ namespace SAE401_APITests.Tests
             _context = new _DBMilibooContext(builder.Options);
             _repository = new DetailcommandeManager<Detailcommande>(_context);
             _controller = new DetailcommandeController(_repository);
+            client1 = new Client()
+            {
+                Nomclient = "NOM",
+                Prenomclient = "Prenom" + DateTime.UtcNow.ToString(),
+                Emailclient = "email@email.email",
+                Telportableclient = "33123456789",
+                Datecreationcompte = DateTime.UtcNow,
+                Hashmdp = "mdp",
+                Pointfideliteclient = 0,
+                Newslettermiliboo = true,
+                Newsletterpartenaires = true
+            };
+            await _context.Clients.AddAsync(client1);
+            await _context.SaveChangesAsync();
+            cmd1 = new Commande()
+            {
+                Idclient = client1.Idclient,
+                IdadresseLivr = 1,
+                IdadresseFact = 1,
+                Idstatut = 1,
+                Idtransporteur = 1,
+                Avecassurance = true,
+                Aveclivraisonexpress = true
+            };
+            await _context.Commandes.AddAsync(cmd1);
+            await _context.SaveChangesAsync();
             detail1 = new Detailcommande()
             {
                 Idproduit = 1,
                 Idcouleur = 7,
-                Idcommande = 1,
+                Idcommande = cmd1.Idcommande,
                 Quantitecommande = 1
             };
             await _context.Detailcommandes.AddAsync(detail1);
             await _context.SaveChangesAsync();
-
+            _controller.ControllerContext = JwtManager.CreateControllerContext(client1);
         }
 
 
@@ -57,8 +86,8 @@ namespace SAE401_APITests.Tests
             DetailcommandeDTO c2 = new DetailcommandeDTO()
             {
                 Idproduit = 1,
-                Idcouleur = 7,
-                Idcommande = 2,
+                Idcouleur = 5,
+                Idcommande = cmd1.Idcommande,
                 Quantitecommande = 1
             };
             var result = await _controller.PostDetailcommande(c2);
@@ -82,6 +111,8 @@ namespace SAE401_APITests.Tests
         {
             await _context.SaveChangesAsync();
             _context.Detailcommandes.Remove(detail1);
+            _context.Commandes.Remove(cmd1);
+            _context.Clients.Remove(client1);
             await _context.SaveChangesAsync();
         }
     }
