@@ -1,11 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SAE401_API.Models.DataManager;
+﻿using Microsoft.AspNetCore.Mvc;
 using SAE401_API.Models.DTO;
 using SAE401_API.Models.EntityFramework;
 using SAE401_API.Models.Repository;
-using System.Security.Claims;
 
 namespace SAE401_API.Controllers
 {
@@ -45,7 +41,7 @@ namespace SAE401_API.Controllers
         [HttpDelete("{idphoto}")]
         public async Task<IActionResult> DeletePhoto(int idphoto)
         {
-            
+
 
             var photo = await dataRepository.GetPhotoByIdAsync(idphoto);
 

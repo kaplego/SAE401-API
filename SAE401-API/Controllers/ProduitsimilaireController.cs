@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SAE401_API.Models.DTO;
 using SAE401_API.Models.EntityFramework;
 using SAE401_API.Models.Repository;
-using System.Security.Claims;
 
 namespace SAE401_API.Controllers
 {
@@ -37,7 +35,7 @@ namespace SAE401_API.Controllers
 
         // POST api/produitsimilaire
         [HttpPost]
-        
+
         public async Task<ActionResult<Produitsimilaire?>> PostProduitsimilaire([FromBody] ProduitsimilaireDTO produitsimilaireDTO)
         {
             var produitSimilaire = new Produitsimilaire
@@ -53,7 +51,7 @@ namespace SAE401_API.Controllers
 
         // DELETE api/produitsimilaire/{idproduitRef}/{idproduitSim}
         [HttpDelete("{idproduitRef}/{idproduitSim}")]
-       
+
         public async Task<IActionResult> DeleteProduitsimilaire(int idproduitRef, int idproduitSim)
         {
             var produitSimilaire = await _produitsimilaireRepository.GetProduitsimilaireByIdAsync(idproduitRef, idproduitSim);

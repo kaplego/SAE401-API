@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SAE401_API.Models.DataManager;
 using SAE401_API.Models.DTO;
 using SAE401_API.Models.EntityFramework;
 using SAE401_API.Models.Repository;
@@ -32,7 +30,7 @@ namespace SAE401_API.Controllers
             }
 
             // Vérification de l'intégrité des paramètres
-            if (idcomposition != detailpaniercompositionDTO.Idcomposition  || idclient != detailpaniercompositionDTO.Idclient)
+            if (idcomposition != detailpaniercompositionDTO.Idcomposition || idclient != detailpaniercompositionDTO.Idclient)
             {
                 return BadRequest("Les paramètres ne correspondent pas.");
             }

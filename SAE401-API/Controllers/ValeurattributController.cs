@@ -1,11 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SAE401_API.Models.DataManager;
+﻿using Microsoft.AspNetCore.Mvc;
 using SAE401_API.Models.DTO;
 using SAE401_API.Models.EntityFramework;
 using SAE401_API.Models.Repository;
-using System.Security.Claims;
 
 namespace SAE401_API.Controllers
 {
@@ -15,13 +11,13 @@ namespace SAE401_API.Controllers
     {
         private readonly IValeurattributRepository<Valeurattribut> dataRepository;
 
-        
+
         public ValeurattributController(IValeurattributRepository<Valeurattribut> datarepo)
         {
             dataRepository = datarepo;
         }
 
-       
+
 
         [HttpPost]
         public async Task<ActionResult<Valeurattribut?>> PostValeurattribut([FromBody] ValeurattributDTO valeurAttributDTO)

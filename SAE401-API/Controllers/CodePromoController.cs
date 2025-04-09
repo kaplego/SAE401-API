@@ -23,6 +23,6 @@ namespace SAE401_API.Controllers
         {
             return await dataRepository.GetAllCodePromoAsync();
         }
-    
+
     }
 }

@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SAE401_API.Models.DataManager;
-using SAE401_API.Models.DTO;
+﻿using Microsoft.AspNetCore.Mvc;
 using SAE401_API.Models.EntityFramework;
 using SAE401_API.Models.Repository;
 

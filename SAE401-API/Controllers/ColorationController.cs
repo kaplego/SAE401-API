@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SAE401_API.Models.DataManager;
 using SAE401_API.Models.DTO;
 using SAE401_API.Models.EntityFramework;
 using SAE401_API.Models.Repository;
-using Microsoft.AspNetCore.Authorization;
-using System.Threading.Tasks;
 
 namespace SAE401_API.Controllers
 {

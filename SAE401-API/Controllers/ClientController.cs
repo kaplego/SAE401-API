@@ -1,22 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
-using SAE401_API.Models;
-using SAE401_API.Models.DataManager;
+using SAE401_API.Models.DataMethods;
 using SAE401_API.Models.DTO;
 using SAE401_API.Models.EntityFramework;
 using SAE401_API.Models.Repository;
-using SAE401_API.Models.DataMethods;
+using System.Security.Claims;
 
 namespace SAE401_API.Controllers
 {
@@ -30,14 +18,24 @@ namespace SAE401_API.Controllers
         {
             dataRepository = datarepo;
         }
-        
 
-        public class Login {
+
+        public class Login
+        {
             public string email { get; set; }
             public string password { get; set; }
             public Login() { }
         }
 
+        /// <summary>
+        /// Authentifie un client
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="login">Les identifiants sous forme {email:"", password:""}</param>
+        /// <response code="200">Le client est authentifié</response>
+        /// <response code="403">Email ou mot de passe invalide</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(403)]
         //POST: api/Client/GetClientByLogin
         [HttpPost]
         [AllowAnonymous]
@@ -59,6 +57,17 @@ namespace SAE401_API.Controllers
             return response;
         }
 
+        /// <summary>
+        /// Obtiens un client
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="id">L'id du client'</param>
+        /// <response code="401">Un des paramètres n'est pas rempi (JWT?)</response>
+        /// <response code="403">Le JWT ne correspond pas</response>
+        /// <response code="404">Le client n'est pas trouvé</response>
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
+        [ProducesResponseType(404)]
         // GET: api/Client/GetClientById/{id}
         [HttpGet]
         [Authorize()] // #Authorize#
@@ -81,7 +90,7 @@ namespace SAE401_API.Controllers
                 return Forbid(); // #forbid#
             }
 
-            var client =await dataRepository.GetClientByIdAsync(id);
+            var client = await dataRepository.GetClientByIdAsync(id);
 
             if (client.Value == null)
             {
@@ -130,9 +139,9 @@ namespace SAE401_API.Controllers
         [HttpPost]
         public async Task<ActionResult<Client?>> PostClient([FromBody] ClientDTO clientDTO)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState); 
+                return BadRequest(ModelState);
             }
 
             Client newclient = new Client()
@@ -148,7 +157,7 @@ namespace SAE401_API.Controllers
                 Pointfideliteclient = clientDTO.Pointfideliteclient,
                 Newslettermiliboo = clientDTO.Newslettermiliboo,
                 Newsletterpartenaires = clientDTO.Newsletterpartenaires,
-        };
+            };
 
             await dataRepository.AddClientAsync(newclient);
 

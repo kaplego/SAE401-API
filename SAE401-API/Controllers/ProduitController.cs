@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SAE401_API.Models.DataManager;
+﻿using Microsoft.AspNetCore.Mvc;
 using SAE401_API.Models.DTO;
 using SAE401_API.Models.EntityFramework;
 using SAE401_API.Models.Repository;
@@ -18,7 +11,7 @@ namespace SAE401_API.Controllers
     {
         private readonly IProduitRepository<Produit> dataRepository;
 
-        public ProduitController( IProduitRepository<Produit> datarepo)
+        public ProduitController(IProduitRepository<Produit> datarepo)
         {
             dataRepository = datarepo;
         }
@@ -38,7 +31,7 @@ namespace SAE401_API.Controllers
         [ActionName("GetAllProduitByRecherche")]
         public async Task<ActionResult<IEnumerable<Produit>>> GetAllProduitByRecherche(string recherche)
         {
-            return await dataRepository.GetAllProduitByRechercheAsync(recherche,2);
+            return await dataRepository.GetAllProduitByRechercheAsync(recherche, 2);
 
         }
 
@@ -79,7 +72,7 @@ namespace SAE401_API.Controllers
 
         public async Task<ActionResult<Produit>> GetProduitById(int id)
         {
-            var produit =await dataRepository.GetProduitByIdAsync(id);
+            var produit = await dataRepository.GetProduitByIdAsync(id);
 
             if (produit.Value == null)
             {
@@ -89,7 +82,7 @@ namespace SAE401_API.Controllers
             return produit;
         }
 
-       
+
 
         // PUT: api/Produit/{id}
         [HttpPut("{id}")]
@@ -125,7 +118,7 @@ namespace SAE401_API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState); 
+                return BadRequest(ModelState);
             }
 
             Produit newProduit = new Produit()

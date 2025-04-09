@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NuGet.Protocol;
-using SAE401_API.Models.DataManager;
 using SAE401_API.Models.DTO;
 using SAE401_API.Models.EntityFramework;
 using SAE401_API.Models.Repository;
@@ -20,7 +18,15 @@ namespace SAE401_API.Controllers
             dataRepository = datarepo;
         }
 
-
+        /// <summary>
+        /// Récupère les cartes du client
+        /// </summary>
+        /// <returns>Http response</returns>
+        /// <param name="idclient">L'ID du client</param>
+        /// <response code="401">Un des paramètres n'est pas rempi (JWT?)</response>
+        /// <response code="403">Le JWT ne correspond pas</response>
+        [ProducesResponseType(401)]
+        [ProducesResponseType(403)]
         // GET: api/Cartebancaire/GetAllCartebancaireByClient/idclient
         [HttpGet("[action]/{idclient}")]
         [Authorize()]
@@ -32,9 +38,9 @@ namespace SAE401_API.Controllers
                 return Forbid();
             }
 
-           return await dataRepository.GetAllCartebancaireByClientAsync(idclient); 
+            return await dataRepository.GetAllCartebancaireByClientAsync(idclient);
         }
-        
+
 
         // POST: api/Cartebancaire
         [HttpPost]

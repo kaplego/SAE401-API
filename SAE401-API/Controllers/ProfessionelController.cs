@@ -1,21 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
-using SAE401_API.Models;
-using SAE401_API.Models.DataManager;
 using SAE401_API.Models.DTO;
 using SAE401_API.Models.EntityFramework;
 using SAE401_API.Models.Repository;
+using System.Security.Claims;
 
 namespace SAE401_API.Controllers
 {
@@ -35,9 +23,9 @@ namespace SAE401_API.Controllers
         [Authorize()]
         public async Task<ActionResult<Professionel?>> PostProfessionel([FromBody] ProfessionelDTO proDTO)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState); 
+                return BadRequest(ModelState);
             }
 
             var identity = HttpContext.User.Identity as ClaimsIdentity;
@@ -69,7 +57,7 @@ namespace SAE401_API.Controllers
                 return BadRequest(ModelState);
             }
 
-            
+
             if (id != pro.Idclient)
             {
                 return BadRequest();

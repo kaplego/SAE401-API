@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SAE401_API.Models.DTO;
 using SAE401_API.Models.EntityFramework;
 using SAE401_API.Models.Repository;
-using SAE401_API.Models.DataManager;
-using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 
 namespace SAE401_API.Controllers
@@ -61,7 +60,7 @@ namespace SAE401_API.Controllers
         {
             var commande = await _commandeRepository.GetCommandeByIdAsync(idcommande);
 
-            if (commande.Value== null)
+            if (commande.Value == null)
             {
                 return NotFound();
             }
