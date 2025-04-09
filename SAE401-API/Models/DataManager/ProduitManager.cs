@@ -114,7 +114,7 @@ namespace SAE401_API.Models.DataManager
             return minDistance;
         }
 
-        public async Task<ActionResult<Produit>> GetProduitByIdAsync(int id)
+        public async Task<ActionResult<Produit?>> GetProduitByIdAsync(int id)
         {
             return await milibooContext.Produits
                 .Include(p => p.ValeursNavigation)

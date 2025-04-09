@@ -114,8 +114,8 @@ namespace SAE401_API.Controllers
 
             else
             {
-                await dataRepository.UpdateProduitAsync(produitToUpdate.Value, produit);
-                return Ok(produitToUpdate.Value);
+                Produit p = await dataRepository.UpdateProduitAsync(produitToUpdate.Value, produit);
+                return Ok(p);
             }
         }
 

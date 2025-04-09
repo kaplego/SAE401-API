@@ -11,7 +11,7 @@ namespace SAE401_API.Models.Repository
         Task<ActionResult<IEnumerable<TEntity>>> GetAllProduitByRegroupementAsync(int id);
         Task<ActionResult<IEnumerable<TEntity>>> GetAllProduitByCategorieAsync(int id);
         Task<ActionResult<IEnumerable<TEntity>>> GetAllProduitByTypeAsync(int id);
-        Task<ActionResult<TEntity>> GetProduitByIdAsync(int id);
+        Task<ActionResult<TEntity?>> GetProduitByIdAsync(int id);
         
 
         Task<Produit> AddProduitAsync(TEntity entity);
