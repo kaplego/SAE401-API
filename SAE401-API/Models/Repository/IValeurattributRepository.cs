@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SAE401_API.Models.DTO;
 using SAE401_API.Models.EntityFramework;
 
 namespace SAE401_API.Models.Repository
@@ -7,7 +8,7 @@ namespace SAE401_API.Models.Repository
     {
         Task<ActionResult<TEntity?>> GetValeurattributByIdAsync(int idattribut, int idproduit);
         Task<Valeurattribut> AddValeurattributAsync(TEntity entity);
-        Task<Valeurattribut> UpdateValeurattributAsync(Valeurattribut valeurattribut, TEntity entity);
+        Task<Valeurattribut> UpdateValeurattributAsync(Valeurattribut valeurattribut, ValeurattributDTO entity);
         Task DeleteValeurattributAsync(Valeurattribut valeurattribut);
     }
 }

@@ -2,6 +2,7 @@
 using SAE401_API.Models.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SAE401_API.Models.DTO;
 
 namespace SAE401_API.Models.DataManager
 {
@@ -38,13 +39,9 @@ namespace SAE401_API.Models.DataManager
             }
         }
 
-        public async Task<Valeurattribut> UpdateValeurattributAsync(Valeurattribut valeurattribut, TEntity entity)
+        public async Task<Valeurattribut> UpdateValeurattributAsync(Valeurattribut valeurattribut, ValeurattributDTO entity)
         {
-            if (entity is Valeurattribut updatedValeurattribut)
-            {
-                valeurattribut.Valeur = updatedValeurattribut.Valeur;
-                // Ajoutez ici d'autres propriétés à mettre à jour si nécessaire
-            }
+            valeurattribut.Valeur = entity.Valeur;
 
             _milibooContext.Entry(valeurattribut).State = EntityState.Modified;
             await _milibooContext.SaveChangesAsync();

@@ -61,16 +61,8 @@ namespace SAE401_API.Controllers
                 return NotFound();
             }
 
-            
-            var updatedValeurattribut = new Valeurattribut
-            {
-                Idattribut = valeurAttributDTO.Idattribut,
-                Idproduit = valeurAttributDTO.Idproduit,
-                Valeur = valeurAttributDTO.Valeur
-            };
-
-            await dataRepository.UpdateValeurattributAsync(existingValeurattribut.Value, updatedValeurattribut);
-            return Ok(existingValeurattribut.Value);
+            Valeurattribut va = await dataRepository.UpdateValeurattributAsync(existingValeurattribut.Value, valeurAttributDTO);
+            return Ok(va);
         }
 
         [HttpDelete("{idattribut}/{idproduit}")]
