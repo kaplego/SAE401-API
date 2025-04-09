@@ -16,12 +16,12 @@ using System.Threading.Tasks;
 namespace SAE401_APITests.Tests
 {
     [TestClass()]
-    public class PhotoControllerTests
+    public class ProduitsimilaireControllerTests
     {
         private _DBMilibooContext _context;
-        private IPhotoRepository<Photo> _repository;
-        private PhotoController _controller;
-        private Photo p1;
+        private IProduitsimilaireRepository<Produitsimilaire> _repository;
+        private ProduitsimilaireController _controller;
+        private Produitsimilaire p1;
 
 
         [TestInitialize]
@@ -35,89 +35,66 @@ namespace SAE401_APITests.Tests
                 Environment.GetEnvironmentVariable("CONNECTION_STRING"))
                 .EnableSensitiveDataLogging(true);
             _context = new _DBMilibooContext(builder.Options);
-            _repository = new PhotoManager(_context);
-            _controller = new PhotoController(_repository);
+            _repository = new ProduitsimilaireManager(_context);
+            _controller = new ProduitsimilaireController(_repository);
 
 
 
-            p1 = new Photo()
+            p1 = new Produitsimilaire()
             {
-                Sourcephoto = "Test",
-                Descriptionphoto = "Test"
+                IdproduitRef = 1,
+                IdproduitSim = 4
             };
-            await _context.Photos.AddAsync(p1);
+            await _context.Produitsimilaires.AddAsync(p1);
             await _context.SaveChangesAsync();
         }
 
-
         [TestMethod()]
-        public async Task PostPhotoTest_Normal()
+        public async Task PostProduitsimilaireTest_Normal()
         {
-            PhotoDTO p2 = new PhotoDTO()
+
+            ProduitsimilaireDTO p2 = new ProduitsimilaireDTO()
             {
-                Sourcephoto = "Test",
-                Descriptionphoto = "Test"
+                IdproduitRef = 2,
+                IdproduitSim = 4
             };
 
-            var result = await _controller.PostPhoto(p2);
+
+            var result = await _controller.PostProduitsimilaire(p2);
             Assert.IsNotNull(result, "Retour est null");
-            Assert.IsInstanceOfType(result, typeof(ActionResult<Photo?>), "Pas un ActionResult");
+            Assert.IsInstanceOfType(result, typeof(ActionResult<Produitsimilaire?>), "Pas un ActionResult");
             Assert.IsNotNull(result.Result, "Résultat est null");
             Assert.IsInstanceOfType(result.Result, typeof(OkObjectResult), "Résultat pas OK");
-            Photo valeur = (Photo)((ObjectResult)result.Result).Value;
+            Produitsimilaire valeur = (Produitsimilaire)((ObjectResult)result.Result).Value;
             Assert.IsNotNull(valeur, "Valeur est null");
-            Assert.AreEqual(p2.Descriptionphoto, valeur.Descriptionphoto, "photo égales");
-            try { _context.Photos.Remove(valeur); } catch { }
+            Assert.AreEqual(p2.IdproduitSim, valeur.IdproduitSim, "produit similaire égales");
+            try { _context.Produitsimilaires.Remove(valeur); } catch { }
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(DbUpdateException))]
-        public async Task PostPhotoTest_Invalide()
-        {
-            // Générer un commentaire de plus de 1024 caractères
-            string longComment = new string('a', 1030); // 1025 caractères 'a'
-
-            PhotoDTO p3 = new PhotoDTO()
-            {
-                Sourcephoto = "Test",
-                Descriptionphoto = longComment
-            };
-
-            try
-            {
-                var result = await _controller.PostPhoto(p3);
-
-            }
-            catch (DbUpdateException ex)
-            {
-                _context.Photos.Remove((Photo)ex.Entries.First().Entity);
-                throw ex;
-            }
-        }
-
-        [TestMethod()]
-        public async Task DeletPhotoTest_Normal()
+        public async Task DeletProduitsimilaireTest_Normal()
         {
 
-            Photo p4 = new Photo()
+            Produitsimilaire p3 = new Produitsimilaire()
             {
-                Sourcephoto = "Test",
-                Descriptionphoto = "Test"
+                IdproduitRef = 3,
+                IdproduitSim = 4
             };
-            await _context.Photos.AddAsync(p4);
+            await _context.Produitsimilaires.AddAsync(p3);
             await _context.SaveChangesAsync();
-            var result = await _controller.DeletePhoto(p4.Idphoto);
+            var result = await _controller.DeleteProduitsimilaire(p3.IdproduitRef, p3.IdproduitSim);
             Assert.IsNotNull(result, "Retour est null");
             Assert.IsInstanceOfType(result, typeof(OkResult), "Pas un OkResult");
         }
 
         [TestMethod()]
-        public async Task DeletePhotoTest_Introuvable()
+        public async Task DeleteProduitTest_Introuvable()
         {
-            var result = await _controller.DeletePhoto(0);
+            var result = await _controller.DeleteProduitsimilaire(0, 0);
             Assert.IsNotNull(result, "Retour est null");
             Assert.IsInstanceOfType(result, typeof(NotFoundResult), "Pas un NotFoundResult");
         }
+
 
 
 
@@ -126,9 +103,8 @@ namespace SAE401_APITests.Tests
         public async Task TestCleanup()
         {
             await _context.SaveChangesAsync();
-            _context.Photos.Remove(p1);
+            _context.Produitsimilaires.Remove(p1);
             await _context.SaveChangesAsync();
         }
-
     }
 }
