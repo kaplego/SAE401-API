@@ -213,8 +213,43 @@ namespace SAE401_APITests.Tests
             Assert.AreEqual(c1.Idclient, valeur.Idclient, "Client non-modifiés (id)");
         }
 
+
         [TestMethod()]
-        public async Task PutAdresseTest_Innégal()
+        [ExpectedException(typeof(DbUpdateException))]
+        public async Task PutClientTest_Invalide()
+        {
+            ClientDTO c6 = new ClientDTO()
+            {
+                Idclient = c1.Idclient,
+                Nomclient = "NOM6",
+                Prenomclient = "Prenom" + DateTime.UtcNow.ToString(),
+                Emailclient = "email@email.email",
+                Telportableclient = "331234567890",
+                Datecreationcompte = DateTime.UtcNow,
+                Hashmdp = "nouv",
+                Pointfideliteclient = 0,
+                Newslettermiliboo = true,
+                Newsletterpartenaires = true
+
+            };
+            try
+            {
+                var result = await _controller.PutClient(c1.Idclient, c6);
+            }
+            catch (DbUpdateException ex)
+            {
+                Client c = (Client)ex.Entries.First().Entity;
+                c.Telportableclient = "33123456788";
+                throw ex;
+            }
+
+
+        }
+
+
+
+        [TestMethod()]
+        public async Task PutClientTest_Innégal()
         {
             ClientDTO c5 = new ClientDTO()
             {
@@ -238,7 +273,7 @@ namespace SAE401_APITests.Tests
         }
 
         [TestMethod()]
-        public async Task PutAdresseTest_Introuvable()
+        public async Task PutClientTest_Introuvable()
         {
             ClientDTO c5 = new ClientDTO()
             {
